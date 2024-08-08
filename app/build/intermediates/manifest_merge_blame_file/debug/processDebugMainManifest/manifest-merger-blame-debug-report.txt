@@ -1,0 +1,218 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.evapharma.queueingsystem"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <queries>
+11-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:7:5-13:15
+12        <intent>
+12-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:8:9-12:18
+13            <action android:name="android.intent.action.CREATE_DOCUMENT" />
+13-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:9:13-76
+13-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:9:21-73
+14
+15            <data android:mimeType="*/*" />
+15-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:11:13-44
+15-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:11:19-41
+16        </intent>
+17    </queries>
+18
+19    <permission
+19-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:22:5-24:47
+20        android:name="com.evapharma.queueingsystem.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+20-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:23:9-81
+21        android:protectionLevel="signature" />
+21-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:24:9-44
+22
+23    <uses-permission android:name="com.evapharma.queueingsystem.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+23-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:26:5-97
+23-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:26:22-94
+24
+25    <application
+25-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:5:5-24:19
+26        android:allowBackup="true"
+26-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:6:9-35
+27        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+27-->[androidx.core:core:1.13.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\518b630beb7334bd991248ef6ca29f3d\transformed\core-1.13.0\AndroidManifest.xml:28:18-86
+28        android:dataExtractionRules="@xml/data_extraction_rules"
+28-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:7:9-65
+29        android:debuggable="true"
+30        android:extractNativeLibs="false"
+31        android:fullBackupContent="@xml/backup_rules"
+31-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:8:9-54
+32        android:icon="@mipmap/ic_launcher"
+32-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:9:9-43
+33        android:label="@string/app_name"
+33-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:10:9-41
+34        android:roundIcon="@mipmap/ic_launcher_round"
+34-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:11:9-54
+35        android:supportsRtl="true"
+35-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:12:9-35
+36        android:testOnly="true"
+37        android:theme="@style/Theme.QueueingSystem" >
+37-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:13:9-52
+38        <activity
+38-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:15:9-23:20
+39            android:name="com.evapharma.queueingsystem.MainActivity"
+39-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:16:13-41
+40            android:exported="true" >
+40-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:17:13-36
+41            <intent-filter>
+41-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:18:13-22:29
+42                <action android:name="android.intent.action.MAIN" />
+42-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:19:17-69
+42-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:19:25-66
+43
+44                <category android:name="android.intent.category.LAUNCHER" />
+44-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:21:17-77
+44-->D:\Hackathon\QueueingSystem\app\src\main\AndroidManifest.xml:21:27-74
+45            </intent-filter>
+46        </activity>
+47        <activity
+47-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:16:9-21:52
+48            android:name="com.chuckerteam.chucker.internal.ui.MainActivity"
+48-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:17:13-76
+49            android:label="@string/chucker_name"
+49-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:18:13-49
+50            android:launchMode="singleTask"
+50-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:19:13-44
+51            android:taskAffinity="com.chuckerteam.chucker.task"
+51-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:20:13-64
+52            android:theme="@style/Chucker.Theme" />
+52-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:21:13-49
+53        <activity
+53-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:22:9-25:52
+54            android:name="com.chuckerteam.chucker.internal.ui.transaction.TransactionActivity"
+54-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:23:13-95
+55            android:parentActivityName="com.chuckerteam.chucker.internal.ui.MainActivity"
+55-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:24:13-90
+56            android:theme="@style/Chucker.Theme" />
+56-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:25:13-49
+57        <activity
+57-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:26:9-29:52
+58            android:name="com.chuckerteam.chucker.internal.ui.throwable.ThrowableActivity"
+58-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:27:13-91
+59            android:parentActivityName="com.chuckerteam.chucker.internal.ui.MainActivity"
+59-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:28:13-90
+60            android:theme="@style/Chucker.Theme" />
+60-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:29:13-49
+61
+62        <service
+62-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:31:9-33:40
+63            android:name="com.chuckerteam.chucker.internal.support.ClearDatabaseService"
+63-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:32:13-89
+64            android:exported="false" />
+64-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:33:13-37
+65
+66        <provider
+66-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:35:9-43:20
+67            android:name="com.chuckerteam.chucker.internal.support.ChuckerFileProvider"
+67-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:36:13-88
+68            android:authorities="com.evapharma.queueingsystem.com.chuckerteam.chucker.provider"
+68-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:37:13-84
+69            android:exported="false"
+69-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:38:13-37
+70            android:grantUriPermissions="true" >
+70-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:39:13-47
+71            <meta-data
+71-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:40:13-42:66
+72                android:name="android.support.FILE_PROVIDER_PATHS"
+72-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:41:17-67
+73                android:resource="@xml/chucker_provider_paths" />
+73-->[com.github.chuckerteam.chucker:library:3.5.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\341e550d3424c609d0fe428d6b3385ac\transformed\library-3.5.2\AndroidManifest.xml:42:17-63
+74        </provider>
+75        <provider
+75-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+76            android:name="androidx.startup.InitializationProvider"
+76-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+77            android:authorities="com.evapharma.queueingsystem.androidx-startup"
+77-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+78            android:exported="false" >
+78-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+79            <meta-data
+79-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+80                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+80-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+81                android:value="androidx.startup" />
+81-->[androidx.emoji2:emoji2:1.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\65f0c585527628af58df3e95d508c3cb\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+82            <meta-data
+82-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\a3f267a751a647b08a7b180bd2627d37\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:29:13-31:52
+83                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+83-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\a3f267a751a647b08a7b180bd2627d37\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:30:17-78
+84                android:value="androidx.startup" />
+84-->[androidx.lifecycle:lifecycle-process:2.6.2] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\a3f267a751a647b08a7b180bd2627d37\transformed\lifecycle-process-2.6.2\AndroidManifest.xml:31:17-49
+85            <meta-data
+85-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+86                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+86-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+87                android:value="androidx.startup" />
+87-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+88        </provider>
+89
+90        <uses-library
+90-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+91            android:name="androidx.window.extensions"
+91-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+92            android:required="false" />
+92-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+93        <uses-library
+93-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+94            android:name="androidx.window.sidecar"
+94-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+95            android:required="false" />
+95-->[androidx.window:window:1.0.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\567eff1e97a893661061569bef62566a\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+96
+97        <service
+97-->[androidx.room:room-runtime:2.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\9373dc4af54dae2cfcb47a6389e6d99a\transformed\room-runtime-2.3.0\AndroidManifest.xml:25:9-28:40
+98            android:name="androidx.room.MultiInstanceInvalidationService"
+98-->[androidx.room:room-runtime:2.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\9373dc4af54dae2cfcb47a6389e6d99a\transformed\room-runtime-2.3.0\AndroidManifest.xml:26:13-74
+99            android:directBootAware="true"
+99-->[androidx.room:room-runtime:2.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\9373dc4af54dae2cfcb47a6389e6d99a\transformed\room-runtime-2.3.0\AndroidManifest.xml:27:13-43
+100            android:exported="false" />
+100-->[androidx.room:room-runtime:2.3.0] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\9373dc4af54dae2cfcb47a6389e6d99a\transformed\room-runtime-2.3.0\AndroidManifest.xml:28:13-37
+101
+102        <receiver
+102-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+103            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+103-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+104            android:directBootAware="false"
+104-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+105            android:enabled="true"
+105-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+106            android:exported="true"
+106-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+107            android:permission="android.permission.DUMP" >
+107-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+108            <intent-filter>
+108-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+109                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+109-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+110            </intent-filter>
+111            <intent-filter>
+111-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+112                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+112-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+113            </intent-filter>
+114            <intent-filter>
+114-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+115                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+115-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+116            </intent-filter>
+117            <intent-filter>
+117-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+118                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+118-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\Moamen.Mahmoud\.gradle\caches\transforms-4\759629f8fb377f14e2c3ec6d82f4a7b4\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+119            </intent-filter>
+120        </receiver>
+121    </application>
+122
+123</manifest>

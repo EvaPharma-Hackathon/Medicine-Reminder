@@ -1,0 +1,90 @@
+[
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/drawable/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/layout_activity_main.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/layout_dialog_session_expired.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/layout/dialog_session_expired.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/xml_data_extraction_rules.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/drawable_ic_warning.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/drawable/ic_warning.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/layout_dialog_progress_layout.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/layout/dialog_progress_layout.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/xml_backup_rules.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/drawable_background_button.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/drawable/background_button.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/layout_error_dialog_layout.xml.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/layout/error_dialog_layout.xml"
+    },
+    {
+        "merged": "com.evapharma.queueingsystem.app-debug-53:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.evapharma.queueingsystem.app-main-55:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    }
+]
