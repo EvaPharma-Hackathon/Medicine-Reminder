@@ -1,10 +1,11 @@
-package com.evaph.se7etak.emr.vital.data
+package com.evapharma.medicinereminder.features.covid_cases.data.remote.data_source
 
 
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.handleException
 import com.evapharma.medicinereminder.core.models.handleResponse
 import com.evapharma.medicinereminder.core.network.BaseURLFactory
+import com.evapharma.medicinereminder.features.covid_cases.data.remote.model.CovidCasesApiService
 import com.evapharma.medicinereminder.features.covid_cases.data.remote.model.CovidCasesResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

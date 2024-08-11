@@ -1,4 +1,4 @@
-package com.evaph.se7etak.emr.vital.data
+package com.evapharma.medicinereminder.features.covid_cases.data.remote.model
 
 import com.evapharma.medicinereminder.Endpoints
 import com.evapharma.medicinereminder.core.models.BaseResponse
