@@ -1,7 +1,7 @@
 package com.evapharma.medicinereminder.features.covid_cases.di
 
-import com.evaph.se7etak.emr.vital.data.CovidCasesRemoteDataSource
-import com.evaph.se7etak.emr.vital.data.CovidRemoteDataSourceImpl
+import com.evapharma.medicinereminder.features.covid_cases.data.remote.data_source.CovidCasesRemoteDataSource
+import com.evapharma.medicinereminder.features.covid_cases.data.remote.data_source.CovidRemoteDataSourceImpl
 import com.evapharma.medicinereminder.features.covid_cases.data.repo.CovidRepoImpl
 import com.evapharma.medicinereminder.features.covid_cases.domain.repo_contract.CovidRepo
 import dagger.Binds

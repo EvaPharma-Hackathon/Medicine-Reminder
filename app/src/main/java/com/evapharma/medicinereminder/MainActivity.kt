@@ -1,6 +1,9 @@
 package com.evapharma.medicinereminder
 
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.View.OnClickListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,16 +27,15 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
     }
 
     override fun onActivityCreated() {
-        viewModel.executeAction(
-            CovidCasesActions.GetCovidCases
-        )
-        handleCovidCasesViewState()
 
-    }
+        binding.retrieveCasesBtn.setOnClickListener {
+            Log.e("TAG", "onClick: ")
+            viewModel.executeAction(
+                CovidCasesActions.GetCovidCases
+            )
+            handleCovidCasesViewState()
+        }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
     }
 
     private fun handleCovidCasesViewState() {
@@ -43,6 +45,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
                     if (viewState.isLoading) {
                         showLoading()
                     }
+                    Log.d("TAG", "handleCovidCasesViewState: ${viewState.data} ")
                     if (viewState.data != null) {
                         hideLoading()
                         viewState.data.let {
@@ -50,6 +53,9 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
                         }
                     } else {
                         hideLoading()
+                        viewState.error?.let {
+                            binding.casesNo.text = it.message
+                        }
                     }
                 }
             }

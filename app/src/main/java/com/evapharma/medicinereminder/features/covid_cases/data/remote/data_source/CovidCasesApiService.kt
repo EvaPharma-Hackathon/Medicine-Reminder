@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.features.covid_cases.data.remote.model
+package com.evapharma.medicinereminder.features.covid_cases.data.remote.data_source
 
 import com.evapharma.medicinereminder.Endpoints
 import com.evapharma.medicinereminder.core.models.BaseResponse
