@@ -38,6 +38,7 @@ class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
 
     }
 
+
     private fun handleCovidCasesViewState() {
         this.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {

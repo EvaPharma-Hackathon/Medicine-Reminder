@@ -26,4 +26,14 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteX="161dp" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="151dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/cases_no"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="174dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
