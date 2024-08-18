@@ -143,4 +143,6 @@
     <string name="percentage">% </string>
     <string name="mg_dl">MG/DL </string>
     <string name="per_minute">Breaths/minute </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
