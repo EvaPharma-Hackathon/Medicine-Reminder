@@ -1,5 +1,6 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
+import MedicineListViewModel
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,33 +8,27 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.intents.MedicineListIntent
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.states.MedicineListState
-import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodels.MedicineListViewModel
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters.MedicineListAdapter
 
-class MedicineListFragment : Fragment() {
-
-    private var _binding: FragmentMedicineListBinding? = null
-    private val binding get() = _binding!!
-
-    private val viewModel: MedicineListViewModel by viewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMedicineListBinding.inflate(inflater, container, false)
-        return binding.root
+class MedicineListFragment : BaseFragment<FragmentMedicineListBinding,MedicineListViewModel>() {
+    override fun initBinding(): FragmentMedicineListBinding {
+        return FragmentMedicineListBinding.inflate(layoutInflater)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initViewModel() {
+        viewModel = ViewModelProvider(this)[MedicineListViewModel::class.java]
+    }
 
-        val adapter = MedicineListAdapter(emptyList()) { medicineId ->
-            val action = MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(medicineId)
+    override fun onFragmentCreated() {
+        val adapter = MedicineListAdapter(emptyList()) { selectedMedicine ->
+            val action = MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(/*selectedMedicine*/)
             findNavController().navigate(action)
         }
 
@@ -59,8 +54,4 @@ class MedicineListFragment : Fragment() {
         viewModel.handleIntent(MedicineListIntent.LoadMedicineList)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

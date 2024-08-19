@@ -2,5 +2,4 @@ package com.evapharma.medicinereminder.features.medicine_reminder.presentation.i
 
 sealed class MedicineListIntent {
     object LoadMedicineList : MedicineListIntent()
-    data class SelectMedicine(val medicineId: Int) : MedicineListIntent()
 }

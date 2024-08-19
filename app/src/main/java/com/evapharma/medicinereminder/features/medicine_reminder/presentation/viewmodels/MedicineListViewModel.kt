@@ -1,36 +1,31 @@
-package com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodels
-
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.evapharma.medicinereminder.features.medicine_reminder.data.repository.MedicineRepository
-import com.evapharma.medicinereminder.features.medicine_reminder.presentation.states.MedicineListState
+import com.evapharma.medicinereminder.core.BaseViewModel
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.intents.MedicineListIntent
-import kotlinx.coroutines.launch
+import com.evapharma.medicinereminder.features.medicine_reminder.presentation.states.MedicineListState
 
-class MedicineListViewModel(private val repository: MedicineRepository) : ViewModel() {
+class MedicineListViewModel(
+    private val getMedicineListUseCase: GetMedicineListUseCase
+) : BaseViewModel() {
 
     private val _medicineListState = MutableLiveData<MedicineListState>()
-    val medicineListState: LiveData<MedicineListState> get() = _medicineListState
+    val medicineListState: LiveData<MedicineListState> = _medicineListState
 
     fun handleIntent(intent: MedicineListIntent) {
         when (intent) {
-            is MedicineListIntent.LoadMedicineList -> {
-                loadMedicineList()
-            }
+            is MedicineListIntent.LoadMedicineList -> loadMedicineList()
         }
     }
 
     private fun loadMedicineList() {
-        viewModelScope.launch {
-            try {
-                _medicineListState.value = MedicineListState.Loading
-                val medicineList = repository.getMedicineList()
-                _medicineListState.value = MedicineListState.Success(medicineList)
-            } catch (e: Exception) {
-                _medicineListState.value = MedicineListState.Error(e.message ?: "Unknown Error")
-            }
+        _medicineListState.value = MedicineListState.Loading
+        try {
+            val medicines = getMedicineListUseCase.execute()
+            _medicineListState.value = MedicineListState.Success(medicines)
+        } catch (e: Exception) {
+            _medicineListState.value = MedicineListState.Error(e.message ?: "Unknown error")
         }
     }
 }

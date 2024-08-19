@@ -11,9 +11,9 @@
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/MedicineDetailsFragment" />
-        <argument
-            android:name="medicineId"
-            app:argType="integer" />
+       <!-- <argument
+            android:name="medicine"
+            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine" />-->
     </fragment>
 
     <fragment
@@ -21,9 +21,9 @@
         android:name="com.evapharma.medicinereminder.features.medicine_reminder.presentation.MedicineDetailsFragment"
         android:label="Medicine Details Fragment"
         tools:layout="@layout/fragment_medicine_details">
-        <argument
-            android:name="medicineId"
-            app:argType="integer" />
+        <!--<argument
+            android:name="medicine"
+            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine" />-->
     </fragment>
 
 </navigation>
