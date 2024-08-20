@@ -1,51 +1,39 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.repository
 
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.frequencyType
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.periodType
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.status
-import java.time.LocalTime
+import com.evapharma.medicinereminder.features.medicine_reminder.data.source.remote.MedicineApiService
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import retrofit2.Response
+import javax.inject.Inject
 
+class MedicineRepository @Inject constructor(
+    private val apiService: MedicineApiService
+) {
 
-class MedicineRepository {
+    fun getMedicineList(): Flow<List<Medicine>> = flow {
+        val response = apiService.getMedicineList()
+        if (response.isSuccessful) {
+            response.body()?.let { emit(it) }
+        } else {
+        }
+    }
 
-    fun getMedicineList(): List<Medicine> {
-        // Mocked data. Replace with actual API or database calls
-        return listOf(
-            Medicine(
-                id = 1,
-                name = "Paracetamol",
-                dosage = "500mg",
-                titration = null,
-                unit = "mg",
-                directions = "Take one tablet every 6 hours.",
-                time = "12:00",
-                durationFrom = "10/09/2023",
-                durationTo = "15/09/2023",
-                frequency = 3,
-                isChronic = false,
-                period = 7,
-                status = status.ACTIVE,
-                periodType = periodType.DAY,
-                frequencyType = frequencyType.DAILY
-            ),
-            Medicine(
-                id = 2,
-                name = "Ibuprofen",
-                dosage = "200mg",
-                titration = null,
-                unit = "mg",
-                directions = "Take one tablet after meals.",
-                time = "18:00",
-                durationFrom ="10/09/2023",
-                durationTo ="15/09/2023",
-                frequency = 2,
-                isChronic = false,
-                period = 10,
-                status = status.INACTIVE,
-                periodType = periodType.DAY,
-                frequencyType = frequencyType.DAILY
-            )
+    fun updateMedicine(medicineId: Int, newStatus: status, time: String?, durationFrom: String?, durationTo: String?): Flow<Response<Medicine>> = flow {
+        val request = MedicineUpdateRequest(
+            id = medicineId ,
+            newstatus = newStatus,
+            time = time,
+            durationFrom = durationFrom,
+            durationTo = durationTo
         )
+        val response = apiService.updateMedicine(medicineId, request)
+        emit(response)
+    }
+    fun updateStatus(medicineId: Int, newStatus: status): Flow<Response<Medicine>> = flow {
+        val response = apiService.updateStatus(medicineId, newStatus)
+        emit(response)
     }
 }

@@ -12,7 +12,6 @@ import com.evapharma.medicinereminder.core.BaseActivity
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
 import com.evapharma.medicinereminder.features.covid_cases.presentation.CovidCasesActions
 import com.evapharma.medicinereminder.features.covid_cases.presentation.viewmodels.MainViewModel
-import com.evapharma.medicinereminder.features.medicine_reminder.presentation.MedicineListFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
