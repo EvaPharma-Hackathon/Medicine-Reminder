@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.res.Configuration
 import com.evapharma.medicinereminder.core.LocaleHelper
 import com.evapharma.medicinereminder.core.utils.StringLocale
-import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import es.dmoral.toasty.Toasty
 import javax.inject.Inject
@@ -31,7 +30,6 @@ class MyApp: Application() {
     override fun onCreate() {
         super.onCreate()
         Toasty.Config.getInstance().allowQueue(false).apply()
-        AndroidThreeTen.init(this)
 
         isDarkMode = isDarkMode(this)
         StringLocale.instance = stringLocale

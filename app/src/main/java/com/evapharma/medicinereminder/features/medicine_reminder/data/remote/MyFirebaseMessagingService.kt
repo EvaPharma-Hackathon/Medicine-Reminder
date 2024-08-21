@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.data.source.remote
+package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,7 +14,6 @@ import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
