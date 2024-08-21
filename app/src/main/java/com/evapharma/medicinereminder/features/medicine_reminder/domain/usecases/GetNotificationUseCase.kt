@@ -1,11 +1,11 @@
-package com.evapharma.medicinereminder.domain
+package com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases
 
-import com.evapharma.medicinereminder.data.NotificationRepository
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.NotificationRepo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetNotificationsUseCase @Inject constructor(
-    private val repository: NotificationRepository
+class GetNotificationUseCase @Inject constructor(
+    private val repository: NotificationRepo
 ) {
-    fun invoke(): Flow<String> = repository.getToken()
+    suspend operator fun invoke(): Flow<String> = repository.getToken()
 }

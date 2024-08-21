@@ -1,16 +1,12 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases
 
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.status
-import com.evapharma.medicinereminder.features.medicine_reminder.data.repository.MedicineRepository
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.MedicineRepo
 import javax.inject.Inject
 
-class UpdateMedicineStatusUseCase @Inject constructor(private val repository: MedicineRepository) {
+class UpdateMedicineStatusUseCase @Inject constructor(private val repository: MedicineRepo) {
 
-    fun invoke(id: Int, newStatus: status) {
-        repository.updateStatus(
-            id,
-            newStatus
-        )
+    suspend operator fun invoke(updateRequest: MedicineStatusUpdateRequest) =
+        repository.updateStatus(updateRequest)
 
-    }
 }

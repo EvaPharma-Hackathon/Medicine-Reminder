@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.features.medicine_reminder.data.source.remote
+package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
 
 import retrofit2.Response
 import retrofit2.http.Body

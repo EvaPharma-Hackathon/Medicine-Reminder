@@ -1,46 +1,39 @@
 package com.evapharma.medicinereminder.di
 
-import com.evapharma.medicinereminder.data.NotificationRepository
-import com.evapharma.medicinereminder.data.source.remote.MyFirebaseMessagingService
-import com.evapharma.medicinereminder.domain.GetNotificationsUseCase
-import com.evapharma.medicinereminder.features.medicine_reminder.data.repository.MedicineRepository
-import com.evapharma.medicinereminder.features.medicine_reminder.data.source.remote.MedicineApiService
-import com.evapharma.medicinereminder.features.medicine_reminder.data.source.remote.NotificationApiService
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineStatusUseCase
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineUseCase
+import com.evapharma.medicinereminder.data.NotificationRepoImpl
+import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService
+import com.evapharma.medicinereminder.features.medicine_reminder.data.repository.MedicineRepoImpl
+import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineApiService
+import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineRemoteDataSource
+import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineRemoteDataSourceImpl
+import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.NotificationApiService
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.MedicineRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.NotificationRepo
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
-object AppModule {
+abstract class AppModule {
 
-    @Provides
-    @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://medicinereminder.evapharma.com/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
+    // Medicine
 
-    @Provides
-    @Singleton
-    fun provideMedicineApiService(retrofit: Retrofit): MedicineApiService {
-        return retrofit.create(MedicineApiService::class.java)
-    }
 
-    @Provides
-    @Singleton
-    fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService {
-        return retrofit.create(NotificationApiService::class.java)
-    }
+    @Binds
+    abstract fun bindMedicineRepository(medicineRepoImpl: MedicineRepoImpl): MedicineRepo
+
+    @Binds
+    abstract fun bindMedicineRemoteDataSource(medicineRemoteDataSourceImpl: MedicineRemoteDataSourceImpl): MedicineRemoteDataSource
+
+
+    // Notification
+
 
     @Provides
     @Singleton
@@ -48,50 +41,29 @@ object AppModule {
         return MyFirebaseMessagingService()
     }
 
+    @Binds
+    abstract fun bindNotificationRepository(notificationRepository: NotificationRepoImpl): NotificationRepo
+
+
+}
+
+
+@Module
+@InstallIn(SingletonComponent::class)
+object ApiServiceModule {
+
+    // Medicine Api Service
     @Provides
     @Singleton
-    fun provideNotificationRepository(
-        firebaseMessagingService: MyFirebaseMessagingService,
-        postToken: NotificationApiService
-    ): NotificationRepository {
-        return NotificationRepository(firebaseMessagingService, postToken)
+    fun provideMedicineApiService(retrofit: Retrofit): MedicineApiService {
+        return retrofit.create(MedicineApiService::class.java)
     }
+
+    // Notification Api Service
 
     @Provides
     @Singleton
-    fun provideGetNotificationsUseCase(
-        repository: NotificationRepository
-    ): GetNotificationsUseCase {
-        return GetNotificationsUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideMedicineRepository(apiService: MedicineApiService): MedicineRepository {
-        return MedicineRepository(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetMedicineListUseCase(
-        repository: MedicineRepository
-    ): GetMedicineListUseCase {
-        return GetMedicineListUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUpdateMedicineUseCase(
-        repository: MedicineRepository
-    ): UpdateMedicineUseCase {
-        return UpdateMedicineUseCase(repository)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUpdateMedicineStatusUseCase(
-        repository: MedicineRepository
-    ): UpdateMedicineStatusUseCase {
-        return UpdateMedicineStatusUseCase(repository)
+    fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService {
+        return retrofit.create(NotificationApiService::class.java)
     }
 }

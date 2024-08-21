@@ -1,43 +1,24 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.model
 
 import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
-import java.time.LocalDate
-import java.time.LocalTime
 
 @Parcelize
 data class Medicine(
-    val id:Int,
-    val name: String,
-    val dosage: String?,
-    val titration: String?,
-    val unit: String?,
-    val directions: String,
-    var time: String?,
-    var durationFrom: String?,
-    var durationTo: String?,
-    val frequency: Int,
-    val isChronic: Boolean,
-    val period: Int,
-    var status: status=com.evapharma.medicinereminder.features.medicine_reminder.data.model.status.INACTIVE,
-    val periodType: periodType,
-    val frequencyType: frequencyType,
-
+    @SerializedName("medicationId") val id: Int?,
+    @SerializedName("medicationName") val name: String,
+    @SerializedName("dosage") val dosage: String?,
+//    @SerializedName("titration") val titration: String?,
+    @SerializedName("status") var status: Status?,
+//    @SerializedName("unit") val unit: String?,
+    @SerializedName("direction") val direction: String?,
+    @SerializedName("durationFrom") var durationFrom: String?,
+    @SerializedName("durationTo") var durationTo: String?,
+    @SerializedName("time") var time: String?,
+    @SerializedName("frequency") val frequency: Int?,
+    @SerializedName("frequencyType") val frequencyType: FrequencyType?,
+    @SerializedName("isChronic") val isChronic: Boolean?,
+    @SerializedName("period") val period: Int?,
+    @SerializedName("periodType") val periodType: PeriodType?,
 ) : Parcelable
-
-enum class status {
-    ACTIVE,
-    INACTIVE,
-    SNOOZED,
-    EXPIRED,
-    STOP
-}
-enum class periodType
-{
-    DAY,
-    WEEK
-}
-enum class frequencyType{
-    DAILY,
-    WEEKLY
-}

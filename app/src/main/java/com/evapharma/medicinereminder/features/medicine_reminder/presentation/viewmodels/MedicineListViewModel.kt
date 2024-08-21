@@ -1,6 +1,5 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.evapharma.medicinereminder.core.BaseViewModel
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.status
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
@@ -23,7 +22,7 @@ class MedicineListViewModel(
             is MedicineListIntent.LoadMedicineList -> loadMedicineList()
             is MedicineListIntent.UpdateMedicine -> updateMedicine(
                 intent.updateMedicine.id,
-                intent.updateMedicine.newstatus ,
+                intent.updateMedicine.newStatus ,
                 intent.updateMedicine.time,
                 intent.updateMedicine.durationFrom,
                 intent.updateMedicine.durationTo

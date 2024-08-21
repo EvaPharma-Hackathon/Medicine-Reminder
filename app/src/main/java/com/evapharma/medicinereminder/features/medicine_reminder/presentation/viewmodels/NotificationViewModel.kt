@@ -1,15 +1,14 @@
 package com.evapharma.medicinereminder.presentation
 import androidx.lifecycle.viewModelScope
 import com.evapharma.medicinereminder.core.BaseViewModel
-import com.evapharma.medicinereminder.data.NotificationRepository
-import com.evapharma.medicinereminder.domain.GetNotificationsUseCase
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetNotificationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class NotificationViewModel @Inject constructor(
-    private val getNotificationsUseCase: GetNotificationsUseCase
+    private val getNotificationUseCase: GetNotificationUseCase
 ) : BaseViewModel() {
 
     private val _tokenState = MutableStateFlow<String?>(null)
@@ -21,7 +20,7 @@ class NotificationViewModel @Inject constructor(
 
     private fun fetchToken() {
         viewModelScope.launch {
-            getNotificationsUseCase.invoke().collect { token ->
+            getNotificationUseCase.invoke().collect { token ->
                 _tokenState.value = token
             }
         }
