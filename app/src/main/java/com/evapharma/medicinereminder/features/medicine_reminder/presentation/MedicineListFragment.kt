@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evapharma.medicinereminder.MainActivity
-import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
@@ -20,29 +16,10 @@ import com.evapharma.medicinereminder.features.medicine_reminder.presentation.ad
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel.MedicineListViewModel
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineListViewState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-
-
-fun CoroutineScope.launchUntilPaused(
-    lifecycleOwner: LifecycleOwner,
-    block: suspend CoroutineScope.() -> Unit
-) {
-    val job = launch(block = block)
-    lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
-        override fun onPause(owner: LifecycleOwner) {
-            job.cancel()
-            lifecycleOwner.lifecycle.removeObserver(this)
-        }
-    })
-}
 
 @AndroidEntryPoint
 class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineListViewModel>() {
-
-    private var job: Job? = null
-
     override fun initBinding(): FragmentMedicineListBinding {
         return FragmentMedicineListBinding.inflate(layoutInflater)
     }

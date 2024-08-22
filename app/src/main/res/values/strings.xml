@@ -147,5 +147,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="default_notification_channel_id">my_channel_id</string>
     <string name="back">back</string>
+    <string name="medication_status">Status:</string>
 
 </resources>

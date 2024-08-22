@@ -1,9 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.evapharma.medicinereminder.R
@@ -63,16 +61,7 @@ class MedicineListAdapter(
 
     fun updateData(newMedicineList: List<Medicine>) {
         medicineList = newMedicineList
-
-        notifyDataSetChanged() // Notify RecyclerView of the data change
-
-
     }
-}
-
-class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val titleTextView: TextView = view.findViewById(R.id.title_text)
-    val statusTextView: TextView = view.findViewById(R.id.status_text)
 }
 
 
