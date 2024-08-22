@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
@@ -34,16 +33,6 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Ensure that the activity implements the callback
-        (activity as? MainActivity)?.setToolbarTitle("My Medications")
-
-
-
-    }
-
     override fun onFragmentCreated() {
 
         // Set up the RecyclerView
@@ -55,6 +44,13 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
         binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.medicineListRecyclerView.adapter = adapter
+
+        binding.topBar.leftIcon.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        binding.topBar.title.text = "My Medications"
+
 
 
 
