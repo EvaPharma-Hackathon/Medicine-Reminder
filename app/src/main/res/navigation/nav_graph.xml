@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:label="navigation"
+    app:startDestination="@id/MedicineListFragment">
 
     <fragment
         android:id="@+id/MedicineListFragment"
@@ -11,9 +13,6 @@
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/MedicineDetailsFragment" />
-       <!-- <argument
-            android:name="medicine"
-            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine" />-->
     </fragment>
 
     <fragment
@@ -21,9 +20,10 @@
         android:name="com.evapharma.medicinereminder.features.medicine_reminder.presentation.MedicineDetailsFragment"
         android:label="Medicine Details Fragment"
         tools:layout="@layout/fragment_medicine_details">
-        <!--<argument
+        <argument
             android:name="medicine"
-            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine" />-->
+            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine"
+            app:nullable="false" />
     </fragment>
 
 </navigation>

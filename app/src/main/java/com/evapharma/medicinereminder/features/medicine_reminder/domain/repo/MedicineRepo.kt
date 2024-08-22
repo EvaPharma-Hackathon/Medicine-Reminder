@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry
+package com.evapharma.medicinereminder.features.medicine_reminder.domain.repo
 
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine

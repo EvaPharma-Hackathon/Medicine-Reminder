@@ -2,7 +2,7 @@ package com.evapharma.medicinereminder.features.medicine_reminder.domain.usecase
 
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.MedicineRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.MedicineRepo
 import javax.inject.Inject
 
 class GetMedicineListUseCase @Inject constructor(private val repository: MedicineRepo) {

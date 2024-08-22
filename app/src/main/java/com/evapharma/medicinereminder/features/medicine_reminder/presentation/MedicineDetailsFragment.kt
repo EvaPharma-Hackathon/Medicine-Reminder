@@ -1,64 +1,58 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
+import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineDetailsBinding
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.periodType
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.status
+import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineDetailsAction
+import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel.MedicineDetailsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
-class MedicineDetailsFragment : Fragment() {
-    private var _binding: FragmentMedicineDetailsBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentMedicineDetailsBinding.inflate(inflater, container, false)
-        return binding.root
+@AndroidEntryPoint
+class MedicineDetailsFragment :
+    BaseFragment<FragmentMedicineDetailsBinding, MedicineDetailsViewModel>() {
+    override fun initBinding(): FragmentMedicineDetailsBinding {
+        return FragmentMedicineDetailsBinding.inflate(layoutInflater)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        // Retrieve Medicine object from arguments
-        /*
-                val medicine = MedicineDetailsFragmentArgs.fromBundle(requireArguments()).medicine
-        */
-        val medicine: Medicine = Medicine(
-            id = 2,
-            name = "Ibuprofen",
-            dosage = "200mg",
-            titration = null,
-            unit = "mg",
-            direction = "Take one tablet after meals.",
-            time = "18:00",
-            durationFrom = "10/09/2023",
-            durationTo = "15/09/2023",
-            frequency = 2,
-            isChronic = false,
-            period = 10,
-            status = status.INACTIVE,
-            periodType = periodType.DAY,
-            frequencyType = FrequencyType.DAILY
-        )
-        medicine.let {
-            binding.medicineTitle.text = it.name
-            binding.medicineDosage.text =
-                if (it.dosage.isNullOrEmpty()) "${it.titration}+${it.unit}" else "${it.dosage}+${it.unit}"
-            binding.medicineDirections.text = it.direction
-            binding.medicineTime.text = it.time
-            binding.medicineDuration.text = "${it.durationFrom} - ${it.durationTo}"
-        }
+    override fun initViewModel() {
+        viewModel = ViewModelProvider(this)[MedicineDetailsViewModel::class.java]
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun onFragmentCreated() {
+
+        val medicine = MedicineDetailsFragmentArgs.fromBundle(requireArguments()).medicine
+
+        // Trigger the loading of the medicine
+        viewModel.handleAction(MedicineDetailsAction.LoadMedicine(medicine = medicine))
+
+//        // Set up the RecyclerView
+//        val adapter = MedicineListAdapter(emptyList()) { selectedMedicine ->
+//            val action =
+//                MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(medicine = selectedMedicine)
+//            findNavController().navigate(action)
+//        }
+//
+//        binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+//        binding.medicineListRecyclerView.adapter = adapter
+//
+//        lifecycleScope.launch {
+//            viewModel.viewStates.collect { state ->
+//
+//                if (state.isLoading) {
+//                    // Show loading indicator
+//                } else if (state.isEmpty) {
+//                    // Show empty state
+//                } else if (state.isSuccess) {
+//                    state.data?.let { medicine ->
+//
+//                    }
+//                } else if (state.error != null) {
+//                    // Show error state
+//                }
+//            }
+//        }
+
+
     }
+
 }

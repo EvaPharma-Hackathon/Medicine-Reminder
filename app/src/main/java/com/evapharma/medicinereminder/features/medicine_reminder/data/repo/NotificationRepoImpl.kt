@@ -3,7 +3,7 @@ package com.evapharma.medicinereminder.data
 import android.util.Log
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.NotificationApiService
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.NotificationRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.NotificationRepo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject

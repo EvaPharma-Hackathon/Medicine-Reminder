@@ -1,42 +1,46 @@
 package com.evapharma.medicinereminder
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.view.View.OnClickListener
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import com.evapharma.medicinereminder.core.BaseActivity
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
-import com.evapharma.medicinereminder.features.covid_cases.presentation.CovidCasesActions
-import com.evapharma.medicinereminder.features.covid_cases.presentation.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
+class MainActivity : AppCompatActivity() {
 
-    override fun initBinding(): ActivityMainBinding {
-        return ActivityMainBinding.inflate(layoutInflater)
+    private lateinit var navController: NavController
+    private lateinit var binding: ActivityMainBinding
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+//        // Set up the Toolbar
+//        val toolbar: Toolbar = findViewById(R.id.topBar)
+//        setSupportActionBar(toolbar)
+//
+//        // default title
+//        supportActionBar?.title = "Default Title fffff"
+
+
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Initialize NavController
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
     }
 
-    override fun initViewModel() {
-      //  viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-    }
-
-    override fun onActivityCreated() {
-
-    /*    binding.retrieveCasesBtn.setOnClickListener {
-            Log.e("TAG", "onClick: ")
-            viewModel.executeAction(
-                CovidCasesActions.GetCovidCases
-            )
-        }*/
-
-    }
-
+//    // Method to update the toolbar title
+//    fun setToolbarTitle(title: String) {
+//        supportActionBar?.title = title
+//    }
 
 
 }

@@ -57,6 +57,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation("com.github.GrenderG:Toasty:1.5.0")
 
@@ -73,4 +75,8 @@ dependencies {
 
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
     implementation("androidx.preference:preference-ktx:1.2.0")
+
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
 }

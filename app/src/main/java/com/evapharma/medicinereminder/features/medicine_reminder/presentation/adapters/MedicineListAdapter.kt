@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.evapharma.medicinereminder.databinding.ItemMedicineBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 
+
 class MedicineListAdapter(
     private var medicineList: List<Medicine>,
     private val onItemClick: (medicine: Medicine) -> Unit

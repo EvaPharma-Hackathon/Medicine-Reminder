@@ -1,7 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases
 
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.MedicineRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.MedicineRepo
 import javax.inject.Inject
 
 class UpdateMedicineUseCase @Inject constructor(private val repository: MedicineRepo) {

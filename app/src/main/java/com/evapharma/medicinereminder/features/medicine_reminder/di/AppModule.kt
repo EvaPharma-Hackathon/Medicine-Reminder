@@ -2,13 +2,13 @@ package com.evapharma.medicinereminder.di
 
 import com.evapharma.medicinereminder.data.NotificationRepoImpl
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService
-import com.evapharma.medicinereminder.features.medicine_reminder.data.repository.MedicineRepoImpl
+import com.evapharma.medicinereminder.features.medicine_reminder.data.repo.MedicineRepoImpl
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineApiService
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineRemoteDataSource
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineRemoteDataSourceImpl
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.NotificationApiService
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.MedicineRepo
-import com.evapharma.medicinereminder.features.medicine_reminder.domain.repositry.NotificationRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.MedicineRepo
+import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.NotificationRepo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -35,12 +35,6 @@ abstract class AppModule {
     // Notification
 
 
-    @Provides
-    @Singleton
-    fun provideMyFirebaseMessagingService(): MyFirebaseMessagingService {
-        return MyFirebaseMessagingService()
-    }
-
     @Binds
     abstract fun bindNotificationRepository(notificationRepository: NotificationRepoImpl): NotificationRepo
 
@@ -65,5 +59,11 @@ object ApiServiceModule {
     @Singleton
     fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService {
         return retrofit.create(NotificationApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyFirebaseMessagingService(): MyFirebaseMessagingService {
+        return MyFirebaseMessagingService()
     }
 }
