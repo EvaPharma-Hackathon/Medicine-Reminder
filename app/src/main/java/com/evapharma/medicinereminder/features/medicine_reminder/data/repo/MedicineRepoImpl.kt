@@ -39,7 +39,7 @@ class MedicineRepoImpl @Inject constructor(
                 Medicine(
                     id = 2,
                     name = "Medicine 2",
-                    status = Status.ACTIVE,
+                    status = Status.INACTIVE,
                     time = listOf("", ""),
                     direction = "",
                     isChronic = false,
@@ -56,7 +56,7 @@ class MedicineRepoImpl @Inject constructor(
                 Medicine(
                     id = 3,
                     name = "Medicine 3",
-                    status = Status.ACTIVE,
+                    status = Status.STOPPED,
                     time = listOf("", ""),
                     direction = "",
                     isChronic = false,

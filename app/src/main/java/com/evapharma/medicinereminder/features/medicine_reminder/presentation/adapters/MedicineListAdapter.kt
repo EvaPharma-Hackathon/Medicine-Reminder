@@ -1,10 +1,15 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.evapharma.medicinereminder.databinding.ItemMedicineBinding
+import com.evapharma.medicinereminder.R
+import com.evapharma.medicinereminder.databinding.MedicineCardBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 
 
 class MedicineListAdapter(
@@ -12,7 +17,9 @@ class MedicineListAdapter(
     private val onItemClick: (medicine: Medicine) -> Unit
 ) : RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder>() {
 
-    inner class MedicineViewHolder(val binding: ItemMedicineBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class MedicineViewHolder(val binding: MedicineCardBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.root.setOnClickListener {
                 val position = adapterPosition
@@ -22,10 +29,12 @@ class MedicineListAdapter(
                 }
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MedicineViewHolder {
-        val binding = ItemMedicineBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            MedicineCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MedicineViewHolder(binding)
     }
 
@@ -33,18 +42,37 @@ class MedicineListAdapter(
 
     override fun onBindViewHolder(holder: MedicineViewHolder, position: Int) {
         val medicine = medicineList[position]
-        holder.binding.medicineTitle.text = medicine.name
+
+        holder.binding.titleText.text = medicine.name
+        holder.binding.statusText.text = medicine.status?.apiName
+        holder.binding.statusText.setTextColor(
+            ContextCompat.getColor(
+                holder.itemView.context,
+                when (medicine.status) {
+                    Status.ACTIVE -> R.color.success
+                    Status.INACTIVE -> R.color.black
+                    Status.SNOOZED -> R.color.primary_color
+                    Status.EXPIRED -> R.color.hint
+                    else -> R.color.error
+                }
+            )
+        )
+
     }
 
-    fun updateData(newMedicineList: List<Medicine>) {
 
-        println("updateData: $newMedicineList")
+    fun updateData(newMedicineList: List<Medicine>) {
         medicineList = newMedicineList
 
         notifyDataSetChanged() // Notify RecyclerView of the data change
 
 
-
     }
 }
+
+class ItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    val titleTextView: TextView = view.findViewById(R.id.title_text)
+    val statusTextView: TextView = view.findViewById(R.id.status_text)
+}
+
 

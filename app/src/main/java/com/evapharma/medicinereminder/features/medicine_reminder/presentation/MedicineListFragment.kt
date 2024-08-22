@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evapharma.medicinereminder.MainActivity
+import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
@@ -59,7 +61,8 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         super.onViewCreated(view, savedInstanceState)
 
         // Ensure that the activity implements the callback
-        (activity as? MainActivity)?.setToolbarTitle("Medicines List")
+        (activity as? MainActivity)?.setToolbarTitle("My Medications")
+
 
 
     }
@@ -75,6 +78,9 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
         binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.medicineListRecyclerView.adapter = adapter
+
+
+
 
 
         viewLifecycleOwner.lifecycleScope.launch {

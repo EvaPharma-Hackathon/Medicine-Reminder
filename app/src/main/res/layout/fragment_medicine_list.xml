@@ -10,25 +10,15 @@
         android:id="@+id/medicineListRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomLabel"
+        android:background="@color/background"
+        android:padding="@dimen/margin_4"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.0"
         tools:itemCount="5"
-        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteX="-119dp"
+
         tools:listitem="@layout/item_medicine" />
 
 
-    <TextView
-        android:id="@+id/bottomLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:gravity="center"
-        android:padding="8dp"
-        android:text="@string/app_name"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
