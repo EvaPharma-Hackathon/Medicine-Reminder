@@ -29,19 +29,19 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
     }
 
 
-//    override fun onCreateView(
-//        inflater: LayoutInflater, container: ViewGroup?,
-//        savedInstanceState: Bundle?
-//    ): View? {
-//        return inflater.inflate(R.layout.fragment_medicine_list, container, false)
-//    }
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//
-//        // Ensure that the activity implements the callback
-//        (activity as? MainActivity)?.setToolbarTitle("Medicines List")
-//    }
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_medicine_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Ensure that the activity implements the callback
+        (activity as? MainActivity)?.setToolbarTitle("Medicines List")
+    }
 
     override fun onFragmentCreated() {
         // Trigger the loading of medicine list
