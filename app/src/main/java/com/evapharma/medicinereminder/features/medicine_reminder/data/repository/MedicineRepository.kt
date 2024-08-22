@@ -13,11 +13,12 @@ class MedicineRepository @Inject constructor(
     private val apiService: MedicineApiService
 ) {
 
-    fun getMedicineList(): Flow<List<Medicine>> = flow {
+    suspend fun getMedicineList(): List<Medicine>? {
         val response = apiService.getMedicineList()
-        if (response.isSuccessful) {
-            response.body()?.let { emit(it) }
+        return if (response.isSuccessful) {
+            response.body()?.filter { it.status != status.STOP }
         } else {
+            null
         }
     }
 

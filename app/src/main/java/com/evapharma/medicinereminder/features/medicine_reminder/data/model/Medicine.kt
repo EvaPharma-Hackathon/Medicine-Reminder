@@ -7,11 +7,9 @@ import java.time.LocalTime
 
 @Parcelize
 data class Medicine(
-    val id:Int,
-    val name: String,
+    val medicationId:Int,
+    val medicationName: String,
     val dosage: String?,
-    val titration: String?,
-    val unit: String?,
     val directions: String,
     var time: String?,
     var durationFrom: String?,

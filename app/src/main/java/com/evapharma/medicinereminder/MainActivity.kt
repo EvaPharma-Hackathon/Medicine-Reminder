@@ -16,27 +16,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding,MainViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
 
     override fun initBinding(): ActivityMainBinding {
         return ActivityMainBinding.inflate(layoutInflater)
     }
 
     override fun initViewModel() {
-      //  viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
     }
 
     override fun onActivityCreated() {
 
-    /*    binding.retrieveCasesBtn.setOnClickListener {
-            Log.e("TAG", "onClick: ")
-            viewModel.executeAction(
-                CovidCasesActions.GetCovidCases
-            )
-        }*/
+        /*    binding.retrieveCasesBtn.setOnClickListener {
+                Log.e("TAG", "onClick: ")
+                viewModel.executeAction(
+                    CovidCasesActions.GetCovidCases
+                )
+            }*/
 
     }
-
 
 
 }

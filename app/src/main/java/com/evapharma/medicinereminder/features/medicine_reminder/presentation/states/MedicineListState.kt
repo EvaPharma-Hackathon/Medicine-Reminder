@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 sealed class MedicineListState {
     object Loading : MedicineListState()
-    data class Success(val medicineList: Flow<List<Medicine>>) : MedicineListState()
+    data class Success(val medicineList: List<Medicine>) : MedicineListState()
     data class Error(val message: String) : MedicineListState()
 
 }

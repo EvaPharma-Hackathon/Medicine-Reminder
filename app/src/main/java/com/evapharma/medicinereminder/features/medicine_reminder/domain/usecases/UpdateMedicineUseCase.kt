@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class UpdateMedicineUseCase @Inject constructor(private val repository: MedicineRepository) {
 
-    fun invoke(medicineId: Int, newStatus: status, time: String?, durationFrom: String?, durationTo: String?) {
+   operator fun invoke(medicineId: Int, newStatus: status, time: String?, durationFrom: String?, durationTo: String?) {
          repository.updateMedicine(
              medicineId ,
             newStatus ,

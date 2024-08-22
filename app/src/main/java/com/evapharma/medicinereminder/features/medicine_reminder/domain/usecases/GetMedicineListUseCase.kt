@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class GetMedicineListUseCase @Inject constructor(private val repository: MedicineRepository) {
 
-    fun invoke(): Flow<List<Medicine>> {
+    suspend fun invoke(): List<Medicine>? {
         return repository.getMedicineList()
     }
 }
