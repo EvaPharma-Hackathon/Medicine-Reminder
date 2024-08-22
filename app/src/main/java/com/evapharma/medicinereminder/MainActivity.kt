@@ -16,7 +16,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Set up the Toolbar
         val toolbar: Toolbar = findViewById(R.id.topBar)
@@ -25,10 +26,6 @@ class MainActivity : AppCompatActivity() {
         // You can set a default title or handle it from the fragment
         supportActionBar?.title = "Default Title fffff"
 
-
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        setContentView(R.layout.activity_main)  //change here
 
         // Initialize NavController
         val navHostFragment =

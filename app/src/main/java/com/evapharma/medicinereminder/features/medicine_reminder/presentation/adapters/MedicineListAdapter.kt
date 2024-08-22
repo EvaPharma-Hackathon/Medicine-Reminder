@@ -37,8 +37,14 @@ class MedicineListAdapter(
     }
 
     fun updateData(newMedicineList: List<Medicine>) {
+
+        println("updateData: $newMedicineList")
         medicineList = newMedicineList
-        notifyDataSetChanged()
+
+        notifyDataSetChanged() // Notify RecyclerView of the data change
+
+
+
     }
 }
 

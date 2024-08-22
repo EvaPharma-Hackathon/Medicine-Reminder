@@ -24,6 +24,7 @@ class MedicineListViewModel @Inject constructor(
         get() = MedicineListViewState()
 
     override fun handleAction(action: MedicineListAction): Flow<MedicineListResult> {
+        println("handleAction")
         return flow {
             when (action) {
                 is MedicineListAction.LoadMedicineList -> handleLoadMedicineList(collector = this)
@@ -32,6 +33,7 @@ class MedicineListViewModel @Inject constructor(
     }
 
     private suspend fun handleLoadMedicineList(collector: FlowCollector<MedicineListResult>) {
+        println("handleLoadMedicineList")
         collector.emit(MedicineListResult.MedicineList(MedicineListViewState(isLoading = true)))
         val useCaseResponse = getMedicineListUseCase()
         handleLoadMedicineListUseCaseResponse(useCaseResponse, collector)
@@ -41,9 +43,12 @@ class MedicineListViewModel @Inject constructor(
         useCaseResponse: DataState<List<Medicine>>,
         collector: FlowCollector<MedicineListResult>
     ) {
+        println("handleLoadMedicineListUseCaseResponse")
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {
+                    println("handleLoadMedicineListUseCaseResponse: Empty List")
+
                     collector.emit(
                         MedicineListResult.MedicineList(
                             MedicineListViewState(
@@ -51,15 +56,17 @@ class MedicineListViewModel @Inject constructor(
                             )
                         )
                     )
-                }
-                collector.emit(
-                    MedicineListResult.MedicineList(
-                        MedicineListViewState(
-                            isSuccess = true,
-                            data = useCaseResponse.data,
+                } else {
+                    println("handleLoadMedicineListUseCaseResponse: ${useCaseResponse.data}")
+                    collector.emit(
+                        MedicineListResult.MedicineList(
+                            MedicineListViewState(
+                                isSuccess = true,
+                                data = useCaseResponse.data,
+                            )
                         )
                     )
-                )
+                }
             }
 
             is DataState.Error -> {

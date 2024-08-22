@@ -4,22 +4,43 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.evapharma.medicinereminder.MainActivity
-import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters.MedicineListAdapter
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel.MedicineListViewModel
+import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineListViewState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+
+
+fun CoroutineScope.launchUntilPaused(
+    lifecycleOwner: LifecycleOwner,
+    block: suspend CoroutineScope.() -> Unit
+) {
+    val job = launch(block = block)
+    lifecycleOwner.lifecycle.addObserver(object : DefaultLifecycleObserver {
+        override fun onPause(owner: LifecycleOwner) {
+            job.cancel()
+            lifecycleOwner.lifecycle.removeObserver(this)
+        }
+    })
+}
 
 @AndroidEntryPoint
 class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineListViewModel>() {
+
+    private var job: Job? = null
+
     override fun initBinding(): FragmentMedicineListBinding {
         return FragmentMedicineListBinding.inflate(layoutInflater)
     }
@@ -28,12 +49,10 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         viewModel = ViewModelProvider(this)[MedicineListViewModel::class.java]
     }
 
-
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_medicine_list, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,11 +60,11 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
         // Ensure that the activity implements the callback
         (activity as? MainActivity)?.setToolbarTitle("Medicines List")
+
+
     }
 
     override fun onFragmentCreated() {
-        // Trigger the loading of medicine list
-        viewModel.handleAction(MedicineListAction.LoadMedicineList)
 
         // Set up the RecyclerView
         val adapter = MedicineListAdapter(emptyList()) { selectedMedicine ->
@@ -57,24 +76,45 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.medicineListRecyclerView.adapter = adapter
 
-        lifecycleScope.launch {
-            viewModel.viewStates.collect { state ->
 
-                if (state.isLoading) {
-                    // Show loading indicator
-                } else if (state.isEmpty) {
-                    // Show empty state
-                } else if (state.isSuccess) {
-                    state.data?.let { medicineList ->
-                        adapter.updateData(medicineList)
-                    }
-                } else if (state.error != null) {
-                    // Show error state
-                }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.viewStates.collect { state ->
+                // Handle the state update here
+                updateUI(state)
             }
         }
 
 
+        // Trigger the loading of medicine list
+        viewModel.executeAction(MedicineListAction.LoadMedicineList)
+
+
+    }
+
+
+    private fun updateUI(state: MedicineListViewState) {
+
+        println("updateUI: $state")
+        // Update the UI based on the state
+        if (state.isLoading) {
+            println("isLoading")
+            // Show loading indicator
+        } else if (state.isSuccess) {
+            println("Success")
+            // Update the RecyclerView with the new data
+            state.data?.let {
+                println("data ${it}")
+                (binding.medicineListRecyclerView.adapter as? MedicineListAdapter)?.updateData(
+                    it
+                )
+            }
+        } else if (state.isEmpty) {
+            println("isEmpty")
+            // Show empty state UI
+        } else if (state.error != null) {
+            println("error")
+            // Show error message
+        }
     }
 
 }
