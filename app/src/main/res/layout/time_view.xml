@@ -13,6 +13,9 @@
         android:drawablePadding="@dimen/margin_8"
         android:gravity="center_vertical"
         android:text="@string/app_name"
+        android:textStyle="bold"
+        android:fontFamily="@font/runda_bold"
+        android:textSize="@dimen/margin_16"
         android:tint="@color/primary_variant"
         app:drawableStartCompat="@drawable/clock_icon" />
 
