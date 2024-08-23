@@ -2,11 +2,9 @@ package com.evapharma.medicinereminder.features.medicine_reminder.data.repo
 
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.features.medicine_reminder.data.mock.MockDataManager
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.PeriodType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineRemoteDataSource
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.MedicineRepo

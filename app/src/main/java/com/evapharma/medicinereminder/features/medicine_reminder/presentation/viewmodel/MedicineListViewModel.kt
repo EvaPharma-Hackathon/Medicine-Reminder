@@ -4,10 +4,7 @@ package com.evapharma.medicinereminder.features.medicine_reminder.presentation.v
 import com.evapharma.medicinereminder.core.MVIBaseViewModel
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.isEmptyList
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.PeriodType
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.result.MedicineListResult
