@@ -6,7 +6,7 @@ import com.evapharma.medicinereminder.R
 enum class Status(val apiName: String, val color: Int) {
     ACTIVE(apiName = "Active", color = R.color.success),
     INACTIVE(apiName = "InActive", color = R.color.black),
-    SNOOZED(apiName = "Snoozed", color = R.color.facebook),
+    SNOOZED(apiName = "Snoozed", color = R.color.warning),
     EXPIRED(apiName = "Expired", color = R.color.hint),
     STOPPED(apiName = "Stopped", color = R.color.error);
 
