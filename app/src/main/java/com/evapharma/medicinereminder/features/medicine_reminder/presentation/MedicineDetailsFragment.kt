@@ -1,5 +1,8 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
+import android.app.AlertDialog
+import android.app.TimePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -56,6 +59,7 @@ class MedicineDetailsFragment :
 
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -132,6 +136,7 @@ class MedicineDetailsFragment :
                         if (it.durationFrom.isNullOrBlank() || it.durationTo.isNullOrBlank()) {
                             binding.MedicineCardDuration.root.visibility = View.GONE
                         } else {
+                            binding.MedicineCardDuration.root.visibility = View.VISIBLE
                             binding.MedicineCardDuration.DurationFrom.text = it.durationFrom
                             binding.MedicineCardDuration.DurationTo.text = it.durationTo
                         }
@@ -139,6 +144,7 @@ class MedicineDetailsFragment :
                         if (it.time.isNullOrEmpty()) {
                             binding.MedicationTimes.root.visibility = View.GONE
                         } else {
+                            binding.MedicationTimes.root.visibility = View.VISIBLE
                             (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
                                 newMedicationTimes = it.time ?: emptyList()
                             )
@@ -149,14 +155,25 @@ class MedicineDetailsFragment :
                             Status.ACTIVE -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
                                 binding.statusInverterBtn.text = "Snooze This Medication"
+                                binding.statusInverterBtn.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        requireContext(), R.color.primary_variant
+                                    )
+                                )
                                 binding.statusInverterBtn.setOnClickListener {
-                                    viewModel.executeAction(
-                                        MedicineDetailsAction.UpdateMedicineStatus(
-                                            MedicineStatusUpdateRequest(
-                                                medicationId = medicineId?.toInt() ?: 0,
-                                                status = Status.SNOOZED.apiName
+
+                                    showConfirmationDialog(
+                                        message = "Are you sure you want to snooze this medication?",
+                                        performAction = {
+                                            viewModel.executeAction(
+                                                MedicineDetailsAction.UpdateMedicineStatus(
+                                                    MedicineStatusUpdateRequest(
+                                                        medicationId = medicineId?.toInt() ?: 0,
+                                                        status = Status.SNOOZED.apiName
+                                                    )
+                                                )
                                             )
-                                        )
+                                        }
                                     )
                                 }
 
@@ -166,14 +183,26 @@ class MedicineDetailsFragment :
                                 } else {
                                     binding.stopMedicationBtn.visibility = View.VISIBLE
                                     binding.isChronicWarningMessage.visibility = View.GONE
+                                    binding.stopMedicationBtn.text = "Stop This Medication"
+                                    binding.stopMedicationBtn.setBackgroundColor(
+                                        ContextCompat.getColor(
+                                            requireContext(), R.color.error
+                                        )
+                                    )
                                     binding.stopMedicationBtn.setOnClickListener {
-                                        viewModel.executeAction(
-                                            MedicineDetailsAction.UpdateMedicineStatus(
-                                                MedicineStatusUpdateRequest(
-                                                    medicationId = medicineId?.toInt() ?: 0,
-                                                    status = Status.INACTIVE.apiName
+                                        showConfirmationDialog(
+                                            message = "Are you sure you want to stop this medication?",
+                                            performAction = {
+                                                viewModel.executeAction(
+                                                    MedicineDetailsAction.UpdateMedicineStatus(
+                                                        MedicineStatusUpdateRequest(
+                                                            medicationId = medicineId?.toInt() ?: 0,
+                                                            status = Status.STOPPED.apiName
+                                                        )
+                                                    )
                                                 )
-                                            )
+                                                findNavController().navigateUp()
+                                            }
                                         )
                                     }
                                 }
@@ -181,17 +210,19 @@ class MedicineDetailsFragment :
                             }
 
                             Status.INACTIVE -> {
-                                binding.stopMedicationBtn.visibility = View.GONE
                                 binding.isChronicWarningMessage.visibility = View.GONE
+                                binding.stopMedicationBtn.visibility = View.GONE
 
-                                binding.statusInverterBtn.text = "Activate"
+                                binding.statusInverterBtn.visibility = View.VISIBLE
+                                binding.statusInverterBtn.text = "Set Medication Time"
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
-                                        requireContext(), R.color.success
+                                        requireContext(), R.color.primary_variant
                                     )
                                 )
-                                binding.statusInverterBtn.isEnabled = false
-                                binding.statusInverterBtn.visibility = View.VISIBLE
+                                binding.statusInverterBtn.setOnClickListener {
+                                    showTimePickerDialog()
+                                }
 
 
                             }
@@ -199,14 +230,25 @@ class MedicineDetailsFragment :
                             Status.SNOOZED -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
                                 binding.statusInverterBtn.text = "Reactivate This Medication"
+                                binding.statusInverterBtn.setBackgroundColor(
+                                    ContextCompat.getColor(
+                                        requireContext(), R.color.primary_variant
+                                    )
+                                )
                                 binding.statusInverterBtn.setOnClickListener {
-                                    viewModel.executeAction(
-                                        MedicineDetailsAction.UpdateMedicineStatus(
-                                            MedicineStatusUpdateRequest(
-                                                medicationId = medicineId?.toInt() ?: 0,
-                                                status = Status.ACTIVE.apiName
+
+                                    showConfirmationDialog(
+                                        message = "Are you sure you want to Activate this medication?",
+                                        performAction = {
+                                            viewModel.executeAction(
+                                                MedicineDetailsAction.UpdateMedicineStatus(
+                                                    MedicineStatusUpdateRequest(
+                                                        medicationId = medicineId?.toInt() ?: 0,
+                                                        status = Status.ACTIVE.apiName
+                                                    )
+                                                )
                                             )
-                                        )
+                                        }
                                     )
                                 }
 
@@ -217,13 +259,19 @@ class MedicineDetailsFragment :
                                     binding.stopMedicationBtn.visibility = View.VISIBLE
                                     binding.isChronicWarningMessage.visibility = View.GONE
                                     binding.stopMedicationBtn.setOnClickListener {
-                                        viewModel.executeAction(
-                                            MedicineDetailsAction.UpdateMedicineStatus(
-                                                MedicineStatusUpdateRequest(
-                                                    medicationId = medicineId?.toInt() ?: 0,
-                                                    status = Status.INACTIVE.apiName
+                                        showConfirmationDialog(
+                                            message = "Are you sure you want to stop this medication?",
+                                            performAction = {
+                                                viewModel.executeAction(
+                                                    MedicineDetailsAction.UpdateMedicineStatus(
+                                                        MedicineStatusUpdateRequest(
+                                                            medicationId = medicineId?.toInt() ?: 0,
+                                                            status = Status.STOPPED.apiName
+                                                        )
+                                                    )
                                                 )
-                                            )
+                                                findNavController().navigateUp()
+                                            }
                                         )
                                     }
                                 }
@@ -271,11 +319,19 @@ class MedicineDetailsFragment :
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    fun setActivateButtonData(
+    private fun setActivateButtonData(
         durationFrom: String, durationTo: String, medicationTimes: List<String>
     ) {
-        binding.statusInverterBtn.isEnabled = true
-        binding.statusInverterBtn.setOnClickListener {
+
+        binding.stopMedicationBtn.text = "Activate"
+
+        binding.stopMedicationBtn.setBackgroundColor(
+            ContextCompat.getColor(
+                requireContext(), R.color.success
+            )
+        )
+        binding.stopMedicationBtn.isEnabled = true
+        binding.stopMedicationBtn.setOnClickListener {
             viewModel.executeAction(
                 MedicineDetailsAction.UpdateMedicine(
                     MedicineUpdateRequest(
@@ -288,6 +344,84 @@ class MedicineDetailsFragment :
                 )
             )
         }
+        binding.stopMedicationBtn.visibility = View.VISIBLE
     }
 
+
+    private fun showConfirmationDialog(
+        message: String = "Are you sure ?",
+        performAction: () -> Unit
+    ) {
+        // Create an instance of AlertDialog.Builder
+        val builder = AlertDialog.Builder(requireContext())
+
+        // Set the dialog title and message
+        builder.setTitle("Confirm Action")
+        builder.setMessage(message)
+
+        // Set the positive button and its click listener
+        builder.setPositiveButton("Yes") { dialog, _ ->
+            // Handle positive button action here
+            performAction()
+            dialog.dismiss()
+        }
+
+        // Set the negative button and its click listener
+        builder.setNegativeButton("No") { dialog, _ ->
+            // Handle negative button action here
+            dialog.dismiss()
+        }
+
+        // Create and show the dialog
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+
+    private fun showTimePickerDialog() {
+        // Get the current time as default values
+        val calendar = Calendar.getInstance()
+        val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        // Create a TimePickerDialog and show it
+        val timePickerDialog = TimePickerDialog(
+            requireContext(),
+            { _, selectedHour, selectedMinute ->
+                // Handle the selected time here
+                viewModel.setMedicationTimes(
+                    selectedHour,
+                    selectedMinute,
+                    viewSelections = { durationFrom, durationTo, newMedicationTimes ->
+                        showDurationCard(durationFrom = durationFrom, durationTo = durationTo)
+                        showMedicationTimes(newMedicationTimes = newMedicationTimes)
+                        setActivateButtonData(
+                            durationFrom = durationFrom,
+                            durationTo = durationTo,
+                            medicationTimes = newMedicationTimes
+                        )
+                    })
+
+
+            },
+            hour, minute, true // true for 24-hour time, false for AM/PM
+        )
+
+        timePickerDialog.show()
+
+    }
+
+
+    private fun showDurationCard(durationFrom: String, durationTo: String) {
+        binding.MedicineCardDuration.root.visibility = View.VISIBLE
+        binding.MedicineCardDuration.DurationFrom.text = durationFrom
+        binding.MedicineCardDuration.DurationTo.text = durationTo
+    }
+
+    private fun showMedicationTimes(newMedicationTimes: List<String>) {
+        (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
+            newMedicationTimes = newMedicationTimes
+        )
+        binding.MedicationTimes.root.visibility = View.VISIBLE
+    }
 }

@@ -1,10 +1,14 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel
 
+import androidx.lifecycle.viewModelScope
 import com.evapharma.medicinereminder.core.MVIBaseViewModel
 import com.evapharma.medicinereminder.core.models.DataState
+import com.evapharma.medicinereminder.core.utils.Constants
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.PeriodType
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineStatusUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineUseCase
@@ -18,6 +22,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,9 +35,9 @@ class MedicineDetailsViewModel @Inject constructor(
     private val updateMedicineStatusUseCase: UpdateMedicineStatusUseCase,
     private val getMedicineUseCase: GetMedicineUseCase
 ) : MVIBaseViewModel<MedicineDetailsAction, MedicineDetailsResult, MedicineDetailsViewState>() {
-
     override val defaultViewState: MedicineDetailsViewState
         get() = MedicineDetailsViewState()
+
 
     override fun handleAction(action: MedicineDetailsAction): Flow<MedicineDetailsResult> {
         return flow {
@@ -220,6 +229,93 @@ class MedicineDetailsViewModel @Inject constructor(
 
             }
         }
+    }
+
+    /// required functions
+
+
+    fun setMedicationTimes(
+        hour: Int,
+        minute: Int,
+        viewSelections: (String, String, List<String>) -> Unit
+    ) {
+
+
+        viewModelScope.launch {
+            val currentDate = Date()  // This gets the current date and time
+            val formatter = SimpleDateFormat(Constants.DAY_MONTH_YEAR_FORMAT, Locale.getDefault())
+            val durationFrom = formatter.format(currentDate)
+            var durationTo: String
+            var medicationTimes: List<String>
+
+            viewStates.value.medicationViewState?.data?.let { medication ->
+
+                durationTo = formatter.format(
+                    currentDate.addDays(
+                        when (medication.periodType) {
+                            PeriodType.DAY -> medication.period ?: 0
+                            PeriodType.WEEK -> (medication.period?.times(7)) ?: 0
+                            null -> 0
+                        }
+                    )
+                )
+
+
+                medicationTimes = generateTimesWithInterval(
+                    hour, minute, when (medication.frequencyType) {
+                        FrequencyType.DAILY -> medication.frequency ?: 0
+                        else -> 1
+                    }
+                )
+
+                viewSelections(durationFrom, durationTo, medicationTimes)
+
+            }
+
+
+        }
+
+
+    }
+
+    private fun generateTimesWithInterval(hour: Int, minute: Int, elements: Int): List<String> {
+        // Calculate the time interval based on the number of elements
+        val intervalHours = 24 / elements
+
+        // Initialize a Calendar instance with the given hour and minute
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+
+        // Create a SimpleDateFormat to format the output
+        val formatter = SimpleDateFormat("H:mm", Locale.getDefault())
+
+        // Generate the times based on the calculated interval
+        val timeList = mutableListOf<String>()
+        for (i in 0 until elements) {
+            // Format the current time and add it to the list
+            val time = formatter.format(calendar.time)
+            timeList.add(time)
+
+            // Add the interval hours to the calendar
+            calendar.add(Calendar.HOUR_OF_DAY, intervalHours)
+        }
+
+        return timeList
+    }
+
+
+    private fun Date.addDays(daysToAdd: Int): Date {
+        // Get the current date
+        val calendar = Calendar.getInstance()
+        calendar.time = this
+
+        // Add the specified number of days
+        calendar.add(Calendar.DAY_OF_YEAR, daysToAdd)
+
+        // Get the updated date
+        val newDate = calendar.time
+        return newDate
     }
 
 

@@ -15,10 +15,9 @@ class MedicineRepoImpl @Inject constructor(
 ) : MedicineRepo {
 
 
-
     override suspend fun getMedicineList(): DataState<List<Medicine>> =
         // medicineRemoteDataSource.getMedicineList()
-        DataState.Success(MockDataManager.medicinesList)
+        DataState.Success(MockDataManager.medicinesList.filter { it.status != Status.STOPPED })
 
 
     override suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Any>
@@ -65,6 +64,7 @@ class MedicineRepoImpl @Inject constructor(
     override suspend fun getMedicineById(medicineId: Int): DataState<Medicine> =
         // medicineRemoteDataSource.getMedicineById(medicineId)
         DataState.Success(
-            MockDataManager.medicinesList.find { it.id == medicineId } ?: MockDataManager.medicinesList[0]
+            MockDataManager.medicinesList.find { it.id == medicineId }
+                ?: MockDataManager.medicinesList[0]
         )
 }
