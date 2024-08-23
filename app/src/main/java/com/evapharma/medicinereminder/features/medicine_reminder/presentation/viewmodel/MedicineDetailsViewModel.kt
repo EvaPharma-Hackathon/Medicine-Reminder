@@ -67,7 +67,7 @@ class MedicineDetailsViewModel @Inject constructor(
         medicineUpdateRequest: MedicineUpdateRequest
     ) {
         collector.emit(
-            MedicineDetailsResult.MedicineDetails(
+            MedicineDetailsResult.Medicine(
                 MedicineDetailsViewState(
                     medicineUpdateViewState = MedicineUpdateViewState(isLoading = true)
                 )
@@ -89,7 +89,7 @@ class MedicineDetailsViewModel @Inject constructor(
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
                             medicineUpdateViewState = MedicineUpdateViewState(isSuccess = true)
                         )
@@ -102,7 +102,7 @@ class MedicineDetailsViewModel @Inject constructor(
             else -> {
 
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
                             medicineUpdateViewState = MedicineUpdateViewState(
                                 error = Throwable(message = useCaseResponse.reason?.get(0))
@@ -124,7 +124,7 @@ class MedicineDetailsViewModel @Inject constructor(
         medicineStatusUpdateRequest: MedicineStatusUpdateRequest
     ) {
         collector.emit(
-            MedicineDetailsResult.MedicineDetails(
+            MedicineDetailsResult.MedicineStatusUpdate(
                 MedicineDetailsViewState(
 
                     medicineUpdateViewState = MedicineUpdateViewState(isLoading = true)
@@ -145,7 +145,7 @@ class MedicineDetailsViewModel @Inject constructor(
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
                             medicineUpdateViewState = MedicineUpdateViewState(isSuccess = true)
                         )
@@ -158,7 +158,7 @@ class MedicineDetailsViewModel @Inject constructor(
                 // show error Toast
 
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
                             medicineUpdateViewState = MedicineUpdateViewState(
                                 error = Throwable(
@@ -179,7 +179,7 @@ class MedicineDetailsViewModel @Inject constructor(
         medicineId: Int
     ) {
         collector.emit(
-            MedicineDetailsResult.MedicineDetails(
+            MedicineDetailsResult.Medicine(
                 MedicineDetailsViewState(
                     medicationViewState = MedicineViewState(isLoading = true)
                 )
@@ -202,7 +202,7 @@ class MedicineDetailsViewModel @Inject constructor(
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.Medicine(
                         MedicineDetailsViewState(
                             medicationViewState = MedicineViewState(
                                 isSuccess = true,
@@ -215,7 +215,7 @@ class MedicineDetailsViewModel @Inject constructor(
 
             else -> {
                 collector.emit(
-                    MedicineDetailsResult.MedicineDetails(
+                    MedicineDetailsResult.Medicine(
                         MedicineDetailsViewState(
                             medicationViewState = MedicineViewState(
                                 error = Throwable(

@@ -87,7 +87,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status: "
+                        android:text="@string/status"
+                        android:layout_marginEnd="@dimen/margin_4"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
 
@@ -125,7 +126,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_8"
                     android:backgroundTint="@color/primary_shade_500"
-                    android:text="Snooze Medication Reminder"
+                    android:text="@string/snooze_medication_reminder"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -135,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/margin_8"
                     android:backgroundTint="@color/error"
-                    android:text="Stop this medication"
+                    android:text="@string/stop_medication"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -143,14 +144,14 @@
                     android:id="@+id/isChronic_warning_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_warning"
                     android:fontFamily="@font/runda_bold"
                     android:gravity="center"
                     android:paddingHorizontal="@dimen/margin_16"
                     android:text="@string/this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped"
                     android:textColor="@color/hint"
                     android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:drawableStartCompat="@drawable/ic_warning" />
             </LinearLayout>
 
         </LinearLayout>

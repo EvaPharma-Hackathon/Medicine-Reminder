@@ -66,20 +66,19 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
     private fun updateUI(state: MedicineListViewState) {
 
-        println("updateUI: $state")
+
         // Update the UI based on the state
         if (state.isLoading) {
-            println("isLoading")
             binding.progressBar.visibility = View.VISIBLE
             binding.nestedScrollView.visibility = View.GONE
             // Show loading indicator
         } else if (state.isSuccess) {
-            println("Success")
+
             binding.progressBar.visibility = View.GONE
             binding.nestedScrollView.visibility = View.VISIBLE
             // Update the RecyclerView with the new data
             state.data?.let {
-                println("data $it")
+
                 (binding.medicineListRecyclerView.adapter as? MedicineListAdapter)?.updateData(
                     it
                 )
@@ -87,12 +86,11 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         } else if (state.isEmpty) {
             binding.progressBar.visibility = View.GONE
             binding.nestedScrollView.visibility = View.VISIBLE
-            println("isEmpty")
+
             // Show empty state UI
         } else if (state.error != null) {
             binding.progressBar.visibility = View.GONE
             binding.nestedScrollView.visibility = View.VISIBLE
-            println("error")
             // Show error message
         }
     }

@@ -6,7 +6,7 @@ import com.evapharma.medicinereminder.features.medicine_reminder.presentation.vi
 
 
 sealed class MedicineDetailsResult : Result<MedicineDetailsViewState> {
-    data class MedicineDetails(val medicineDetailsVS: MedicineDetailsViewState) :
+    data class Medicine(val medicineDetailsVS: MedicineDetailsViewState) :
         MedicineDetailsResult() {
 
         override fun reduce(
@@ -23,7 +23,7 @@ sealed class MedicineDetailsResult : Result<MedicineDetailsViewState> {
         }
     }
 
-    data class MedicineUpdate(val medicineUpdateVS: MedicineDetailsViewState) :
+    data class MedicineStatusUpdate(val medicineUpdateVS: MedicineDetailsViewState) :
         MedicineDetailsResult() {
         override fun reduce(
             defaultState: MedicineDetailsViewState,

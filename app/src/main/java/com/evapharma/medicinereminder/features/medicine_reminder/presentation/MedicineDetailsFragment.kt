@@ -109,7 +109,6 @@ class MedicineDetailsFragment :
                     hideLoadingSpinner()
 
                     medState.data?.let {
-                        println("data $it")
                         binding.title.text = it.name
                         binding.status.text = it.status?.apiName
                         binding.status.setTextColor(
@@ -122,14 +121,14 @@ class MedicineDetailsFragment :
 
                             binding.MedicineDetailsDosage.root.visibility = View.GONE
                         } else {
-                            binding.MedicineDetailsDosage.title.text = "Dosage"
+                            binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
                             binding.MedicineDetailsDosage.details.text = it.dosage
                         }
 
                         if (it.titration.isNullOrBlank()) {
                             binding.MedicineDetailsTitration.root.visibility = View.GONE
                         } else {
-                            binding.MedicineDetailsDosage.title.text = "Titration"
+                            binding.MedicineDetailsDosage.title.text = getString(R.string.titration)
                             binding.MedicineDetailsTitration.details.text = it.titration
                         }
 
@@ -154,7 +153,7 @@ class MedicineDetailsFragment :
                         when (it.status) {
                             Status.ACTIVE -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text = "Snooze This Medication"
+                                binding.statusInverterBtn.text = getString(R.string.snooze_medication_reminder)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
                                         requireContext(), R.color.primary_variant
@@ -163,7 +162,7 @@ class MedicineDetailsFragment :
                                 binding.statusInverterBtn.setOnClickListener {
 
                                     showConfirmationDialog(
-                                        message = "Are you sure you want to snooze this medication?",
+                                        message = getString(R.string.are_you_sure_you_want_to_snooze_this_medication),
                                         performAction = {
                                             viewModel.executeAction(
                                                 MedicineDetailsAction.UpdateMedicineStatus(
@@ -183,7 +182,7 @@ class MedicineDetailsFragment :
                                 } else {
                                     binding.stopMedicationBtn.visibility = View.VISIBLE
                                     binding.isChronicWarningMessage.visibility = View.GONE
-                                    binding.stopMedicationBtn.text = "Stop This Medication"
+                                    binding.stopMedicationBtn.text = getString(R.string.stop_medication)
                                     binding.stopMedicationBtn.setBackgroundColor(
                                         ContextCompat.getColor(
                                             requireContext(), R.color.error
@@ -191,7 +190,7 @@ class MedicineDetailsFragment :
                                     )
                                     binding.stopMedicationBtn.setOnClickListener {
                                         showConfirmationDialog(
-                                            message = "Are you sure you want to stop this medication?",
+                                            message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
                                             performAction = {
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
@@ -214,7 +213,8 @@ class MedicineDetailsFragment :
                                 binding.stopMedicationBtn.visibility = View.GONE
 
                                 binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text = "Set Medication Time"
+                                binding.statusInverterBtn.text =
+                                    getString(R.string.set_medication_time)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
                                         requireContext(), R.color.primary_variant
@@ -229,7 +229,8 @@ class MedicineDetailsFragment :
 
                             Status.SNOOZED -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text = "Reactivate This Medication"
+                                binding.statusInverterBtn.text =
+                                    getString(R.string.reactivate_this_medication)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
                                         requireContext(), R.color.primary_variant
@@ -238,7 +239,7 @@ class MedicineDetailsFragment :
                                 binding.statusInverterBtn.setOnClickListener {
 
                                     showConfirmationDialog(
-                                        message = "Are you sure you want to Activate this medication?",
+                                        message = getString(R.string.are_you_sure_you_want_to_reactivate_this_medication),
                                         performAction = {
                                             viewModel.executeAction(
                                                 MedicineDetailsAction.UpdateMedicineStatus(
@@ -260,7 +261,7 @@ class MedicineDetailsFragment :
                                     binding.isChronicWarningMessage.visibility = View.GONE
                                     binding.stopMedicationBtn.setOnClickListener {
                                         showConfirmationDialog(
-                                            message = "Are you sure you want to stop this medication?",
+                                            message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
                                             performAction = {
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
@@ -282,12 +283,9 @@ class MedicineDetailsFragment :
                     }
                 } else if (medState.isEmpty) {
                     hideLoadingSpinner()
-                    println("isEmpty")
                     // Show empty state UI
                 } else if (medState.error != null) {
                     hideLoadingSpinner()
-                    println("error")
-                    // Show error message
                 } else {
                 }
             }
@@ -296,7 +294,7 @@ class MedicineDetailsFragment :
                 if (medUpdateStatus.isSuccess) {
                     hideLoadingSpinner()
                     // show toast
-                    showToast("Medicine updated successfully")
+                    showToast(getString(R.string.medicine_updated_successfully))
                     viewModel.executeAction(
                         MedicineDetailsAction.LoadMedicine(
                             medicineId = medicineId?.toInt() ?: 0
@@ -306,7 +304,7 @@ class MedicineDetailsFragment :
                 } else if (medUpdateStatus.error != null) {
                     hideLoadingSpinner()
                     // show error toast
-                    showToast("Error updating medicine status")
+                    showToast(getString(R.string.error_updating_medicine_status))
 
                 } else {
                 }
@@ -323,7 +321,7 @@ class MedicineDetailsFragment :
         durationFrom: String, durationTo: String, medicationTimes: List<String>
     ) {
 
-        binding.stopMedicationBtn.text = "Activate"
+        binding.stopMedicationBtn.text = getString(R.string.activate)
 
         binding.stopMedicationBtn.setBackgroundColor(
             ContextCompat.getColor(
@@ -349,25 +347,25 @@ class MedicineDetailsFragment :
 
 
     private fun showConfirmationDialog(
-        message: String = "Are you sure ?",
+        message: String = getString(R.string.are_you_sure),
         performAction: () -> Unit
     ) {
         // Create an instance of AlertDialog.Builder
         val builder = AlertDialog.Builder(requireContext())
 
         // Set the dialog title and message
-        builder.setTitle("Confirm Action")
+        builder.setTitle(getString(R.string.confirm_action))
         builder.setMessage(message)
 
         // Set the positive button and its click listener
-        builder.setPositiveButton("Yes") { dialog, _ ->
+        builder.setPositiveButton(getString(R.string.yes)) { dialog, _ ->
             // Handle positive button action here
             performAction()
             dialog.dismiss()
         }
 
         // Set the negative button and its click listener
-        builder.setNegativeButton("No") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.no)) { dialog, _ ->
             // Handle negative button action here
             dialog.dismiss()
         }

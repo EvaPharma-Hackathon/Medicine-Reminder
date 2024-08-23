@@ -149,6 +149,24 @@
     <string name="back">back</string>
     <string name="medication_status">Status:</string>
     <string name="my_medications">My Medications</string>
-    <string name="this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped">This is a medication to a chronic disease so it can\'t be stopped</string>
+    <string name="this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped">This medication is used for a chronic disease so it can\'t be stopped</string>
+    <string name="medication_times">Medication Times</string>
+    <string name="duration">Duration</string>
+    <string name="to">To</string>
+    <string name="status">Status:</string>
+    <string name="snooze_medication_reminder">Snooze Medication Reminder</string>
+    <string name="stop_medication">Stop Medication</string>
+    <string name="dosage">Dosage</string>
+    <string name="titration">Titration</string>
+    <string name="set_medication_time">Set Medication Time</string>
+    <string name="reactivate_this_medication">Reactivate This Medication</string>
+    <string name="activate">Activate</string>
+    <string name="error_updating_medicine_status">Error updating medicine status</string>
+    <string name="are_you_sure">Are you sure ?</string>
+    <string name="confirm_action">Confirm Action</string>
+    <string name="are_you_sure_you_want_to_stop_this_medication">Are you sure you want to stop this medication?</string>
+    <string name="are_you_sure_you_want_to_snooze_this_medication">Are you sure you want to snooze this medication?</string>
+    <string name="are_you_sure_you_want_to_reactivate_this_medication">Are you sure you want to Reactivate this medication?</string>
+    <string name="medicine_updated_successfully">Medicine updated successfully</string>
 
 </resources>

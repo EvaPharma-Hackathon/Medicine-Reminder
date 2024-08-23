@@ -23,7 +23,7 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Medication Times"
+                android:text="@string/medication_times"
                 android:textColor="@color/primary_color"
                 android:layout_marginBottom="@dimen/margin_10"
                 android:textSize="18sp"

@@ -26,7 +26,7 @@ class MedicineListViewModel @Inject constructor(
         get() = MedicineListViewState()
 
     override fun handleAction(action: MedicineListAction): Flow<MedicineListResult> {
-        println("handleAction")
+
         return flow {
             when (action) {
                 is MedicineListAction.LoadMedicineList -> handleLoadMedicineList(collector = this)
@@ -35,7 +35,7 @@ class MedicineListViewModel @Inject constructor(
     }
 
     private suspend fun handleLoadMedicineList(collector: FlowCollector<MedicineListResult>) {
-        println("handleLoadMedicineList")
+
         collector.emit(MedicineListResult.MedicineList(MedicineListViewState(isLoading = true)))
         // add a delay to simulate a network call
 
@@ -47,15 +47,12 @@ class MedicineListViewModel @Inject constructor(
         useCaseResponse: DataState<List<Medicine>>,
         collector: FlowCollector<MedicineListResult>
     ) {
-        println("handleLoadMedicineListUseCaseResponse")
         // TODO: should be removed
-        delay(2000)
+        delay(1000)
         //
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {
-                    println("handleLoadMedicineListUseCaseResponse: Empty List")
-
                     collector.emit(
                         MedicineListResult.MedicineList(
                             MedicineListViewState(
@@ -64,7 +61,6 @@ class MedicineListViewModel @Inject constructor(
                         )
                     )
                 } else {
-                    println("handleLoadMedicineListUseCaseResponse: ${useCaseResponse.data}")
                     collector.emit(
                         MedicineListResult.MedicineList(
                             MedicineListViewState(
