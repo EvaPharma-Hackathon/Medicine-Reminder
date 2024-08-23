@@ -1,13 +1,11 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
@@ -27,18 +25,12 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         viewModel = ViewModelProvider(this)[MedicineListViewModel::class.java]
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onFragmentCreated() {
 
         // Set up the RecyclerView
-        val adapter = MedicineListAdapter(emptyList()) { selectedMedicine ->
+        val adapter = MedicineListAdapter(emptyList()) { selectedMedicineId ->
             val action =
-                MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(medicine = selectedMedicine)
+                MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(medicineId = selectedMedicineId)
             findNavController().navigate(action)
         }
 
@@ -49,13 +41,15 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
             findNavController().navigateUp()
         }
 
-        binding.topBar.title.text = "My Medications"
+        binding.topBar.title.text = getString(R.string.my_medications)
 
 
+    }
 
-
-
-
+    override fun onResume() {
+        // Trigger the loading of medicine list
+        println("onResume in MedicineListFragment")
+        super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.viewStates.collect { state ->
                 // Handle the state update here
@@ -67,7 +61,6 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         // Trigger the loading of medicine list
         viewModel.executeAction(MedicineListAction.LoadMedicineList)
 
-
     }
 
 
@@ -77,20 +70,28 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         // Update the UI based on the state
         if (state.isLoading) {
             println("isLoading")
+            binding.progressBar.visibility = View.VISIBLE
+            binding.nestedScrollView.visibility = View.GONE
             // Show loading indicator
         } else if (state.isSuccess) {
             println("Success")
+            binding.progressBar.visibility = View.GONE
+            binding.nestedScrollView.visibility = View.VISIBLE
             // Update the RecyclerView with the new data
             state.data?.let {
-                println("data ${it}")
+                println("data $it")
                 (binding.medicineListRecyclerView.adapter as? MedicineListAdapter)?.updateData(
                     it
                 )
             }
         } else if (state.isEmpty) {
+            binding.progressBar.visibility = View.GONE
+            binding.nestedScrollView.visibility = View.VISIBLE
             println("isEmpty")
             // Show empty state UI
         } else if (state.error != null) {
+            binding.progressBar.visibility = View.GONE
+            binding.nestedScrollView.visibility = View.VISIBLE
             println("error")
             // Show error message
         }

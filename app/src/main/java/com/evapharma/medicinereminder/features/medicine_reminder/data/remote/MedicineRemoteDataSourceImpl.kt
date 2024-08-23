@@ -22,7 +22,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
             )
         }
 
-    override suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Void> =
+    override suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Any> =
         try {
             medicineApi.setReminder(medicineUpdateRequest).getDataStateV2()
         } catch (exception: Exception) {
@@ -32,7 +32,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
             )
         }
 
-    override suspend fun updateStatus(medicineStatusUpdateRequest: MedicineStatusUpdateRequest): DataState<Void> =
+    override suspend fun updateStatus(medicineStatusUpdateRequest: MedicineStatusUpdateRequest): DataState<Any> =
         try {
             medicineApi.updateStatus(medicineStatusUpdateRequest).getDataStateV2()
         } catch (exception: Exception) {

@@ -1,6 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.repo
 
 import com.evapharma.medicinereminder.core.models.DataState
+import com.evapharma.medicinereminder.features.medicine_reminder.data.mock.MockDataManager
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
@@ -15,68 +16,57 @@ class MedicineRepoImpl @Inject constructor(
     private val medicineRemoteDataSource: MedicineRemoteDataSource
 ) : MedicineRepo {
 
+
+
     override suspend fun getMedicineList(): DataState<List<Medicine>> =
-//        medicineRemoteDataSource.getMedicineList()
+        // medicineRemoteDataSource.getMedicineList()
+        DataState.Success(MockDataManager.medicinesList)
+
+
+    override suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Any>
+//        medicineRemoteDataSource.updateMedicine(medicineUpdateRequest)
+    {
+        if (MockDataManager.medicinesList.find { it.id == medicineUpdateRequest.medicationId } != null) {
+            MockDataManager.medicinesList =
+                MockDataManager.medicinesList.map {
+                    if (it.id == medicineUpdateRequest.medicationId) it.copy(
+                        status = Status.fromString(
+                            medicineUpdateRequest.status
+                        ),
+                        durationFrom = medicineUpdateRequest.durationFrom,
+                        durationTo = medicineUpdateRequest.durationTo,
+                        time = medicineUpdateRequest.time
+                    ) else it
+                }
+            return DataState.Success(Any())
+        }
+        return DataState.Error(reason = listOf("Medicine not found"), code = 0)
+    }
+
+
+    override suspend fun updateStatus(medicineStatusUpdateRequest: MedicineStatusUpdateRequest): DataState<Any>
+//        medicineRemoteDataSource.updateStatus(medicineStatusUpdateRequest)
+    {
+        if (MockDataManager.medicinesList.find { it.id == medicineStatusUpdateRequest.medicationId } != null) {
+            MockDataManager.medicinesList =
+                MockDataManager.medicinesList.map {
+                    if (it.id == medicineStatusUpdateRequest.medicationId) it.copy(
+                        status = Status.fromString(
+                            medicineStatusUpdateRequest.status
+                        ),
+
+                        ) else it
+                }
+            println("status changed")
+            println("medicinesList: ${MockDataManager.medicinesList}")
+            return DataState.Success(Any())
+        }
+        return DataState.Error(reason = listOf("Medicine not found"), code = 0)
+    }
+
+    override suspend fun getMedicineById(medicineId: Int): DataState<Medicine> =
+        // medicineRemoteDataSource.getMedicineById(medicineId)
         DataState.Success(
-            listOf(
-                Medicine(
-                    id = 1,
-                    name = "Medicine 1",
-                    status = Status.ACTIVE,
-                    time = listOf("", ""),
-                    direction = "",
-                    isChronic = false,
-                    dosage = "10 mg",
-                    durationFrom = "10",
-                    durationTo = "20",
-                    periodType = PeriodType.DAY,
-                    frequencyType = FrequencyType.WEEKLY,
-                    frequency = 1,
-                    unit = "mg",
-                    titration = "10",
-                    period = 10,
-                ),
-                Medicine(
-                    id = 2,
-                    name = "Medicine 2",
-                    status = Status.INACTIVE,
-                    time = listOf("", ""),
-                    direction = "",
-                    isChronic = false,
-                    dosage = "10 mg",
-                    durationFrom = "10",
-                    durationTo = "20",
-                    periodType = PeriodType.DAY,
-                    frequencyType = FrequencyType.WEEKLY,
-                    frequency = 1,
-                    unit = "mg",
-                    titration = "10",
-                    period = 10,
-                ),
-                Medicine(
-                    id = 3,
-                    name = "Medicine 3",
-                    status = Status.STOPPED,
-                    time = listOf("", ""),
-                    direction = "",
-                    isChronic = false,
-                    dosage = "10 mg",
-                    durationFrom = "10",
-                    durationTo = "20",
-                    periodType = PeriodType.DAY,
-                    frequencyType = FrequencyType.WEEKLY,
-                    frequency = 1,
-                    unit = "mg",
-                    titration = "10",
-                    period = 10,
-                )
-            )
+            MockDataManager.medicinesList.find { it.id == medicineId } ?: MockDataManager.medicinesList[0]
         )
-
-
-    override suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Void> =
-        medicineRemoteDataSource.updateMedicine(medicineUpdateRequest)
-
-    override suspend fun updateStatus(medicineStatusUpdateRequest: MedicineStatusUpdateRequest): DataState<Void> =
-        medicineRemoteDataSource.updateStatus(medicineStatusUpdateRequest)
 }

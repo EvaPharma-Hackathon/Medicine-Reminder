@@ -4,12 +4,16 @@ package com.evapharma.medicinereminder.features.medicine_reminder.presentation.v
 import com.evapharma.medicinereminder.core.MVIBaseViewModel
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.isEmptyList
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.PeriodType
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.result.MedicineListResult
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -19,6 +23,7 @@ import javax.inject.Inject
 class MedicineListViewModel @Inject constructor(
     private val getMedicineListUseCase: GetMedicineListUseCase,
 ) : MVIBaseViewModel<MedicineListAction, MedicineListResult, MedicineListViewState>() {
+
 
     override val defaultViewState: MedicineListViewState
         get() = MedicineListViewState()
@@ -35,6 +40,8 @@ class MedicineListViewModel @Inject constructor(
     private suspend fun handleLoadMedicineList(collector: FlowCollector<MedicineListResult>) {
         println("handleLoadMedicineList")
         collector.emit(MedicineListResult.MedicineList(MedicineListViewState(isLoading = true)))
+        // add a delay to simulate a network call
+
         val useCaseResponse = getMedicineListUseCase()
         handleLoadMedicineListUseCaseResponse(useCaseResponse, collector)
     }
@@ -44,6 +51,9 @@ class MedicineListViewModel @Inject constructor(
         collector: FlowCollector<MedicineListResult>
     ) {
         println("handleLoadMedicineListUseCaseResponse")
+        // TODO: should be removed
+        delay(2000)
+        //
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {
@@ -69,7 +79,7 @@ class MedicineListViewModel @Inject constructor(
                 }
             }
 
-            is DataState.Error -> {
+            else -> {
                 collector.emit(
                     MedicineListResult.MedicineList(
                         MedicineListViewState(
@@ -78,8 +88,6 @@ class MedicineListViewModel @Inject constructor(
                     )
                 )
             }
-
-            else -> TODO()
         }
     }
 }

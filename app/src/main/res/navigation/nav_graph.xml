@@ -25,8 +25,9 @@
         android:label="Medicine Details Fragment"
         tools:layout="@layout/fragment_medicine_details">
         <argument
-            android:name="medicine"
-            app:argType="com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine"
+            android:name="medicineId"
+            app:argType="string"
+            android:defaultValue=""
             app:nullable="false" />
     </fragment>
 

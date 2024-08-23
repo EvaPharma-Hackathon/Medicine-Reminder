@@ -1,6 +1,6 @@
 package com.evapharma.medicinereminder.di
 
-import com.evapharma.medicinereminder.data.NotificationRepoImpl
+import com.evapharma.medicinereminder.features.medicine_reminder.data.repo.NotificationRepoImpl
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService
 import com.evapharma.medicinereminder.features.medicine_reminder.data.repo.MedicineRepoImpl
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineApiService

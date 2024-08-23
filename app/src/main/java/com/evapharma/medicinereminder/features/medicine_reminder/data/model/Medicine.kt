@@ -15,7 +15,7 @@ data class Medicine(
     @SerializedName("direction") val direction: String?,
     @SerializedName("durationFrom") var durationFrom: String?,
     @SerializedName("durationTo") var durationTo: String?,
-    @SerializedName("time") var time: List<String?>?,
+    @SerializedName("time") var time: List<String>?,
     @SerializedName("frequency") val frequency: Int?,
     @SerializedName("frequencyType") val frequencyType: FrequencyType?,
     @SerializedName("isChronic") val isChronic: Boolean?,

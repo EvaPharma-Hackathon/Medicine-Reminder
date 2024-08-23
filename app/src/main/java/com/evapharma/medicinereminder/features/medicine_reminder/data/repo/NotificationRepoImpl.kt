@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.data
+package com.evapharma.medicinereminder.features.medicine_reminder.data.repo
 
 import android.util.Log
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService

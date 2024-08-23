@@ -4,15 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.databinding.MedicineCardBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 
 
 class MedicineListAdapter(
     private var medicineList: List<Medicine>,
-    private val onItemClick: (medicine: Medicine) -> Unit
+    private val onItemClick: (medicineId: String) -> Unit
 ) : RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder>() {
 
     inner class MedicineViewHolder(val binding: MedicineCardBinding) :
@@ -23,7 +21,7 @@ class MedicineListAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val selectedMedicine = medicineList[position]
-                    onItemClick(selectedMedicine)
+                    onItemClick(selectedMedicine.id.toString())
                 }
             }
         }
@@ -43,24 +41,22 @@ class MedicineListAdapter(
 
         holder.binding.titleText.text = medicine.name
         holder.binding.statusText.text = medicine.status?.apiName
-        holder.binding.statusText.setTextColor(
-            ContextCompat.getColor(
-                holder.itemView.context,
-                when (medicine.status) {
-                    Status.ACTIVE -> R.color.success
-                    Status.INACTIVE -> R.color.black
-                    Status.SNOOZED -> R.color.primary_color
-                    Status.EXPIRED -> R.color.hint
-                    else -> R.color.error
-                }
+
+        medicine.status?.color?.let { color ->
+            holder.binding.statusText.setTextColor(
+                ContextCompat.getColor(
+                    holder.itemView.context, color
+                )
             )
-        )
+        }
+
 
     }
 
 
     fun updateData(newMedicineList: List<Medicine>) {
         medicineList = newMedicineList
+        notifyDataSetChanged()
     }
 }
 

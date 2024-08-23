@@ -19,13 +19,13 @@ interface MedicineApiService {
     @PUT(Endpoints.SET_REMINDER)
     suspend fun setReminder(
         @Body medicineUpdateRequest: MedicineUpdateRequest
-    ): Response<Void>
+    ): Response<Any>
 
 
     @POST(Endpoints.UPDATE_STATUS)
     suspend fun updateStatus(
         @Body request: MedicineStatusUpdateRequest
-    ): Response<Void>
+    ): Response<Any>
 
 }
 

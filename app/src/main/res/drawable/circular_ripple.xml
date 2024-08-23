@@ -1,6 +1,10 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?attr/colorControlHighlight">
-    <item android:id="@android:id/mask">
-        <color android:color="?attr/colorControlHighlight"/>
+
+    <!-- Define a circular shape for the background -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/primary_color" />
+        </shape>
     </item>
 </ripple>

@@ -148,5 +148,7 @@
     <string name="default_notification_channel_id">my_channel_id</string>
     <string name="back">back</string>
     <string name="medication_status">Status:</string>
+    <string name="my_medications">My Medications</string>
+    <string name="this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped">This is a medication to a chronic disease so it can\'t be stopped</string>
 
 </resources>
