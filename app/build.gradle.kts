@@ -29,6 +29,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"http://ec2-54-171-240-65.eu-west-1.compute.amazonaws.com\"")
+        }
         release {
             isMinifyEnabled = true // Enables code shrinking
             isShrinkResources = true
