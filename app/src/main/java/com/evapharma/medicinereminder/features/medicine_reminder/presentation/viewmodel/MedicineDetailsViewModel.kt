@@ -243,7 +243,7 @@ class MedicineDetailsViewModel @Inject constructor(
 
         viewModelScope.launch {
             val currentDate = Date()  // This gets the current date and time
-            val formatter = SimpleDateFormat(Constants.DAY_MONTH_YEAR_FORMAT, Locale.getDefault())
+            val formatter = SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())
             val durationFrom = formatter.format(currentDate)
             var durationTo: String
             var medicationTimes: List<String>
