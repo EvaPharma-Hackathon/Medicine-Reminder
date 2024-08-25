@@ -77,7 +77,7 @@ class BaseURLFactory {
 
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(provideOkHttpClient(timeout))
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
