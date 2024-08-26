@@ -17,6 +17,9 @@ class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
 ) : BaseViewModel() {
 
+    // TODO: Implemented using BaseViewModel because of time
+    // will be converted to MVI architecture with MVIBaseViewModel
+
     private val _loginState = MutableStateFlow<CommonViewState<Any>>(CommonViewState())
     val loginState: StateFlow<CommonViewState<Any>> = _loginState
 
