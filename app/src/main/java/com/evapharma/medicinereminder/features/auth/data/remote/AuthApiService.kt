@@ -5,7 +5,6 @@ import com.evapharma.medicinereminder.core.models.BaseResponse
 import com.evapharma.medicinereminder.features.auth.data.model.LoginRequest
 import retrofit2.Response
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 

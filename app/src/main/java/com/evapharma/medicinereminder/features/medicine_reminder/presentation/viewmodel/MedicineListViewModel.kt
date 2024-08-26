@@ -10,7 +10,6 @@ import com.evapharma.medicinereminder.features.medicine_reminder.presentation.ac
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.result.MedicineListResult
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow

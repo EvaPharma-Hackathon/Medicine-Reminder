@@ -1,10 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.repo
 
 import android.util.Log
-import com.evapharma.medicinereminder.core.models.handleException
-import com.evapharma.medicinereminder.core.models.handleResponse
 import com.evapharma.medicinereminder.core.network.BaseURLFactory
-import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MedicineApiService
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.MyFirebaseMessagingService
 import com.evapharma.medicinereminder.features.medicine_reminder.data.remote.NotificationApiService
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.repo.NotificationRepo
