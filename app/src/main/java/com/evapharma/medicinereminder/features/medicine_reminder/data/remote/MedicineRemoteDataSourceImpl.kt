@@ -3,7 +3,6 @@ package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.getDataState
 import com.evapharma.medicinereminder.core.models.handleException
-import com.evapharma.medicinereminder.core.models.handleResponse
 import com.evapharma.medicinereminder.core.network.BaseURLFactory
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
