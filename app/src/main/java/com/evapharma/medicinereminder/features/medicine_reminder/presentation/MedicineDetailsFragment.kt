@@ -203,6 +203,8 @@ class MedicineDetailsFragment :
                             }
 
                             Status.INACTIVE -> {
+                                binding.MedicationTimes.root.visibility = View.GONE
+                                binding.MedicineCardDuration.root.visibility = View.GONE
                                 binding.isChronicWarningMessage.visibility = View.GONE
                                 binding.stopMedicationBtn.visibility = View.GONE
 
@@ -292,6 +294,8 @@ class MedicineDetailsFragment :
         durationFrom: String, durationTo: String, medicationTimes: List<String>
     ) {
 
+        binding.MedicationTimes.root.visibility = View.VISIBLE
+
         binding.stopMedicationBtn.text = getString(R.string.activate)
 
         binding.stopMedicationBtn.setBackgroundColor(
@@ -300,6 +304,7 @@ class MedicineDetailsFragment :
             )
         )
         binding.stopMedicationBtn.isEnabled = true
+
         binding.stopMedicationBtn.setOnClickListener {
             viewModel.executeAction(
                 MedicineDetailsAction.UpdateMedicine(
