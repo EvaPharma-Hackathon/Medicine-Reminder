@@ -41,25 +41,9 @@ abstract class AppModule {
 
 }
 
-
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiServiceModule {
-
-    // Medicine Api Service
-    @Provides
-    @Singleton
-    fun provideMedicineApiService(retrofit: Retrofit): MedicineApiService {
-        return retrofit.create(MedicineApiService::class.java)
-    }
-
-    // Notification Api Service
-
-    @Provides
-    @Singleton
-    fun provideNotificationApiService(retrofit: Retrofit): NotificationApiService {
-        return retrofit.create(NotificationApiService::class.java)
-    }
+object FireBaseModule {
 
     @Provides
     @Singleton

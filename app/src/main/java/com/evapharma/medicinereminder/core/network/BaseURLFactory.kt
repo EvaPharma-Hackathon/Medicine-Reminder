@@ -19,6 +19,7 @@ class BaseURLFactory {
 
         var retrofit: Retrofit = provideRetrofit()
 
+
         fun resetBaseURL(url: String) {
             retrofit = Retrofit.Builder()
                 .baseUrl(url)
@@ -36,7 +37,10 @@ class BaseURLFactory {
                 .build()
 
 
-        private fun provideOkHttpClient(timeout: Long = 30): OkHttpClient {
+        private fun provideOkHttpClient(
+            timeout: Long = 30,
+            bearerToken: String = ""
+        ): OkHttpClient {
             val chuckerInterceptor =
                 ChuckerInterceptor.Builder(StringLocale.instance.appContextProvider.getAppContext())
                     .build()
@@ -46,20 +50,6 @@ class BaseURLFactory {
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .addInterceptor(chuckerInterceptor)
 
-            return okHttpClient.build()
-        }
-
-
-        fun provideRetrofitWithAuth(
-            timeout: Long = 30,
-            bearerToken: String,
-            baseUrl: String
-        ): Retrofit {
-
-
-            val chuckerInterceptor =
-                ChuckerInterceptor.Builder(StringLocale.instance.appContextProvider.getAppContext())
-                    .build()
             val authInterceptor = Interceptor { chain ->
                 val originalRequest = chain.request()
                 val requestWithToken = originalRequest.newBuilder()
@@ -67,22 +57,19 @@ class BaseURLFactory {
                     .build()
                 chain.proceed(requestWithToken)
             }
-            val okHttpClient = OkHttpClient.Builder()
-                .connectTimeout(timeout, TimeUnit.SECONDS)
-                .writeTimeout(timeout, TimeUnit.SECONDS)
-                .readTimeout(timeout, TimeUnit.SECONDS)
-                .addInterceptor(authInterceptor)
-                .addInterceptor(chuckerInterceptor).build()
 
-
-            return Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(okHttpClient)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
+            return if (bearerToken.isEmpty()) okHttpClient.build() else okHttpClient.addInterceptor(
+                authInterceptor
+            ).build()
         }
 
-
+        fun setAccessToken(token: String) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .client(provideOkHttpClient(bearerToken = token))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+        }
     }
 
 }

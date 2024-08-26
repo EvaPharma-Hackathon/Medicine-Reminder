@@ -47,9 +47,8 @@ class MedicineListViewModel @Inject constructor(
         useCaseResponse: DataState<List<Medicine>>,
         collector: FlowCollector<MedicineListResult>
     ) {
-        // TODO: should be removed
-        delay(1000)
-        //
+
+        println ("useCaseResponse: $useCaseResponse , isempty = ${useCaseResponse.isEmptyList()}")
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {

@@ -81,11 +81,6 @@ class MedicineDetailsViewModel @Inject constructor(
         useCaseResponse: DataState<Any>,
         collector: FlowCollector<MedicineDetailsResult>
     ) {
-
-        // TODO : should be removed
-        delay(1000)
-
-        ///
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(
@@ -139,9 +134,6 @@ class MedicineDetailsViewModel @Inject constructor(
         useCaseResponse: DataState<Any>,
         collector: FlowCollector<MedicineDetailsResult>
     ) {
-        // TODO : should be removed
-        delay(1000)
-        ///
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(
@@ -195,10 +187,6 @@ class MedicineDetailsViewModel @Inject constructor(
         useCaseResponse: DataState<Medicine>,
         collector: FlowCollector<MedicineDetailsResult>
     ) {
-        // TODO : should be removed
-        delay(1000)
-
-        ///
         when (useCaseResponse) {
             is DataState.Success -> {
                 collector.emit(

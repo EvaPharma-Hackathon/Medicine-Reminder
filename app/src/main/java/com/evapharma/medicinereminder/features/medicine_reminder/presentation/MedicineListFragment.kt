@@ -1,10 +1,10 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineListBinding
@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineListViewModel>() {
+
+
     override fun initBinding(): FragmentMedicineListBinding {
         return FragmentMedicineListBinding.inflate(layoutInflater)
     }
@@ -27,12 +29,19 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
     override fun onFragmentCreated() {
 
+        // set tryAgain Default Action
+        (activity as? MainActivity)?.setTryAgainListener {
+            viewModel.executeAction(MedicineListAction.LoadMedicineList)
+        }
+
         // Set up the RecyclerView
         val adapter = MedicineListAdapter(emptyList()) { selectedMedicineId ->
             val action =
                 MedicineListFragmentDirections.actionFirstFragmentToSecondFragment(medicineId = selectedMedicineId)
             findNavController().navigate(action)
         }
+
+
 
         binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.medicineListRecyclerView.adapter = adapter
@@ -69,14 +78,10 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
         // Update the UI based on the state
         if (state.isLoading) {
-            binding.progressBar.visibility = View.VISIBLE
-            binding.nestedScrollView.visibility = View.GONE
-            // Show loading indicator
-        } else if (state.isSuccess) {
+            (activity as? MainActivity)?.showLoadingSpinner()
 
-            binding.progressBar.visibility = View.GONE
-            binding.nestedScrollView.visibility = View.VISIBLE
-            // Update the RecyclerView with the new data
+        } else if (state.isSuccess) {
+            (activity as? MainActivity)?.showMainContent()
             state.data?.let {
 
                 (binding.medicineListRecyclerView.adapter as? MedicineListAdapter)?.updateData(
@@ -84,14 +89,11 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
                 )
             }
         } else if (state.isEmpty) {
-            binding.progressBar.visibility = View.GONE
-            binding.nestedScrollView.visibility = View.VISIBLE
 
-            // Show empty state UI
+            (activity as? MainActivity)?.showEmptyView()
+
         } else if (state.error != null) {
-            binding.progressBar.visibility = View.GONE
-            binding.nestedScrollView.visibility = View.VISIBLE
-            // Show error message
+            (activity as? MainActivity)?.showMainContent()
         }
     }
 
