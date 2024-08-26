@@ -228,30 +228,7 @@ class MedicineDetailsFragment :
                             }
 
                             Status.SNOOZED -> {
-                                binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text =
-                                    getString(R.string.reactivate_this_medication)
-                                binding.statusInverterBtn.setBackgroundColor(
-                                    ContextCompat.getColor(
-                                        requireContext(), R.color.primary_variant
-                                    )
-                                )
-                                binding.statusInverterBtn.setOnClickListener {
-
-                                    showConfirmationDialog(
-                                        message = getString(R.string.are_you_sure_you_want_to_reactivate_this_medication),
-                                        performAction = {
-                                            viewModel.executeAction(
-                                                MedicineDetailsAction.UpdateMedicineStatus(
-                                                    MedicineStatusUpdateRequest(
-                                                        medicationId = medicineId?.toInt() ?: 0,
-                                                        status = Status.ACTIVE.apiName
-                                                    )
-                                                )
-                                            )
-                                        }
-                                    )
-                                }
+                                binding.statusInverterBtn.visibility = View.GONE
 
                                 if (it.isChronic == true) {
                                     binding.stopMedicationBtn.visibility = View.GONE

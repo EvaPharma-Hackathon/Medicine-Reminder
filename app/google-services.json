@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "542211335449",
+    "project_id": "medicinereminder-a87ac",
+    "storage_bucket": "medicinereminder-a87ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542211335449:android:a4d972d9d7d40f150d5188",
+        "android_client_info": {
+          "package_name": "com.evapharma.medicinereminder"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5Yr7gTuduXShuKcMN9FqpWlVt9uTOm38"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

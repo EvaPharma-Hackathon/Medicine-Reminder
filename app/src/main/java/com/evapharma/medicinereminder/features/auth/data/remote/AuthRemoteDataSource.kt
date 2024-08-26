@@ -5,4 +5,6 @@ import com.evapharma.medicinereminder.features.auth.data.model.LoginRequest
 
 interface AuthRemoteDataSource {
     suspend fun login(loginRequest: LoginRequest): DataState<String>
+
+    suspend fun getFirebaseToken(): DataState<String>
 }

@@ -14,19 +14,26 @@ class AuthRepoImpl @Inject constructor(
 ) : AuthRepo {
 
     override suspend fun login(loginRequest: LoginRequest): DataState<String> {
-        if (authLocalDataSource.getToken() == null) {
-            println("token is null")
-            val response = authRemoteDataSource.login(loginRequest)
-            println("response is $response")
-            if (response is DataState.Success) {
-                authLocalDataSource.saveToken(response.data)
-                BaseURLFactory.setAccessToken(response.data)
-            }
-            return response
+
+
+        val firebaseToken = authRemoteDataSource.getFirebaseToken()
+
+
+        var response: DataState<String> = if (firebaseToken is DataState.Success) {
+            println("firebase token: ${firebaseToken.data}")
+
+            authRemoteDataSource.login(loginRequest.copy(deviceToken = firebaseToken.data))
+
         } else {
-            val token = authLocalDataSource.getToken()
-            BaseURLFactory.setAccessToken(token!!)
-            return DataState.Success(token)
+            authRemoteDataSource.login(loginRequest)
         }
+
+        if (response is DataState.Success) {
+            BaseURLFactory.setAccessToken(response.data)
+        }
+
+        return response
+
+
     }
 }

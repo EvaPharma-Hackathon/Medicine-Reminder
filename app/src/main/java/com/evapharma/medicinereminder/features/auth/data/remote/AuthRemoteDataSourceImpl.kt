@@ -9,7 +9,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class AuthRemoteDataSourceImpl @Inject constructor(): AuthRemoteDataSource {
+class AuthRemoteDataSourceImpl @Inject constructor(
+    private val firebaseMessagingService: MyFirebaseMessagingService
+) : AuthRemoteDataSource {
 
     override suspend fun login(loginRequest: LoginRequest): DataState<String> =
         withContext(Dispatchers.IO) {
@@ -21,5 +23,19 @@ class AuthRemoteDataSourceImpl @Inject constructor(): AuthRemoteDataSource {
                 t.handleException()
             }
         }
+
+    override suspend fun getFirebaseToken(): DataState<String> {
+        val token = firebaseMessagingService.getFirebaseToken()
+        if (token != null) {
+            println("firebase token: ${token}")
+            return DataState.Success(token)
+
+        } else {
+            println("firebase token failed: ${token}")
+            return DataState.Error(reason = listOf("Failed to get firebase token"), code = 0)
+
+        }
+    }
+
 
 }

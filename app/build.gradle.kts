@@ -6,6 +6,8 @@ plugins {
     id("com.google.dagger.hilt.android") version "2.48"
     id("androidx.navigation.safeargs.kotlin") version "2.6.0"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 apply(from = "$rootDir/base.gradle")
@@ -82,4 +84,13 @@ dependencies {
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.1")
+
+
+    // Import the Firebase BoM
+    implementation(platform(libs.firebase.bom))
+
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+    implementation(libs.firebase.analytics)
 }

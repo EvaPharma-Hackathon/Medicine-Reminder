@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name=".features.medicine_reminder.data.remote.MyFirebaseMessagingService"
+            android:name=".features.auth.data.remote.MyFirebaseMessagingService"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

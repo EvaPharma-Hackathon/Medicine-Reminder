@@ -1,10 +1,13 @@
 package com.evapharma.medicinereminder
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentContainerView
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +20,20 @@ class MainActivity : AppCompatActivity() {
     private var emptyView: LinearLayout? = null
     private var navHostFragment: FragmentContainerView? = null
     private var loadingSpinnerView: ProgressBar? = null
+
+
+
+
+    // Declare the launcher at the top
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            // FCM SDK (and your app) can post notifications.
+        } else {
+            // Inform user that your app will not show notifications.
+        }
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +70,9 @@ class MainActivity : AppCompatActivity() {
             listener()
         }
     }
+
+
+
 
 
 }

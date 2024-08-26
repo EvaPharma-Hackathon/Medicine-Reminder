@@ -1,4 +1,4 @@
-package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
+package com.evapharma.medicinereminder.features.auth.data.remote
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.FirebaseMessaging
@@ -74,8 +75,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         notificationManager.notify(0, notificationBuilder.build())
     }
 
-    fun getFirebaseToken(): Flow<String> = flow {
-        val token = FirebaseMessaging.getInstance().token.await()
-        emit(token)
+    suspend fun getFirebaseToken(): String? {
+        return try {
+            FirebaseMessaging.getInstance().token.await()
+        } catch (e: Exception) {
+            Log.w(TAG, "Fetching FCM registration token failed", e)
+            null
+        }
     }
+
 }
