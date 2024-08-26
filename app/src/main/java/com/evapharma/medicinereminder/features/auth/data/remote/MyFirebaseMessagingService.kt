@@ -12,12 +12,9 @@ import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.firebase.messaging.FirebaseMessaging
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {

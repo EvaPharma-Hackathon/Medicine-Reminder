@@ -1,13 +1,11 @@
 package com.evapharma.medicinereminder
 
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentContainerView
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
