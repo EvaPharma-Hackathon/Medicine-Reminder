@@ -9,6 +9,8 @@ import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medi
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.PeriodType
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationFrequencyType
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationPeriodType
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineStatusUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineUseCase
@@ -236,21 +238,23 @@ class MedicineDetailsViewModel @Inject constructor(
             var medicationTimes: List<String>
 
             viewStates.value.medicationViewState?.data?.let { medication ->
-
+                val newPeriod =
+                    if (medication.period == null || medication.period <= 0) 1 else medication.period
                 durationTo = formatter.format(
                     currentDate.addDays(
-                        when (medication.periodType) {
-                            PeriodType.DAY -> medication.period ?: 0
-                            PeriodType.WEEK -> (medication.period?.times(7)) ?: 0
-                            null -> 0
+                        when (medication.getMedicationPeriodType()) {
+                            PeriodType.DAY -> newPeriod
+                            PeriodType.WEEK -> (newPeriod.times(7))
                         }
                     )
                 )
 
+                val newFrequency = if (medication.frequency == null || medication.frequency <= 0) 1 else medication.frequency
+
 
                 medicationTimes = generateTimesWithInterval(
-                    hour, minute, when (medication.frequencyType) {
-                        FrequencyType.DAILY -> medication.frequency ?: 0
+                    hour, minute, when (medication.getMedicationFrequencyType()) {
+                        FrequencyType.DAILY -> newFrequency
                         else -> 1
                     }
                 )

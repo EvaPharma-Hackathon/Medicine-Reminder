@@ -67,7 +67,7 @@ class BaseURLFactory {
             retrofit = Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(provideOkHttpClient(bearerToken = token))
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()
         }
     }

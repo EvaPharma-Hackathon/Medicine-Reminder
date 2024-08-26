@@ -1,6 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
 
 import com.evapharma.medicinereminder.core.models.DataState
+import com.evapharma.medicinereminder.core.models.getDataState
 import com.evapharma.medicinereminder.core.models.handleException
 import com.evapharma.medicinereminder.core.models.handleResponse
 import com.evapharma.medicinereminder.core.network.BaseURLFactory
@@ -19,7 +20,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
             try {
                 BaseURLFactory.retrofit.create(
                     MedicineApiService::class.java
-                ).getMedicineList().handleResponse()
+                ).getMedicineList().getDataState()
             } catch (t: Throwable) {
                 t.handleException()
             }
@@ -30,7 +31,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
             try {
                 BaseURLFactory.retrofit.create(
                     MedicineApiService::class.java
-                ).setReminder(medicineUpdateRequest = medicineUpdateRequest).handleResponse()
+                ).setReminder(medicineUpdateRequest = medicineUpdateRequest).getDataState()
             } catch (t: Throwable) {
                 t.handleException()
             }
@@ -41,7 +42,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
             try {
                 BaseURLFactory.retrofit.create(
                     MedicineApiService::class.java
-                ).updateStatus(request = medicineStatusUpdateRequest).handleResponse()
+                ).updateStatus(request = medicineStatusUpdateRequest).getDataState()
             } catch (t: Throwable) {
                 t.handleException()
             }

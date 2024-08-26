@@ -17,6 +17,7 @@ import com.evapharma.medicinereminder.databinding.FragmentMedicineDetailsBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getStatus
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineDetailsAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters.MedicationTimesAdapter
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel.MedicineDetailsViewModel
@@ -110,26 +111,19 @@ class MedicineDetailsFragment :
 
                     medState.data?.let {
                         binding.title.text = it.name
-                        binding.status.text = it.status?.apiName
+                        binding.status.text = it.getStatus().apiName
                         binding.status.setTextColor(
                             ContextCompat.getColor(
-                                requireContext(), it.status?.color ?: 0
+                                requireContext(), it.getStatus().color
                             )
                         )
 
-                        if (it.dosage.isNullOrBlank()) {
+                        if (it.dosage == null) {
 
                             binding.MedicineDetailsDosage.root.visibility = View.GONE
                         } else {
                             binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
-                            binding.MedicineDetailsDosage.details.text = it.dosage
-                        }
-
-                        if (it.titration.isNullOrBlank()) {
-                            binding.MedicineDetailsTitration.root.visibility = View.GONE
-                        } else {
-                            binding.MedicineDetailsDosage.title.text = getString(R.string.titration)
-                            binding.MedicineDetailsTitration.details.text = it.titration
+                            binding.MedicineDetailsDosage.details.text = it.dosage.toString()
                         }
 
                         if (it.durationFrom.isNullOrBlank() || it.durationTo.isNullOrBlank()) {
@@ -150,7 +144,7 @@ class MedicineDetailsFragment :
                         }
 
                         // buttons to show
-                        when (it.status) {
+                        when (it.getStatus()) {
                             Status.ACTIVE -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
                                 binding.statusInverterBtn.text = getString(R.string.snooze_medication_reminder)

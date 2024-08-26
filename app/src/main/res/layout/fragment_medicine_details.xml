@@ -108,10 +108,6 @@
                     layout="@layout/general_info_card" />
 
                 <include
-                    android:id="@+id/MedicineDetailsTitration"
-                    layout="@layout/general_info_card" />
-
-                <include
                     android:id="@+id/MedicineCardDuration"
                     layout="@layout/duration_card" />
 

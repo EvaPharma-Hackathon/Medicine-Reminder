@@ -39,6 +39,8 @@ class MedicineListViewModel @Inject constructor(
         // add a delay to simulate a network call
 
         val useCaseResponse = getMedicineListUseCase()
+
+        println("useCaseResponse: $useCaseResponse")
         handleLoadMedicineListUseCaseResponse(useCaseResponse, collector)
     }
 

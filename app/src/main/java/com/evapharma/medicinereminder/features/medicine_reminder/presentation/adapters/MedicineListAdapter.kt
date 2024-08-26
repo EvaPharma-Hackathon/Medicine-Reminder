@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.evapharma.medicinereminder.databinding.MedicineCardBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getStatus
 
 
 class MedicineListAdapter(
@@ -40,9 +41,9 @@ class MedicineListAdapter(
         val medicine = medicineList[position]
 
         holder.binding.titleText.text = medicine.name
-        holder.binding.statusText.text = medicine.status?.apiName
+        holder.binding.statusText.text = medicine.getStatus().apiName
 
-        medicine.status?.color?.let { color ->
+        medicine.getStatus().color.let { color ->
             holder.binding.statusText.setTextColor(
                 ContextCompat.getColor(
                     holder.itemView.context, color
