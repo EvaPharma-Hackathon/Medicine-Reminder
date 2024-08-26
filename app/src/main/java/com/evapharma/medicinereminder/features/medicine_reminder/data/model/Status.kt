@@ -8,7 +8,8 @@ enum class Status(val apiName: String, val color: Int) {
     INACTIVE(apiName = "InActive", color = R.color.black),
     SNOOZED(apiName = "Snoozed", color = R.color.google),
     EXPIRED(apiName = "Expired", color = R.color.hint),
-    STOPPED(apiName = "Stopped", color = R.color.error);
+    STOPPED(apiName = "Stopped", color = R.color.error),
+    COMPLETED(apiName = "Completed", color = R.color.request_finished_bg);
 
     companion object {
         fun fromString(value: String): Status? =

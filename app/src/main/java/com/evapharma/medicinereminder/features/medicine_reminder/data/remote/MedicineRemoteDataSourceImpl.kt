@@ -46,4 +46,16 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
                 t.handleException()
             }
         }
+
+
+    override suspend fun getMedicineById(medicineId: Int): DataState<Medicine> =
+        withContext(Dispatchers.IO) {
+            try {
+                BaseURLFactory.retrofit.create(
+                    MedicineApiService::class.java
+                ).getMedicineById(id = medicineId).getDataState()
+            } catch (t: Throwable) {
+                t.handleException()
+            }
+        }
 }

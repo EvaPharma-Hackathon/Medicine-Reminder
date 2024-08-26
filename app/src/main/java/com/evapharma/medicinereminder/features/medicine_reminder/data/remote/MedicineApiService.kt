@@ -10,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface MedicineApiService {
 
@@ -27,6 +28,11 @@ interface MedicineApiService {
     suspend fun updateStatus(
         @Body request: MedicineStatusUpdateRequest
     ): Response<BaseResponse<Any>>
+
+    @GET (Endpoints.MEDICINE)
+    suspend fun getMedicineById(
+        @Path("id") id: Int
+    ): Response<BaseResponse<Medicine>>
 
 }
 

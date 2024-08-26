@@ -4,7 +4,6 @@ import androidx.lifecycle.viewModelScope
 import com.evapharma.medicinereminder.core.MVIBaseViewModel
 import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.utils.Constants
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.FrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
@@ -245,6 +244,7 @@ class MedicineDetailsViewModel @Inject constructor(
                         when (medication.getMedicationPeriodType()) {
                             PeriodType.DAY -> newPeriod
                             PeriodType.WEEK -> (newPeriod.times(7))
+                            PeriodType.MONTH -> (newPeriod.times(30))
                         }
                     )
                 )
@@ -254,7 +254,7 @@ class MedicineDetailsViewModel @Inject constructor(
 
                 medicationTimes = generateTimesWithInterval(
                     hour, minute, when (medication.getMedicationFrequencyType()) {
-                        FrequencyType.DAILY -> newFrequency
+                        PeriodType.DAY -> newFrequency
                         else -> 1
                     }
                 )

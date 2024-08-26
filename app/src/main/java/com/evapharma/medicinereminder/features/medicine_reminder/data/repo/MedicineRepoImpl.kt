@@ -26,29 +26,6 @@ class MedicineRepoImpl @Inject constructor(
         medicineRemoteDataSource.updateStatus(medicineStatusUpdateRequest)
 
 
-    override suspend fun getMedicineById(medicineId: Int): DataState<Medicine> {
-        //TODO: should have an api endpoint for this
-        // alternative solution get full list of medicines then filter by id
-
-        val medicinesListResponse = medicineRemoteDataSource.getMedicineList()
-
-        if (medicinesListResponse is DataState.Success) {
-            val filteredList = medicinesListResponse.data.filter { it.id == medicineId }
-            if (filteredList.isNotEmpty()) {
-                return DataState.Success(filteredList[0])
-            } else {
-                return DataState.Error(
-                    reason = listOf("Medicine not found"),
-                    code = Constants.LOCAL_ERROR_CODE
-                )
-            }
-        } else {
-            return DataState.Error(
-                reason = listOf("Medicine not found"),
-                code = Constants.LOCAL_ERROR_CODE
-            )
-        }
-
-    }
-
+    override suspend fun getMedicineById(medicineId: Int): DataState<Medicine> =
+        medicineRemoteDataSource.getMedicineById(medicineId)
 }

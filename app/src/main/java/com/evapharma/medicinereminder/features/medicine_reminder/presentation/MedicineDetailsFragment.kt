@@ -123,7 +123,7 @@ class MedicineDetailsFragment :
                             binding.MedicineDetailsDosage.root.visibility = View.GONE
                         } else {
                             binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
-                            binding.MedicineDetailsDosage.details.text = it.dosage.toString()
+                            binding.MedicineDetailsDosage.details.text = "${it.dosage} \n ${it.direction}"
                         }
 
                         if (it.durationFrom.isNullOrBlank() || it.durationTo.isNullOrBlank()) {

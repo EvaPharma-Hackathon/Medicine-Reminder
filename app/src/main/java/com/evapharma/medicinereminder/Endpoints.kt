@@ -12,6 +12,7 @@ object Endpoints {
     const val MEDICINE_LIST = "/api/medications"
     const val SET_REMINDER = "/api/medications/SetReminder"
     const val UPDATE_STATUS = "/api/medications/UpdateStatus"
+    const val MEDICINE = "/api/medications/{id}"
 
 
 }

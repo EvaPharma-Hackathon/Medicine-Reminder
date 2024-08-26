@@ -30,9 +30,9 @@ fun Medicine.getStatus(): Status
 
 }
 
-fun Medicine.getMedicationFrequencyType(): FrequencyType
+fun Medicine.getMedicationFrequencyType(): PeriodType
 {
-    return FrequencyType.fromString(frequencyType ?: "") ?: FrequencyType.DAILY
+    return PeriodType.fromString(frequencyType ?: "") ?: PeriodType.DAY
 }
 
 fun Medicine.getMedicationPeriodType(): PeriodType
