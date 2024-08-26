@@ -270,16 +270,22 @@ class MedicineDetailsViewModel @Inject constructor(
     }
 
     private fun generateTimesWithInterval(hour: Int, minute: Int, elements: Int): List<String> {
-        // Calculate the time interval based on the number of elements
-        val intervalHours = 24 / elements
+        // Calculate the total number of minutes in a day
+        val totalMinutesInDay = 24 * 60
+
+        // Calculate the time interval in minutes based on the number of elements
+        val intervalMinutes = totalMinutesInDay / elements
 
         // Initialize a Calendar instance with the given hour and minute
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
+        val calendar = Calendar.getInstance().apply {
+            set(Calendar.HOUR_OF_DAY, hour)
+            set(Calendar.MINUTE, minute)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
 
         // Create a SimpleDateFormat to format the output
-        val formatter = SimpleDateFormat("H:mm", Locale.getDefault())
+        val formatter = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
 
         // Generate the times based on the calculated interval
         val timeList = mutableListOf<String>()
@@ -288,9 +294,13 @@ class MedicineDetailsViewModel @Inject constructor(
             val time = formatter.format(calendar.time)
             timeList.add(time)
 
-            // Add the interval hours to the calendar
-            calendar.add(Calendar.HOUR_OF_DAY, intervalHours)
+            // Add the interval minutes to the calendar
+            calendar.add(Calendar.MINUTE, intervalMinutes)
         }
+
+        println("timeList: $timeList")
+
+
 
         return timeList
     }
@@ -306,6 +316,7 @@ class MedicineDetailsViewModel @Inject constructor(
 
         // Get the updated date
         val newDate = calendar.time
+
         return newDate
     }
 

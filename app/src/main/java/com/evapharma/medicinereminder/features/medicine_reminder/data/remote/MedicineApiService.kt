@@ -17,13 +17,13 @@ interface MedicineApiService {
     suspend fun getMedicineList(): Response<BaseResponse<List<Medicine>>>
 
 
-    @PUT(Endpoints.SET_REMINDER)
+    @POST(Endpoints.SET_REMINDER)
     suspend fun setReminder(
         @Body medicineUpdateRequest: MedicineUpdateRequest
     ): Response<BaseResponse<Any>>
 
 
-    @POST(Endpoints.UPDATE_STATUS)
+    @PUT(Endpoints.UPDATE_STATUS)
     suspend fun updateStatus(
         @Body request: MedicineStatusUpdateRequest
     ): Response<BaseResponse<Any>>
