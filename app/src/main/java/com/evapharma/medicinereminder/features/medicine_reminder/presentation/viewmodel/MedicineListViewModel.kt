@@ -47,7 +47,6 @@ class MedicineListViewModel @Inject constructor(
         collector: FlowCollector<MedicineListResult>
     ) {
 
-        println ("useCaseResponse: $useCaseResponse , isempty = ${useCaseResponse.isEmptyList()}")
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {

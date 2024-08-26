@@ -57,7 +57,6 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
 
     override fun onResume() {
         // Trigger the loading of medicine list
-        println("onResume in MedicineListFragment")
         super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.viewStates.collect { state ->
