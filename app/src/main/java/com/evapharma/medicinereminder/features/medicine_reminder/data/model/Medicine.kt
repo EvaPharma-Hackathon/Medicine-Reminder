@@ -39,3 +39,14 @@ fun Medicine.getMedicationPeriodType(): PeriodType
 {
     return PeriodType.fromString(periodType ?: "") ?: PeriodType.DAY
 }
+
+fun Medicine.toUpdateRequest(status : String? = null): MedicineUpdateRequest
+{
+    return MedicineUpdateRequest(
+        medicationId = id ?: 0,
+        durationFrom = durationFrom ?: "",
+        durationTo = durationTo ?: "",
+        status = status ?: "",
+        time = time ?: emptyList(),
+    )
+}

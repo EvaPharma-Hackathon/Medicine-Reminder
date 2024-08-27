@@ -68,7 +68,7 @@
                     android:layout_marginEnd="@dimen/margin_4"
                     android:text="@string/status"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/status"
@@ -110,14 +110,14 @@
             style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginHorizontal="@dimen/margin_6"
             android:layout_marginBottom="@dimen/margin_6">
 
             <Button
                 android:id="@+id/status_inverter_btn"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="start"
@@ -129,7 +129,7 @@
             <Button
                 android:id="@+id/stop_medication_btn"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="end"
@@ -148,7 +148,7 @@
             android:layout_marginHorizontal="@dimen/margin_6"
             android:text="@string/this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped"
             android:textColor="@color/hint"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textSize="14sp"
             android:textStyle="bold"
             app:drawableStartCompat="@drawable/ic_warning" />

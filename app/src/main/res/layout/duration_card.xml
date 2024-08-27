@@ -45,8 +45,8 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:text="@string/app_name"
-                    android:textColor="@color/hint"
-                    android:textSize="16sp" />
+                    android:textColor="@color/primary_shade_400"
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout

@@ -1,6 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
+import com.evapharma.medicinereminder.core.utils.Constants
 import com.evapharma.medicinereminder.databinding.FragmentMedicineDetailsBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
@@ -21,12 +23,19 @@ import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Stat
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationFrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationPeriodType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getStatus
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.toUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineDetailsAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters.MedicationTimesAdapter
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewmodel.MedicineDetailsViewModel
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineDetailsViewState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.time.temporal.ChronoUnit
+import java.util.Date
+import java.util.Locale
+import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class MedicineDetailsFragment :
@@ -73,6 +82,8 @@ class MedicineDetailsFragment :
 
 
     override fun onResume() {
+
+
         super.onResume()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.viewStates.collect { state ->
@@ -94,6 +105,7 @@ class MedicineDetailsFragment :
     private fun updateUI(state: MedicineDetailsViewState) {
         // Update the UI based on the state
 
+
         val medicineState = state.medicationViewState
         val medicineUpdateState = state.medicineUpdateViewState
         if (medicineState?.isLoading == true || medicineUpdateState?.isLoading == true) {
@@ -102,9 +114,13 @@ class MedicineDetailsFragment :
         } else {
             medicineState?.let { medState ->
 
+
                 if (medState.isSuccess) {
 
                     (activity as MainActivity).showMainContent()
+
+
+
 
                     medState.data?.let {
                         binding.title.text = it.name
@@ -115,6 +131,23 @@ class MedicineDetailsFragment :
                             )
                         )
 
+
+                        (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).setOnEditTime { timeIndex ->
+                            //TODO: show save changes button if active
+
+                            showTimePickerDialog(timeIndex = timeIndex)
+
+                            if (it.getStatus() == Status.ACTIVE) {
+
+                                binding.MedicationTimes.saveChangesBtn.root.visibility =
+                                    View.VISIBLE
+
+                            }
+
+                        }
+
+
+
                         if (it.dosage == null) {
 
                             binding.MedicineDetailsDosage.root.visibility = View.GONE
@@ -124,44 +157,59 @@ class MedicineDetailsFragment :
                                 "${it.dosage} \n ${it.direction}"
                         }
 
-                        if (it.durationFrom.isNullOrBlank() || it.durationTo.isNullOrBlank()) {
-                            binding.MedicineCardDuration.root.visibility = View.GONE
+                        binding.MedicineCardDuration.root.visibility = View.VISIBLE
+                        binding.MedicineCardDuration.setStartBtn.root.visibility = View.GONE
+
+                        val newPeriod =
+                            if (it.period == null || it.period <= 0) 1 else it.period
+                        var period =
+                            "$newPeriod ${it.getMedicationPeriodType().toString().lowercase()}"
+                        period = if (newPeriod == 1) period else "${period}s"
+                        binding.MedicineCardDuration.period.text = period
+                        if (it.durationFrom.isNullOrBlank()) {
+                            binding.MedicineCardDuration.DurationFrom.text = "Unspecified"
                         } else {
-                            val newPeriod =
-                                if (it.period == null || it.period <= 0) 1 else it.period
-                            var period =
-                                "$newPeriod ${it.getMedicationPeriodType().toString().lowercase()}"
-                            period = if (newPeriod == 1) period else "${period}s"
-                            binding.MedicineCardDuration.root.visibility = View.VISIBLE
                             binding.MedicineCardDuration.DurationFrom.text = it.durationFrom
+                        }
+                        if (it.durationTo.isNullOrBlank()) {
+                            binding.MedicineCardDuration.DurationTo.text = "Unspecified"
+                        } else {
                             binding.MedicineCardDuration.DurationTo.text = it.durationTo
-                            binding.MedicineCardDuration.period.text = period
                         }
 
-                        if (it.time.isNullOrEmpty()) {
-                            binding.MedicationTimes.root.visibility = View.GONE
-                        } else {
-                            val newFrequency =
-                                if (it.frequency == null || it.frequency <= 0) 1 else it.frequency
-                            val frequency = if (newFrequency == 1) getString(
-                                R.string.one_time_per,
+                        binding.MedicationTimes.root.visibility = View.VISIBLE
+
+                        val newFrequency =
+                            if (it.frequency == null || it.frequency <= 0) 1 else it.frequency
+                        val frequency = if (newFrequency == 1) getString(
+                            R.string.one_time_per,
+                            it.getMedicationFrequencyType().name.lowercase()
+                        ) else
+                            getString(
+                                R.string.times_per,
+                                newFrequency,
                                 it.getMedicationFrequencyType().name.lowercase()
-                            ) else
-                                getString(
-                                    R.string.times_per,
-                                    newFrequency,
-                                    it.getMedicationFrequencyType().name.lowercase()
-                                )
-                            binding.MedicationTimes.root.visibility = View.VISIBLE
-                            binding.MedicationTimes.frequency.text = frequency
+                            )
+                        binding.MedicationTimes.frequency.text = frequency
+
+                        it.time?.let { medicationTimes ->
                             (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
-                                newMedicationTimes = it.time ?: emptyList()
+                                newMedicationTimes = medicationTimes,
+                                isEditable = (it.getStatus() == Status.ACTIVE || it.getStatus() == Status.INACTIVE)
                             )
                         }
+
 
                         // buttons to show
                         when (it.getStatus()) {
                             Status.ACTIVE -> {
+
+                                binding.MedicationTimes.saveChangesBtn.btnAction.setOnClickListener {
+                                    binding.MedicationTimes.saveChangesBtn.root.visibility =
+                                        View.GONE
+                                    activateOrUpdate(Status.ACTIVE.apiName)
+                                }
+
                                 binding.statusInverterBtn.visibility = View.VISIBLE
                                 binding.statusInverterBtn.text =
                                     getString(R.string.snooze_medication_reminder)
@@ -221,27 +269,39 @@ class MedicineDetailsFragment :
                             }
 
                             Status.INACTIVE -> {
-                                binding.MedicationTimes.root.visibility = View.GONE
-                                binding.MedicineCardDuration.root.visibility = View.GONE
+                                binding.MedicationTimes.saveChangesBtn.root.visibility = View.GONE
+                                binding.MedicineCardDuration.setStartBtn.root.visibility =
+                                    View.VISIBLE
+                                binding.MedicineCardDuration.setStartBtn.btnAction.text =
+                                    "Edit Start Date"
+                                binding.MedicineCardDuration.setStartBtn.root.setOnClickListener {
+                                    showDatePickerDialog()
+                                }
+
+
+
                                 binding.isChronicWarningMessage.visibility = View.GONE
                                 binding.stopMedicationBtn.visibility = View.GONE
 
                                 binding.statusInverterBtn.visibility = View.VISIBLE
                                 binding.statusInverterBtn.text =
-                                    getString(R.string.set_medication_time)
+                                    getString(R.string.activate)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
-                                        requireContext(), R.color.primary_variant
+                                        requireContext(), R.color.success
                                     )
                                 )
                                 binding.statusInverterBtn.setOnClickListener {
-                                    showTimePickerDialog()
+
+                                    activateOrUpdate(Status.ACTIVE.apiName)
+
                                 }
-
-
+                                binding.statusInverterBtn.visibility =
+                                    if (viewModel.readyToActivate()) View.VISIBLE else View.GONE
                             }
 
                             Status.SNOOZED -> {
+                                binding.MedicationTimes.saveChangesBtn.root.visibility = View.GONE
                                 binding.statusInverterBtn.visibility = View.GONE
 
                                 if (it.isChronic == true) {
@@ -275,7 +335,7 @@ class MedicineDetailsFragment :
                 } else if (medState.isEmpty) {
                     (activity as MainActivity).showEmptyView(text = "Medicine not found")
                 } else if (medState.error != null) {
-                    (activity as MainActivity).showEmptyView(text = "Medicine not found")
+                    (activity as MainActivity).showErrorView()
                 } else {
                 }
             }
@@ -369,7 +429,7 @@ class MedicineDetailsFragment :
     }
 
 
-    private fun showTimePickerDialog() {
+    private fun showTimePickerDialog(timeIndex: Int) {
         // Get the current time as default values
         val calendar = Calendar.getInstance()
         val hour = calendar.get(Calendar.HOUR_OF_DAY)
@@ -383,15 +443,8 @@ class MedicineDetailsFragment :
                 viewModel.setMedicationTimes(
                     selectedHour,
                     selectedMinute,
-                    viewSelections = { durationFrom, durationTo, newMedicationTimes ->
-                        showDurationCard(durationFrom = durationFrom, durationTo = durationTo)
-                        showMedicationTimes(newMedicationTimes = newMedicationTimes)
-                        setActivateButtonData(
-                            durationFrom = durationFrom,
-                            durationTo = durationTo,
-                            medicationTimes = newMedicationTimes
-                        )
-                    })
+                    timeIndex
+                )
 
 
             },
@@ -403,16 +456,84 @@ class MedicineDetailsFragment :
     }
 
 
-    private fun showDurationCard(durationFrom: String, durationTo: String) {
-        binding.MedicineCardDuration.root.visibility = View.VISIBLE
-        binding.MedicineCardDuration.DurationFrom.text = durationFrom
-        binding.MedicineCardDuration.DurationTo.text = durationTo
+//    private fun showDurationCard(durationFrom: String, durationTo: String) {
+//        binding.MedicineCardDuration.root.visibility = View.VISIBLE
+//        binding.MedicineCardDuration.DurationFrom.text = durationFrom
+//        binding.MedicineCardDuration.DurationTo.text = durationTo
+//    }
+//
+//    private fun showMedicationTimes(newMedicationTimes: List<String>) {
+//        (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
+//            newMedicationTimes = newMedicationTimes
+//        )
+//        binding.MedicationTimes.root.visibility = View.VISIBLE
+//    }
+
+    private fun showDatePickerDialog() {
+        val today = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, year, month, dayOfMonth ->
+                // Handle the selected date here
+                val selectedDate = String.format("%04d-%02d-%02d", year, month, dayOfMonth)
+                // Create a SimpleDateFormat instance with the desired format
+                val dateFormat =
+                    SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())
+
+                val durationFrom: Date? = dateFormat.parse(selectedDate)
+
+                durationFrom?.let {
+
+                    viewModel.setDurations(selectedDate = it)
+                }
+
+            },
+            today.get(Calendar.YEAR),
+            today.get(Calendar.MONTH),
+            today.get(Calendar.DAY_OF_MONTH)
+        )
+
+        // Set the minimum date to today
+        datePickerDialog.datePicker.minDate = today.timeInMillis
+
+
+
+        datePickerDialog.show()
     }
 
-    private fun showMedicationTimes(newMedicationTimes: List<String>) {
-        (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
-            newMedicationTimes = newMedicationTimes
-        )
-        binding.MedicationTimes.root.visibility = View.VISIBLE
+    fun allTimesHaveAtLeastOneHourDifference(): Boolean {
+        // Parse time strings into LocalTime instances
+        val timeStrings = viewModel.currentMedicine?.time ?: emptyList()
+        val times = timeStrings.map { LocalTime.parse(it) }
+
+        // Check if every pair of times has at least a 1-hour difference
+        for (i in times.indices) {
+            for (j in i + 1 until times.size) {
+                val time1 = times[i]
+                val time2 = times[j]
+                val diffInMinutes = ChronoUnit.MINUTES.between(time1, time2).absoluteValue
+                if (diffInMinutes < 60) {
+                    showToast("${timeStrings[i].dropLast(3)} and ${timeStrings[j].dropLast(3)} should have at least a 1-hour difference")
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
+
+    private fun activateOrUpdate(status: String) {
+        if (allTimesHaveAtLeastOneHourDifference()) {
+            viewModel.currentMedicine?.let { it1 ->
+                viewModel.executeAction(
+                    MedicineDetailsAction.UpdateMedicine(
+                        it1.toUpdateRequest(status = status)
+                    )
+                )
+
+            }
+        }
     }
 }

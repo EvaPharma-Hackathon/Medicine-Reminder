@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:textStyle=""
         android:background="@android:color/transparent"
-        android:text="@string/app_name"
+        android:text="Save Changes"
         android:textColor="@color/primary_variant" />
 </com.google.android.material.card.MaterialCardView>

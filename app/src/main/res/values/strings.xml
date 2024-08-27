@@ -154,7 +154,7 @@
     <string name="duration">Duration</string>
     <string name="to">To</string>
     <string name="status">Status:</string>
-    <string name="snooze_medication_reminder">Snooze Medication Reminder</string>
+    <string name="snooze_medication_reminder">Snooze for 7 Days</string>
     <string name="stop_medication">Stop Medication</string>
     <string name="dosage">Dosage</string>
     <string name="titration">Titration</string>

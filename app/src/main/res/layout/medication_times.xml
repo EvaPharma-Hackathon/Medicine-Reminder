@@ -30,9 +30,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="@string/medication_times"
                     android:layout_weight="1"
                     android:gravity="start"
+                    android:text="@string/medication_times"
                     android:textColor="@color/primary_color"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -45,7 +45,7 @@
                     android:gravity="end"
                     android:text="@string/app_name"
                     android:textColor="@color/primary_shade_400"
-                    android:textSize="18sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
 
@@ -59,6 +59,16 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="2"
                 tools:listitem="@layout/time_view" />
+
+
+            <include
+                android:id="@+id/save_changes_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone"
+
+                layout="@layout/rounded_button" />
 
 
         </LinearLayout>
