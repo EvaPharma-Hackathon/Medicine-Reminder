@@ -11,12 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.R
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentMedicineDetailsBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationFrequencyType
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationPeriodType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getStatus
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineDetailsAction
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters.MedicationTimesAdapter
@@ -58,6 +61,13 @@ class MedicineDetailsFragment :
             findNavController().navigateUp()
         }
 
+        (activity as? MainActivity)?.setTryAgainListener {
+            viewModel.executeAction(
+                MedicineDetailsAction.LoadMedicine(
+                    medicineId = medicineId?.toInt() ?: 0
+                )
+            )
+        }
 
     }
 
@@ -80,19 +90,6 @@ class MedicineDetailsFragment :
         )
     }
 
-    private fun showLoadingSpinner() {
-        // Show loading indicator
-        binding.progressBar.visibility = View.VISIBLE
-        binding.nestedScrollView.visibility = View.GONE
-
-    }
-
-    private fun hideLoadingSpinner() {
-        // Hide loading indicator
-        binding.progressBar.visibility = View.GONE
-        binding.nestedScrollView.visibility = View.VISIBLE
-    }
-
 
     private fun updateUI(state: MedicineDetailsViewState) {
         // Update the UI based on the state
@@ -100,14 +97,14 @@ class MedicineDetailsFragment :
         val medicineState = state.medicationViewState
         val medicineUpdateState = state.medicineUpdateViewState
         if (medicineState?.isLoading == true || medicineUpdateState?.isLoading == true) {
-            showLoadingSpinner()
+            (activity as MainActivity).showLoadingSpinner()
 
         } else {
             medicineState?.let { medState ->
 
                 if (medState.isSuccess) {
 
-                    hideLoadingSpinner()
+                    (activity as MainActivity).showMainContent()
 
                     medState.data?.let {
                         binding.title.text = it.name
@@ -123,21 +120,40 @@ class MedicineDetailsFragment :
                             binding.MedicineDetailsDosage.root.visibility = View.GONE
                         } else {
                             binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
-                            binding.MedicineDetailsDosage.details.text = "${it.dosage} \n ${it.direction}"
+                            binding.MedicineDetailsDosage.details.text =
+                                "${it.dosage} \n ${it.direction}"
                         }
 
                         if (it.durationFrom.isNullOrBlank() || it.durationTo.isNullOrBlank()) {
                             binding.MedicineCardDuration.root.visibility = View.GONE
                         } else {
+                            val newPeriod =
+                                if (it.period == null || it.period <= 0) 1 else it.period
+                            var period =
+                                "$newPeriod ${it.getMedicationPeriodType().toString().lowercase()}"
+                            period = if (newPeriod == 1) period else "${period}s"
                             binding.MedicineCardDuration.root.visibility = View.VISIBLE
                             binding.MedicineCardDuration.DurationFrom.text = it.durationFrom
                             binding.MedicineCardDuration.DurationTo.text = it.durationTo
+                            binding.MedicineCardDuration.period.text = period
                         }
 
                         if (it.time.isNullOrEmpty()) {
                             binding.MedicationTimes.root.visibility = View.GONE
                         } else {
+                            val newFrequency =
+                                if (it.frequency == null || it.frequency <= 0) 1 else it.frequency
+                            val frequency = if (newFrequency == 1) getString(
+                                R.string.one_time_per,
+                                it.getMedicationFrequencyType().name.lowercase()
+                            ) else
+                                getString(
+                                    R.string.times_per,
+                                    newFrequency,
+                                    it.getMedicationFrequencyType().name.lowercase()
+                                )
                             binding.MedicationTimes.root.visibility = View.VISIBLE
+                            binding.MedicationTimes.frequency.text = frequency
                             (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
                                 newMedicationTimes = it.time ?: emptyList()
                             )
@@ -147,7 +163,8 @@ class MedicineDetailsFragment :
                         when (it.getStatus()) {
                             Status.ACTIVE -> {
                                 binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text = getString(R.string.snooze_medication_reminder)
+                                binding.statusInverterBtn.text =
+                                    getString(R.string.snooze_medication_reminder)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
                                         requireContext(), R.color.primary_variant
@@ -176,7 +193,8 @@ class MedicineDetailsFragment :
                                 } else {
                                     binding.stopMedicationBtn.visibility = View.VISIBLE
                                     binding.isChronicWarningMessage.visibility = View.GONE
-                                    binding.stopMedicationBtn.text = getString(R.string.stop_medication)
+                                    binding.stopMedicationBtn.text =
+                                        getString(R.string.stop_medication)
                                     binding.stopMedicationBtn.setBackgroundColor(
                                         ContextCompat.getColor(
                                             requireContext(), R.color.error
@@ -255,17 +273,16 @@ class MedicineDetailsFragment :
                         }
                     }
                 } else if (medState.isEmpty) {
-                    hideLoadingSpinner()
-                    // Show empty state UI
+                    (activity as MainActivity).showEmptyView(text = "Medicine not found")
                 } else if (medState.error != null) {
-                    hideLoadingSpinner()
+                    (activity as MainActivity).showEmptyView(text = "Medicine not found")
                 } else {
                 }
             }
 
             medicineUpdateState?.let { medUpdateStatus ->
                 if (medUpdateStatus.isSuccess) {
-                    hideLoadingSpinner()
+                    (activity as MainActivity).showMainContent()
                     // show toast
                     showToast(getString(R.string.medicine_updated_successfully))
                     viewModel.executeAction(
@@ -275,7 +292,7 @@ class MedicineDetailsFragment :
                     )
 
                 } else if (medUpdateStatus.error != null) {
-                    hideLoadingSpinner()
+                    (activity as MainActivity).showMainContent()
                     // show error toast
                     showToast(getString(R.string.error_updating_medicine_status))
 
