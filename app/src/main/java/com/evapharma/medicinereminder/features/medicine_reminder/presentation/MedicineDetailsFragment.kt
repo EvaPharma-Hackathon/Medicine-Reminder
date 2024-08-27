@@ -364,39 +364,9 @@ class MedicineDetailsFragment :
     }
 
     private fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
-    private fun setActivateButtonData(
-        durationFrom: String, durationTo: String, medicationTimes: List<String>
-    ) {
-
-        binding.MedicationTimes.root.visibility = View.VISIBLE
-
-        binding.stopMedicationBtn.text = getString(R.string.activate)
-
-        binding.stopMedicationBtn.setBackgroundColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.success
-            )
-        )
-        binding.stopMedicationBtn.isEnabled = true
-
-        binding.stopMedicationBtn.setOnClickListener {
-            viewModel.executeAction(
-                MedicineDetailsAction.UpdateMedicine(
-                    MedicineUpdateRequest(
-                        medicationId = medicineId?.toInt() ?: 0,
-                        status = Status.ACTIVE.apiName,
-                        durationFrom = durationFrom,
-                        durationTo = durationTo,
-                        time = medicationTimes
-                    )
-                )
-            )
-        }
-        binding.stopMedicationBtn.visibility = View.VISIBLE
-    }
 
 
     private fun showConfirmationDialog(
@@ -455,20 +425,6 @@ class MedicineDetailsFragment :
 
     }
 
-
-//    private fun showDurationCard(durationFrom: String, durationTo: String) {
-//        binding.MedicineCardDuration.root.visibility = View.VISIBLE
-//        binding.MedicineCardDuration.DurationFrom.text = durationFrom
-//        binding.MedicineCardDuration.DurationTo.text = durationTo
-//    }
-//
-//    private fun showMedicationTimes(newMedicationTimes: List<String>) {
-//        (binding.MedicationTimes.medicationsTimesRecyclerView.adapter as MedicationTimesAdapter).updateData(
-//            newMedicationTimes = newMedicationTimes
-//        )
-//        binding.MedicationTimes.root.visibility = View.VISIBLE
-//    }
-
     private fun showDatePickerDialog() {
         val today = Calendar.getInstance()
 
@@ -502,7 +458,7 @@ class MedicineDetailsFragment :
         datePickerDialog.show()
     }
 
-    fun allTimesHaveAtLeastOneHourDifference(): Boolean {
+    private fun allTimesHaveAtLeastOneHourDifference(): Boolean {
         // Parse time strings into LocalTime instances
         val timeStrings = viewModel.currentMedicine?.time ?: emptyList()
         val times = timeStrings.map { LocalTime.parse(it) }
