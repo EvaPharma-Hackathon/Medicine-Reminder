@@ -3,6 +3,7 @@ package com.evapharma.medicinereminder.features.auth.presentation.view
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.evapharma.medicinereminder.MainActivity
 import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.databinding.FragmentSplashBinding
 import com.evapharma.medicinereminder.features.auth.data.model.LoginRequest
@@ -23,6 +24,17 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
 
     override fun onFragmentCreated() {
 
+        (activity as? MainActivity)?.setTryAgainListener {
+            // Trigger login process
+            viewModel.login(
+                LoginRequest(
+                    deviceToken = "deviceToken",
+                    os = "Android",
+                    phoneNumber = "123"
+                )
+            )
+        }
+
 
         // Trigger login process
         viewModel.login(
@@ -33,6 +45,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
             )
         )
 
+
         // Observe login state
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.loginState.collectLatest { state ->
@@ -40,9 +53,17 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
                     val action =
                         SplashFragmentDirections.actionSplashFragmentToMedicineListFragment()
                     findNavController().navigate(action)
+                } else if (state.isLoading) {
+                    (activity as? MainActivity)?.showLoadingSpinner()
+
+                } else {
+                    (activity as? MainActivity)?.showErrorView()
                 }
+
             }
         }
 
     }
+
+
 }

@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var emptyView: LinearLayout? = null
     private var navHostFragment: FragmentContainerView? = null
     private var loadingSpinnerView: ProgressBar? = null
+    private var errorView : View? = null
 
 
 
@@ -46,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         emptyView = binding.emptyState.root
         navHostFragment = binding.navHostFragment
         loadingSpinnerView = binding.loadingSpinner
+        errorView = binding.errorState.root
 
         // Check and request notification permission for Android 13+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -64,26 +66,40 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showLoadingSpinner() {
+        loadingSpinnerView?.visibility = View.VISIBLE
+        errorView?.visibility = View.GONE
         emptyView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
-        loadingSpinnerView?.visibility = View.VISIBLE
     }
 
     fun showEmptyView(text: String = getString(R.string.no_medicines_found)) {
         binding.emptyState.titleText.text = text
         emptyView?.visibility = View.VISIBLE
+        errorView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
         loadingSpinnerView?.visibility = View.GONE
     }
 
     fun showMainContent() {
-        emptyView?.visibility = View.GONE
         navHostFragment?.visibility = View.VISIBLE
+        errorView?.visibility = View.GONE
+        emptyView?.visibility = View.GONE
+        loadingSpinnerView?.visibility = View.GONE
+    }
+
+    fun showErrorView() {
+        errorView?.visibility = View.VISIBLE
+        emptyView?.visibility = View.GONE
+        navHostFragment?.visibility = View.GONE
         loadingSpinnerView?.visibility = View.GONE
     }
 
     fun setTryAgainListener(listener: () -> Unit) {
         binding.emptyState.btnText.setOnClickListener {
+            listener()
+        }
+
+        binding.errorState.btnOK.setOnClickListener {
             listener()
         }
     }

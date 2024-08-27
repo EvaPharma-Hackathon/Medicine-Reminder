@@ -25,6 +25,10 @@
         android:id="@+id/empty_state"
         layout="@layout/empty_view" />
 
+    <include
+        android:id="@+id/error_state"
+        layout="@layout/error_dialog_layout" />
+
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"

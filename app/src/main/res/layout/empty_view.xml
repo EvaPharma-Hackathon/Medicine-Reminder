@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:visibility="gone"
     android:orientation="vertical">
 
 
@@ -16,7 +15,7 @@
 
     <TextView
         android:id="@+id/title_text"
-        style="@style/TextAppearance.AppCompat.Headline"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -28,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary_color"
-        android:text="@string/please_try_again"
+        android:text="@string/retry"
 
         android:textColor="@color/white" />
 </LinearLayout>
