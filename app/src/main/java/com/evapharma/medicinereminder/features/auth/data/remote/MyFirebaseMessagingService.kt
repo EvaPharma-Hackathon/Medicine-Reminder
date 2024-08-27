@@ -50,9 +50,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val channelId = getString(R.string.default_notification_channel_id)
         val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
+        // Create NotificationBuilder with a small icon
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_launcher_foreground) // Set your small icon here
             .setContentTitle("Medicine Reminder")
-            .setContentText(medicineName)
+            .setContentText(medicineName ?: "No medicine specified")
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
@@ -61,11 +63,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         // Create notification channel if Android O or above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelName = "Medicine Reminder Notifications"
             val channel = NotificationChannel(
                 channelId,
-                "Medicine Reminder Notifications",
+                channelName,
                 NotificationManager.IMPORTANCE_DEFAULT
-            )
+            ).apply {
+                description = "Channel for Medicine Reminder notifications"
+            }
             notificationManager.createNotificationChannel(channel)
         }
 
@@ -80,5 +85,4 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             null
         }
     }
-
 }

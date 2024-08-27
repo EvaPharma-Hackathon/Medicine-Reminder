@@ -21,6 +21,7 @@ class AuthRepoImpl @Inject constructor(
 
         var response: DataState<String> = if (firebaseToken is DataState.Success) {
 
+            println("firebaseToken: ${firebaseToken.data}")
             authRemoteDataSource.login(loginRequest.copy(deviceToken = firebaseToken.data))
 
         } else {

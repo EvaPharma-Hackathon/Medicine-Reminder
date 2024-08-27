@@ -1,8 +1,6 @@
 package com.evapharma.medicinereminder.core.network
 
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.evapharma.medicinereminder.core.utils.Constants
-import com.evapharma.medicinereminder.core.utils.StringLocale
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -41,14 +39,10 @@ class BaseURLFactory {
             timeout: Long = 30,
             bearerToken: String = ""
         ): OkHttpClient {
-            val chuckerInterceptor =
-                ChuckerInterceptor.Builder(StringLocale.instance.appContextProvider.getAppContext())
-                    .build()
             val okHttpClient = OkHttpClient.Builder()
                 .connectTimeout(timeout, TimeUnit.SECONDS)
                 .writeTimeout(timeout, TimeUnit.SECONDS)
                 .readTimeout(timeout, TimeUnit.SECONDS)
-                .addInterceptor(chuckerInterceptor)
 
             val authInterceptor = Interceptor { chain ->
                 val originalRequest = chain.request()
