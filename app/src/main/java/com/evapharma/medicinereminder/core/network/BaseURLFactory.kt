@@ -4,6 +4,7 @@ import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.evapharma.medicinereminder.core.utils.Constants
 import com.evapharma.medicinereminder.core.utils.StringLocale
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,6 +18,7 @@ class BaseURLFactory {
         val gson = GsonBuilder().setLenient().create()
 
         var retrofit: Retrofit = provideRetrofit()
+
 
         fun resetBaseURL(url: String) {
             retrofit = Retrofit.Builder()
@@ -35,7 +37,10 @@ class BaseURLFactory {
                 .build()
 
 
-        private fun provideOkHttpClient(timeout: Long = 30): OkHttpClient {
+        private fun provideOkHttpClient(
+            timeout: Long = 30,
+            bearerToken: String = ""
+        ): OkHttpClient {
             val chuckerInterceptor =
                 ChuckerInterceptor.Builder(StringLocale.instance.appContextProvider.getAppContext())
                     .build()
@@ -45,9 +50,26 @@ class BaseURLFactory {
                 .readTimeout(timeout, TimeUnit.SECONDS)
                 .addInterceptor(chuckerInterceptor)
 
-            return okHttpClient.build()
+            val authInterceptor = Interceptor { chain ->
+                val originalRequest = chain.request()
+                val requestWithToken = originalRequest.newBuilder()
+                    .header("Authorization", "Bearer $bearerToken")
+                    .build()
+                chain.proceed(requestWithToken)
+            }
+
+            return if (bearerToken.isEmpty()) okHttpClient.build() else okHttpClient.addInterceptor(
+                authInterceptor
+            ).build()
         }
 
+        fun setAccessToken(token: String) {
+            retrofit = Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .client(provideOkHttpClient(bearerToken = token))
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build()
+        }
     }
 
 }

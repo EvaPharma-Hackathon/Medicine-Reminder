@@ -1,6 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.data.remote
 
 import com.evapharma.medicinereminder.Endpoints
+import com.evapharma.medicinereminder.core.models.BaseResponse
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
@@ -9,23 +10,29 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 
 interface MedicineApiService {
 
     @GET(Endpoints.MEDICINE_LIST)
-    suspend fun getMedicineList(): Response<List<Medicine>>
+    suspend fun getMedicineList(): Response<BaseResponse<List<Medicine>>>
 
 
-    @PUT(Endpoints.SET_REMINDER)
+    @POST(Endpoints.SET_REMINDER)
     suspend fun setReminder(
         @Body medicineUpdateRequest: MedicineUpdateRequest
-    ): Response<Any>
+    ): Response<BaseResponse<Any>>
 
 
-    @POST(Endpoints.UPDATE_STATUS)
+    @PUT(Endpoints.UPDATE_STATUS)
     suspend fun updateStatus(
         @Body request: MedicineStatusUpdateRequest
-    ): Response<Any>
+    ): Response<BaseResponse<Any>>
+
+    @GET (Endpoints.MEDICINE)
+    suspend fun getMedicineById(
+        @Path("id") id: Int
+    ): Response<BaseResponse<Medicine>>
 
 }
 

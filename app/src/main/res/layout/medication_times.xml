@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:padding="@dimen/margin_8">
 
     <androidx.cardview.widget.CardView
@@ -19,15 +19,34 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/medication_times"
-                android:textColor="@color/primary_color"
-                android:layout_marginBottom="@dimen/margin_10"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="@dimen/margin_4"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/medication_times"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:textColor="@color/primary_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/frequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/app_name"
+                    android:textColor="@color/primary_shade_400"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
@@ -40,8 +59,6 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:itemCount="2"
                 tools:listitem="@layout/time_view" />
-
-
 
 
         </LinearLayout>

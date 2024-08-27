@@ -12,4 +12,7 @@ interface MedicineRemoteDataSource {
     suspend fun updateMedicine(medicineUpdateRequest: MedicineUpdateRequest): DataState<Any>
 
     suspend fun updateStatus(medicineStatusUpdateRequest: MedicineStatusUpdateRequest): DataState<Any>
+
+    suspend fun getMedicineById(medicineId: Int): DataState<Medicine>
+
 }

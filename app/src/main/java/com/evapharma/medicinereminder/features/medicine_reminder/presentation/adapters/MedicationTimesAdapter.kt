@@ -30,6 +30,7 @@ class MedicationTimesAdapter(
 
     fun updateData(newMedicationTimes: List<String>) {
         medicationTimes = newMedicationTimes
+        notifyDataSetChanged()
     }
 }
 

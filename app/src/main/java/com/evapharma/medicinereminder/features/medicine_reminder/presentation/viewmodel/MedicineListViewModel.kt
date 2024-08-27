@@ -10,7 +10,6 @@ import com.evapharma.medicinereminder.features.medicine_reminder.presentation.ac
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.result.MedicineListResult
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.viewstate.MedicineListViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
@@ -40,6 +39,8 @@ class MedicineListViewModel @Inject constructor(
         // add a delay to simulate a network call
 
         val useCaseResponse = getMedicineListUseCase()
+
+        println("useCaseResponse: $useCaseResponse")
         handleLoadMedicineListUseCaseResponse(useCaseResponse, collector)
     }
 
@@ -47,9 +48,7 @@ class MedicineListViewModel @Inject constructor(
         useCaseResponse: DataState<List<Medicine>>,
         collector: FlowCollector<MedicineListResult>
     ) {
-        // TODO: should be removed
-        delay(1000)
-        //
+
         when (useCaseResponse) {
             is DataState.Success -> {
                 if (useCaseResponse.isEmptyList()) {

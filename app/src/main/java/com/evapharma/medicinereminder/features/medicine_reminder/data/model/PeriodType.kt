@@ -2,10 +2,17 @@ package com.evapharma.medicinereminder.features.medicine_reminder.data.model
 
 enum class PeriodType {
     DAY,
-    WEEK;
+    WEEK,
+    MONTH;
 
     companion object {
         fun fromString(value: String): PeriodType? =
-            PeriodType.entries.find { it.name.lowercase() == value.lowercase() }
+            entries.find { it.name.lowercase() == value.lowercase() }
+                ?: when (value) {
+                    "يوم" -> DAY
+                    "إسبوع" -> WEEK
+                    "شهر" -> MONTH
+                    else -> null
+                }
     }
 }
