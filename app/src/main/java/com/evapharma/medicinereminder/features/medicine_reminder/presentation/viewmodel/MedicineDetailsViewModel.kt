@@ -39,6 +39,10 @@ class MedicineDetailsViewModel @Inject constructor(
         get() = MedicineDetailsViewState()
 
 
+    // needed state for editInfo
+    private var currentMedicine: Medicine? = null
+
+
     override fun handleAction(action: MedicineDetailsAction): Flow<MedicineDetailsResult> {
         return flow {
             when (action) {
@@ -55,6 +59,11 @@ class MedicineDetailsViewModel @Inject constructor(
                 is MedicineDetailsAction.LoadMedicine -> handleLoadMedicine(
                     collector = this,
                     action.medicineId
+                )
+
+                is MedicineDetailsAction.EditInfo -> handleEditInfo(
+                    collector = this,
+                    action.medicine
                 )
             }
         }
@@ -189,6 +198,7 @@ class MedicineDetailsViewModel @Inject constructor(
     ) {
         when (useCaseResponse) {
             is DataState.Success -> {
+                currentMedicine = useCaseResponse.data
                 collector.emit(
                     MedicineDetailsResult.Medicine(
                         MedicineDetailsViewState(
@@ -217,6 +227,26 @@ class MedicineDetailsViewModel @Inject constructor(
 
             }
         }
+    }
+
+
+    /// -----------------------handle Edit Info Action---------------------------------------------/////
+
+    private suspend fun handleEditInfo(
+        collector: FlowCollector<MedicineDetailsResult>,
+        medicine: Medicine
+    ) {
+        currentMedicine = medicine
+        collector.emit(
+            MedicineDetailsResult.Medicine(
+                MedicineDetailsViewState(
+                    medicationViewState = MedicineViewState(
+                        isSuccess = true,
+                        data = medicine
+                    )
+                )
+            )
+        )
     }
 
     /// required functions
@@ -249,7 +279,8 @@ class MedicineDetailsViewModel @Inject constructor(
                     )
                 )
 
-                val newFrequency = if (medication.frequency == null || medication.frequency <= 0) 1 else medication.frequency
+                val newFrequency =
+                    if (medication.frequency == null || medication.frequency <= 0) 1 else medication.frequency
 
 
                 medicationTimes = generateTimesWithInterval(
