@@ -1,10 +1,14 @@
 package com.evapharma.medicinereminder
 
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
@@ -42,6 +46,21 @@ class MainActivity : AppCompatActivity() {
         emptyView = binding.emptyState.root
         navHostFragment = binding.navHostFragment
         loadingSpinnerView = binding.loadingSpinner
+
+        // Check and request notification permission for Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestNotificationPermission()
+        }
+    }
+
+    // Function to request notification permission
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    private fun requestNotificationPermission() {
+        if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) !=
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 
     fun showLoadingSpinner() {
