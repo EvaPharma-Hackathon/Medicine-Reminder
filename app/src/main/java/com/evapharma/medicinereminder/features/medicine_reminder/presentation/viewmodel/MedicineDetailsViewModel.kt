@@ -246,14 +246,13 @@ class MedicineDetailsViewModel @Inject constructor(
         collector: FlowCollector<MedicineDetailsResult>,
         medicine: Medicine
     ) {
-
-        currentMedicine = medicine
+        currentMedicine = medicine.copy(time = sortTimesAscending(medicine.time ?: emptyList()))
         collector.emit(
             MedicineDetailsResult.Medicine(
                 MedicineDetailsViewState(
                     medicationViewState = MedicineViewState(
                         isSuccess = true,
-                        data = medicine
+                        data = currentMedicine
                     )
                 )
             )
@@ -393,5 +392,10 @@ class MedicineDetailsViewModel @Inject constructor(
         return newDate
     }
 
+
+    private fun sortTimesAscending(times: List<String>): List<String> {
+        val (validTimes, emptyTimes) = times.partition { it.isNotEmpty() }
+        return validTimes.sorted() + emptyTimes
+    }
 
 }

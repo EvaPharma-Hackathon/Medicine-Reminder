@@ -93,14 +93,13 @@ class MedicineDetailsFragment :
 
 
         // Trigger the loading of medicine details
-        if (viewModel.currentMedicine == null)
-        {
-        viewModel.executeAction(
-            MedicineDetailsAction.LoadMedicine(
-                medicineId = medicineId?.toInt() ?: 0
+        if (viewModel.currentMedicine == null) {
+            viewModel.executeAction(
+                MedicineDetailsAction.LoadMedicine(
+                    medicineId = medicineId?.toInt() ?: 0
+                )
             )
-        )
-            }
+        }
     }
 
 
@@ -167,8 +166,7 @@ class MedicineDetailsFragment :
                         binding.MedicineCardDuration.root.visibility = View.VISIBLE
                         binding.MedicineCardDuration.setStartBtn.root.visibility = View.GONE
 
-                        val newPeriod =
-                            if (it.period == null || it.period <= 0) 1 else it.period
+                        val newPeriod = if (it.period == null || it.period <= 0) 1 else it.period
                         var period =
                             "$newPeriod ${it.getMedicationPeriodType().toString().lowercase()}"
                         period = if (newPeriod == 1) period else "${period}s"
@@ -176,12 +174,12 @@ class MedicineDetailsFragment :
                         if (it.durationFrom.isNullOrBlank()) {
                             binding.MedicineCardDuration.DurationFrom.text = "Unspecified"
                         } else {
-                            binding.MedicineCardDuration.DurationFrom.text = it.durationFrom
+                            binding.MedicineCardDuration.DurationFrom.text = convertDateFormat(it.durationFrom ?: "")
                         }
                         if (it.durationTo.isNullOrBlank()) {
                             binding.MedicineCardDuration.DurationTo.text = "Unspecified"
                         } else {
-                            binding.MedicineCardDuration.DurationTo.text = it.durationTo
+                            binding.MedicineCardDuration.DurationTo.text = convertDateFormat(it.durationTo ?: "")
                         }
 
 
@@ -191,14 +189,12 @@ class MedicineDetailsFragment :
                         val newFrequency =
                             if (it.frequency == null || it.frequency <= 0) 1 else it.frequency
                         val frequency = if (newFrequency == 1) getString(
-                            R.string.one_time_per,
+                            R.string.one_time_per, it.getMedicationFrequencyType().name.lowercase()
+                        ) else getString(
+                            R.string.times_per,
+                            newFrequency,
                             it.getMedicationFrequencyType().name.lowercase()
-                        ) else
-                            getString(
-                                R.string.times_per,
-                                newFrequency,
-                                it.getMedicationFrequencyType().name.lowercase()
-                            )
+                        )
                         binding.MedicationTimes.frequency.text = frequency
 
                         it.time?.let { medicationTimes ->
@@ -229,8 +225,7 @@ class MedicineDetailsFragment :
                                 )
                                 binding.statusInverterBtn.setOnClickListener {
 
-                                    showConfirmationDialog(
-                                        message = getString(R.string.are_you_sure_you_want_to_snooze_this_medication),
+                                    showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_snooze_this_medication),
                                         performAction = {
                                             viewModel.executeAction(
                                                 MedicineDetailsAction.UpdateMedicineStatus(
@@ -240,8 +235,7 @@ class MedicineDetailsFragment :
                                                     )
                                                 )
                                             )
-                                        }
-                                    )
+                                        })
                                 }
 
                                 if (it.isChronic == true) {
@@ -258,8 +252,7 @@ class MedicineDetailsFragment :
                                         )
                                     )
                                     binding.stopMedicationBtn.setOnClickListener {
-                                        showConfirmationDialog(
-                                            message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
+                                        showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
                                             performAction = {
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
@@ -270,8 +263,7 @@ class MedicineDetailsFragment :
                                                     )
                                                 )
                                                 findNavController().navigateUp()
-                                            }
-                                        )
+                                            })
                                     }
                                 }
 
@@ -293,8 +285,7 @@ class MedicineDetailsFragment :
                                 binding.stopMedicationBtn.visibility = View.GONE
 
                                 binding.statusInverterBtn.visibility = View.VISIBLE
-                                binding.statusInverterBtn.text =
-                                    getString(R.string.activate)
+                                binding.statusInverterBtn.text = getString(R.string.activate)
                                 binding.statusInverterBtn.setBackgroundColor(
                                     ContextCompat.getColor(
                                         requireContext(), R.color.success
@@ -320,8 +311,7 @@ class MedicineDetailsFragment :
                                     binding.stopMedicationBtn.visibility = View.VISIBLE
                                     binding.isChronicWarningMessage.visibility = View.GONE
                                     binding.stopMedicationBtn.setOnClickListener {
-                                        showConfirmationDialog(
-                                            message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
+                                        showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_stop_this_medication),
                                             performAction = {
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
@@ -332,16 +322,14 @@ class MedicineDetailsFragment :
                                                     )
                                                 )
                                                 findNavController().navigateUp()
-                                            }
-                                        )
+                                            })
                                     }
                                 }
                             }
 
                             else -> {
                                 binding.MedicationTimes.saveChangesBtn.root.visibility = View.GONE
-                                binding.MedicineCardDuration.setStartBtn.root.visibility =
-                                    View.GONE
+                                binding.MedicineCardDuration.setStartBtn.root.visibility = View.GONE
                                 binding.stopMedicationBtn.visibility = View.GONE
                                 binding.statusInverterBtn.visibility = View.GONE
                                 binding.isChronicWarningMessage.visibility = View.GONE
@@ -387,8 +375,7 @@ class MedicineDetailsFragment :
 
 
     private fun showConfirmationDialog(
-        message: String = getString(R.string.are_you_sure),
-        performAction: () -> Unit
+        message: String = getString(R.string.are_you_sure), performAction: () -> Unit
     ) {
         // Create an instance of AlertDialog.Builder
         val builder = AlertDialog.Builder(requireContext())
@@ -424,18 +411,14 @@ class MedicineDetailsFragment :
 
         // Create a TimePickerDialog and show it
         val timePickerDialog = TimePickerDialog(
-            requireContext(),
-            { _, selectedHour, selectedMinute ->
+            requireContext(), { _, selectedHour, selectedMinute ->
                 // Handle the selected time here
                 viewModel.setMedicationTimes(
-                    selectedHour,
-                    selectedMinute,
-                    timeIndex
+                    selectedHour, selectedMinute, timeIndex
                 )
 
 
-            },
-            hour, minute, true // true for 24-hour time, false for AM/PM
+            }, hour, minute, false // true for 24-hour time, false for AM/PM
         )
 
         timePickerDialog.show()
@@ -446,8 +429,7 @@ class MedicineDetailsFragment :
         val today = Calendar.getInstance()
 
         val datePickerDialog = DatePickerDialog(
-            requireContext(),
-            { _, year, month, dayOfMonth ->
+            requireContext(), { _, year, month, dayOfMonth ->
                 // Handle the selected date here
                 val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
                 // Create a SimpleDateFormat instance with the desired format
@@ -461,10 +443,7 @@ class MedicineDetailsFragment :
                     viewModel.setDurations(selectedDate = it)
                 }
 
-            },
-            today.get(Calendar.YEAR),
-            today.get(Calendar.MONTH),
-            today.get(Calendar.DAY_OF_MONTH)
+            }, today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DAY_OF_MONTH)
         )
 
         // Set the minimum date to today
@@ -473,6 +452,26 @@ class MedicineDetailsFragment :
 
 
         datePickerDialog.show()
+    }
+
+    private fun convertTo12HourFormat(time24: String): String {
+        // Split the input into hours, minutes, and seconds
+        val parts = time24.split(":")
+        var hour = parts[0].toInt()
+        val minutes = parts[1]
+
+        // Determine AM or PM
+        val period: String = if (hour >= 12) "PM" else "AM"
+
+        // Convert hour from 24-hour to 12-hour format
+        if (hour == 0) {
+            hour = 12 // Midnight case (00:XX:XX becomes 12:XX AM)
+        } else if (hour > 12) {
+            hour -= 12 // Convert hours > 12 to 12-hour format
+        }
+
+        // Format the time in 12-hour format with AM/PM
+        return "%02d:%s %s".format(hour, minutes, period)
     }
 
     private fun allTimesHaveAtLeastOneHourDifference(): Boolean {
@@ -487,13 +486,30 @@ class MedicineDetailsFragment :
                 val time2 = times[j]
                 val diffInMinutes = ChronoUnit.MINUTES.between(time1, time2).absoluteValue
                 if (diffInMinutes < 60) {
-                    showToast("${timeStrings[i].dropLast(3)} and ${timeStrings[j].dropLast(3)} should have at least a 1-hour difference")
+                    showToast(
+                        "${convertTo12HourFormat(timeStrings[i])} and ${
+                            convertTo12HourFormat(
+                                timeStrings[j]
+                            )
+                        } should have at least a 1-hour difference"
+                    )
                     return false
                 }
             }
         }
 
         return true
+    }
+
+    fun convertDateFormat(date: String): String {
+        // Split the date into year, month, and day
+        val parts = date.split("-")
+        val year = parts[0]
+        val month = parts[1]
+        val day = parts[2]
+
+        // Rearrange and return the date in DD-MM-YYYY format
+        return "$day-$month-$year"
     }
 
 
