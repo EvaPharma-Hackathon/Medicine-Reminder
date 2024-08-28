@@ -6,6 +6,7 @@ import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.isEmptyList
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
+import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.GetMedicineListUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.domain.usecases.UpdateMedicineStatusUseCase
 import com.evapharma.medicinereminder.features.medicine_reminder.presentation.action.MedicineListAction
@@ -33,7 +34,7 @@ class MedicineListViewModel @Inject constructor(
             when (action) {
                 is MedicineListAction.LoadMedicineList -> handleLoadMedicineList(collector = this)
                 is MedicineListAction.UpdateMedicineStatus -> handleUpdateMedicineStatus(
-                    collector = this, request = action.request , showToast = action.showToast
+                    collector = this, request = action.request, showToast = action.showToast
                 )
             }
         }
@@ -66,11 +67,14 @@ class MedicineListViewModel @Inject constructor(
                         )
                     )
                 } else {
+                    // filter out stopped medicines
+                    val filteredList =
+                        useCaseResponse.data.filter { it.status?.lowercase() != Status.STOPPED.apiName.lowercase() }
                     collector.emit(
                         MedicineListResult.MedicineList(
                             MedicineListViewState(
                                 isSuccess = true,
-                                data = useCaseResponse.data,
+                                data = filteredList,
                             )
                         )
                     )
@@ -114,6 +118,7 @@ class MedicineListViewModel @Inject constructor(
                 showToast("Medicine status updated successfully")
                 executeAction(MedicineListAction.LoadMedicineList)
             }
+
             else -> {
                 showToast("Error updating medicine status")
             }
