@@ -337,7 +337,7 @@ class MedicineDetailsFragment :
                         }
                     }
                 } else if (medState.isEmpty) {
-                    (activity as MainActivity).showEmptyView(text = "Medicine not found")
+                    (activity as MainActivity).showEmptyView(text = "Medication not found")
                 } else if (medState.error != null) {
                     (activity as MainActivity).showErrorView()
                 } else {

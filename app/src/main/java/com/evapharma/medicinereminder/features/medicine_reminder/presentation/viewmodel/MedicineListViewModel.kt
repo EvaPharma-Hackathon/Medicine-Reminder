@@ -115,12 +115,12 @@ class MedicineListViewModel @Inject constructor(
     ) {
         when (response) {
             is DataState.Success -> {
-                showToast("Medicine status updated successfully")
+                showToast("Medication updated successfully")
                 executeAction(MedicineListAction.LoadMedicineList)
             }
 
             else -> {
-                showToast("Error updating medicine status")
+                showToast("Error updating medication status")
             }
         }
 
