@@ -5,8 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.evapharma.medicinereminder.databinding.TimeViewBinding
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 
 
 class MedicationTimesAdapter(
