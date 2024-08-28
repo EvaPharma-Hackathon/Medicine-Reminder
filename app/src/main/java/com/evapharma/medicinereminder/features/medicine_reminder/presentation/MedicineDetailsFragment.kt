@@ -30,12 +30,9 @@ import com.evapharma.medicinereminder.features.medicine_reminder.presentation.vi
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
-import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
 class MedicineDetailsFragment :
