@@ -165,7 +165,7 @@
     <string name="are_you_sure">Are you sure ?</string>
     <string name="confirm_action">Confirm Action</string>
     <string name="are_you_sure_you_want_to_stop_this_medication">Are you sure you want to stop this medication?</string>
-    <string name="are_you_sure_you_want_to_snooze_this_medication">Are you sure you want to snooze this medication?</string>
+    <string name="are_you_sure_you_want_to_snooze_this_medication">Are you sure you want to snooze this medication for 7 days?</string>
     <string name="are_you_sure_you_want_to_reactivate_this_medication">Are you sure you want to Reactivate this medication?</string>
     <string name="medicine_updated_successfully">Medicine updated successfully</string>
     <string name="no_medicines_found">No Medications Found</string>

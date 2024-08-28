@@ -61,8 +61,6 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         binding.topBar.title.text = getString(R.string.my_medications)
 
 
-
-
     }
 
     override fun onResume() {
@@ -87,19 +85,16 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
                     val wrapper = ContextThemeWrapper(requireContext(), R.style.CustomPopupMenu)
                     val popupMenu = PopupMenu(wrapper, currentView)
 
-                    // Add Option 1
-                    popupMenu.menu.add(0, 1, 0, "Snooze")
+                    // Add Options
+                    popupMenu.menu.add(0, 1, 0, getString(R.string.snooze_medication_reminder))
 
-                    // Conditionally add Option 2 (Delete)
-                    if (medicine.isChronic == false) {
-                        popupMenu.menu.add(0, 2, 1, "Stop")
-                    }
+                    popupMenu.menu.add(0, 2, 1, "Stop")
 
                     // Handle menu item clicks
                     popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
                         when (menuItem.title) {
-                            "Snooze" -> {
-                                showConfirmationDialog(message = "Are you sure you want to snooze this medication?") {
+                            getString(R.string.snooze_medication_reminder) -> {
+                                showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_snooze_this_medication)) {
                                     medicine.id?.let {
                                         viewModel.executeAction(
                                             MedicineListAction.UpdateMedicineStatus(
@@ -120,20 +115,26 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
                             }
 
                             "Stop" -> {
-                                showConfirmationDialog(message = "Are you sure you want to stop this medication?") {
-                                    medicine.id?.let {
-                                        viewModel.executeAction(
-                                            MedicineListAction.UpdateMedicineStatus(
-                                                MedicineStatusUpdateRequest(
-                                                    medicationId = it,
-                                                    status = Status.STOPPED.apiName
-                                                ),
-                                                showToast = { message ->
-                                                    showToast(message)
-                                                }
+                                if (medicine.isChronic == false) {
+
+
+                                    showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_stop_this_medication)) {
+                                        medicine.id?.let {
+                                            viewModel.executeAction(
+                                                MedicineListAction.UpdateMedicineStatus(
+                                                    MedicineStatusUpdateRequest(
+                                                        medicationId = it,
+                                                        status = Status.STOPPED.apiName
+                                                    ),
+                                                    showToast = { message ->
+                                                        showToast(message)
+                                                    }
+                                                )
                                             )
-                                        )
+                                        }
                                     }
+                                } else {
+                                    showToast(getString(R.string.this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped))
                                 }
                                 true
                             }
@@ -147,27 +148,46 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
                 }
 
                 Status.SNOOZED -> {
-                    if (medicine.isChronic == false) {
-                        val popupMenu = PopupMenu(requireContext(), binding.root)
 
-                        // Add Option 1
-                        popupMenu.menu.add(0, 2, 1, "Stop")
+                    val wrapper = ContextThemeWrapper(requireContext(), R.style.CustomPopupMenu)
+                    val popupMenu = PopupMenu(wrapper, currentView)
 
-                        // Handle menu item clicks
-                        popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
-                            when (menuItem.title) {
-                                "Stop" -> {
-                                    // TODO: call view model update status to stop
-                                    true
+                    // Add Options
+                    popupMenu.menu.add(0, 1, 0, "Stop")
+
+                    // Handle menu item clicks
+                    popupMenu.setOnMenuItemClickListener { menuItem: MenuItem ->
+                        when (menuItem.title) {
+                            "Stop" -> {
+                                if (medicine.isChronic == false) {
+                                    showConfirmationDialog(message = getString(R.string.are_you_sure_you_want_to_stop_this_medication)) {
+                                        medicine.id?.let {
+                                            viewModel.executeAction(
+                                                MedicineListAction.UpdateMedicineStatus(
+                                                    MedicineStatusUpdateRequest(
+                                                        medicationId = it,
+                                                        status = Status.STOPPED.apiName
+                                                    ),
+                                                    showToast = { message ->
+                                                        showToast(message)
+                                                    }
+                                                )
+                                            )
+                                        }
+                                    }
+                                } else {
+                                    showToast(getString(R.string.this_is_a_medication_to_a_chronic_disease_so_it_can_t_be_stopped))
                                 }
-
-                                else -> false
+                                true
                             }
-                        }
 
-                        // Show the PopupMenu
-                        popupMenu.show()
+                            else -> false
+                        }
                     }
+
+                    // Show the PopupMenu
+                    popupMenu.show()
+
                 }
 
                 else -> {}

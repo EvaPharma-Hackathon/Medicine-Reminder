@@ -7,6 +7,7 @@
 
     <!-- Top Bar -->
     <LinearLayout
+        android:layout_marginTop="@dimen/margin_10"
         android:id="@+id/medicineDetailsTopBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -26,7 +27,9 @@
             android:background="@drawable/circular_ripple"
             android:contentDescription="@string/back"
             android:scaleType="fitCenter"
-            android:src="@drawable/back_arrow_v2" />
+            android:src="@drawable/ic_back_arrow_icon"
+            android:backgroundTint="@color/primary_shade_100"
+            app:tint="@color/black" />
 
         <!-- Title centered in Toolbar -->
         <TextView
