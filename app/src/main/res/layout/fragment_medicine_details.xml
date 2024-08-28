@@ -83,6 +83,9 @@
             <include
                 android:id="@+id/MedicineDetailsDosage"
                 layout="@layout/general_info_card" />
+            <include
+                android:id="@+id/MedicineDetailsInstructions"
+                layout="@layout/general_info_card" />
 
             <include
                 android:id="@+id/MedicineCardDuration"

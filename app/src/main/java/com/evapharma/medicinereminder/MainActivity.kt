@@ -1,12 +1,12 @@
 package com.evapharma.medicinereminder
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var emptyView: LinearLayout? = null
     private var navHostFragment: FragmentContainerView? = null
     private var loadingSpinnerView: ProgressBar? = null
-    private var errorView : View? = null
-
-
+    private var errorView: View? = null
 
 
     // Declare the launcher at the top
@@ -74,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showEmptyView(text: String = getString(R.string.no_medicines_found)) {
         binding.emptyState.titleText.text = text
+
         emptyView?.visibility = View.VISIBLE
         errorView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
@@ -87,7 +86,13 @@ class MainActivity : AppCompatActivity() {
         loadingSpinnerView?.visibility = View.GONE
     }
 
-    fun showErrorView() {
+    fun showErrorView(
+        title: String = getString(R.string.warning),
+        content: String = getString(R.string.warning_desc)
+    ) {
+        binding.errorState.txtTitle.text = title
+        binding.errorState.txtdesc.text = content
+
         errorView?.visibility = View.VISIBLE
         emptyView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
@@ -103,9 +108,6 @@ class MainActivity : AppCompatActivity() {
             listener()
         }
     }
-
-
-
 
 
 }

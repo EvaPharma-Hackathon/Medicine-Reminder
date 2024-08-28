@@ -92,12 +92,15 @@ class MedicineDetailsFragment :
         }
 
 
-        // Trigger the loading of medicine list
+        // Trigger the loading of medicine details
+        if (viewModel.currentMedicine == null)
+        {
         viewModel.executeAction(
             MedicineDetailsAction.LoadMedicine(
                 medicineId = medicineId?.toInt() ?: 0
             )
         )
+            }
     }
 
 
@@ -146,16 +149,21 @@ class MedicineDetailsFragment :
                         }
 
 
+                        /// dosage data
+                        binding.MedicineDetailsDosage.root.visibility = View.VISIBLE
+                        binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
+                        binding.MedicineDetailsDosage.details.text =
+                            it.dosage?.takeIf { dosage -> dosage > 0 }?.toString() ?: "No dosage"
 
-                        if (it.dosage == null) {
+                        /// Instructions data
+                        binding.MedicineDetailsInstructions.root.visibility = View.VISIBLE
+                        binding.MedicineDetailsInstructions.title.text = "Instructions"
+                        binding.MedicineDetailsInstructions.details.text =
+                            it.direction?.takeIf { direction -> direction.isNotBlank() }
+                                ?: "No instructions"
 
-                            binding.MedicineDetailsDosage.root.visibility = View.GONE
-                        } else {
-                            binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
-                            binding.MedicineDetailsDosage.details.text =
-                                "${it.dosage} \n ${it.direction}"
-                        }
 
+                        // Medication Duration data
                         binding.MedicineCardDuration.root.visibility = View.VISIBLE
                         binding.MedicineCardDuration.setStartBtn.root.visibility = View.GONE
 
@@ -176,6 +184,8 @@ class MedicineDetailsFragment :
                             binding.MedicineCardDuration.DurationTo.text = it.durationTo
                         }
 
+
+                        // Medication Times
                         binding.MedicationTimes.root.visibility = View.VISIBLE
 
                         val newFrequency =
@@ -199,7 +209,7 @@ class MedicineDetailsFragment :
                         }
 
 
-                        // buttons to show
+                        // buttons to show according to status
                         when (it.getStatus()) {
                             Status.ACTIVE -> {
 
@@ -439,7 +449,7 @@ class MedicineDetailsFragment :
             requireContext(),
             { _, year, month, dayOfMonth ->
                 // Handle the selected date here
-                val selectedDate = String.format("%04d-%02d-%02d", year, month+1, dayOfMonth)
+                val selectedDate = String.format("%04d-%02d-%02d", year, month + 1, dayOfMonth)
                 // Create a SimpleDateFormat instance with the desired format
                 val dateFormat =
                     SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())

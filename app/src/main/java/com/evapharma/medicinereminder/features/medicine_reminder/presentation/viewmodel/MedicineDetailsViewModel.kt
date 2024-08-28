@@ -24,13 +24,10 @@ import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.temporal.ChronoUnit
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
-import kotlin.math.absoluteValue
 
 @HiltViewModel
 class MedicineDetailsViewModel @Inject constructor(
@@ -107,7 +104,6 @@ class MedicineDetailsViewModel @Inject constructor(
             }
 
             else -> {
-
                 collector.emit(
                     MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
@@ -306,7 +302,6 @@ class MedicineDetailsViewModel @Inject constructor(
 
 
     }
-
 
 
     fun setDurations(selectedDate: Date) {

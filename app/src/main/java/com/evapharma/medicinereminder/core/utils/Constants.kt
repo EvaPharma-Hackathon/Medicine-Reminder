@@ -34,4 +34,7 @@ object Constants {
     const val DATA = "data"
     const val MESSAGE = "message"
 
+    const val NO_INTERNET_ERROR = "No internet connection"
+    const val NO_FIREBASE_TOKEN_ERROR = "No firebase token"
+
 }

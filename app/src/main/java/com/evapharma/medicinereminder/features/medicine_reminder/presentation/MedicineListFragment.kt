@@ -61,6 +61,8 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         binding.topBar.title.text = getString(R.string.my_medications)
 
 
+
+
     }
 
     override fun onResume() {
@@ -197,10 +199,10 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
             }
         } else if (state.isEmpty) {
 
-            (activity as? MainActivity)?.showEmptyView()
+            (activity as? MainActivity)?.showEmptyView(text = getString(R.string.no_medicines_found))
 
         } else if (state.error != null) {
-            (activity as? MainActivity)?.showMainContent()
+            (activity as? MainActivity)?.showErrorView()
         }
     }
 
