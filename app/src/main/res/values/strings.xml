@@ -170,7 +170,7 @@
     <string name="medicine_updated_successfully">Medicine updated successfully</string>
     <string name="no_medicines_found">No Medications Found</string>
     <string name="times_per">%1$d times per %2$s </string>
-    <string name="one_time_per">1 time per %1$s </string>
+    <string name="one_time_per">Once per %1$s </string>
 
 
 

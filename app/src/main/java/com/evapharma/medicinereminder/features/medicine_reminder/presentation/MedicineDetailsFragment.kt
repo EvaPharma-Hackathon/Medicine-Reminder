@@ -34,6 +34,7 @@ import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import java.util.Date
 import java.util.Locale
+import kotlin.math.abs
 import kotlin.math.absoluteValue
 
 @AndroidEntryPoint
@@ -475,23 +476,23 @@ class MedicineDetailsFragment :
     }
 
     private fun allTimesHaveAtLeastOneHourDifference(): Boolean {
-        // Parse time strings into LocalTime instances
+        // Parse time strings into minutes since midnight
         val timeStrings = viewModel.currentMedicine?.time ?: emptyList()
-        val times = timeStrings.map { LocalTime.parse(it) }
+        val timesInMinutes = timeStrings.map { timeToMinutes(it) }
 
         // Check if every pair of times has at least a 1-hour difference
-        for (i in times.indices) {
-            for (j in i + 1 until times.size) {
-                val time1 = times[i]
-                val time2 = times[j]
-                val diffInMinutes = ChronoUnit.MINUTES.between(time1, time2).absoluteValue
+        for (i in timesInMinutes.indices) {
+            for (j in i + 1 until timesInMinutes.size) {
+                val time1 = timesInMinutes[i]
+                val time2 = timesInMinutes[j]
+                val diffInMinutes = abs(time1 - time2)
                 if (diffInMinutes < 60) {
                     showToast(
                         "${convertTo12HourFormat(timeStrings[i])} and ${
                             convertTo12HourFormat(
                                 timeStrings[j]
                             )
-                        } should have at least a 1-hour difference"
+                        } should have at least 1-hour difference"
                     )
                     return false
                 }
@@ -500,6 +501,14 @@ class MedicineDetailsFragment :
 
         return true
     }
+
+    private fun timeToMinutes(time: String): Int {
+        val parts = time.split(":")
+        val hours = parts[0].toInt()
+        val minutes = parts[1].toInt()
+        return hours * 60 + minutes
+    }
+
 
     fun convertDateFormat(date: String): String {
         // Split the date into year, month, and day
