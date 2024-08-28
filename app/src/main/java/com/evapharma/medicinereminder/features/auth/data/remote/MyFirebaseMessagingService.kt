@@ -20,6 +20,8 @@ import kotlinx.coroutines.tasks.await
 class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     private val TAG = "MyFirebaseMsgService"
+    private val NOTIFICATION_ID = 1
+    private val CHANNEL_ID = "medicine_reminder_channel"
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
@@ -47,34 +49,38 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val channelId = getString(R.string.default_notification_channel_id)
         val defaultSoundUri: Uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
 
-        // Create NotificationBuilder with a small icon
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Set your small icon here
+        // Create NotificationBuilder with high priority and full-screen intent
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.clock_icon) // Set your small icon here
             .setContentTitle("Medicine Reminder")
             .setContentText(medicineName ?: "No medicine specified")
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)  // High priority for heads-up notification
+            .setDefaults(NotificationCompat.DEFAULT_ALL)  // Use default settings for sound, vibration, etc.
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)  // Set category as a reminder
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        // Create notification channel if Android O or above
+        // Create notification channel with high importance if Android O or above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channelName = "Medicine Reminder Notifications"
             val channel = NotificationChannel(
-                channelId,
+                CHANNEL_ID,
                 channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_HIGH  // Set high importance for heads-up notifications
             ).apply {
                 description = "Channel for Medicine Reminder notifications"
+                enableVibration(true)  // Enable vibration
+                enableLights(true)  // Enable LED light
             }
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
     }
 
     suspend fun getFirebaseToken(): String? {
