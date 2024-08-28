@@ -18,7 +18,6 @@ import com.evapharma.medicinereminder.core.BaseFragment
 import com.evapharma.medicinereminder.core.utils.Constants
 import com.evapharma.medicinereminder.databinding.FragmentMedicineDetailsBinding
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
-import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Status
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationFrequencyType
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getMedicationPeriodType
@@ -329,7 +328,16 @@ class MedicineDetailsFragment :
                                 }
                             }
 
-                            else -> {}
+                            else -> {
+                                binding.MedicationTimes.saveChangesBtn.root.visibility = View.GONE
+                                binding.MedicineCardDuration.setStartBtn.root.visibility =
+                                    View.GONE
+                                binding.stopMedicationBtn.visibility = View.GONE
+                                binding.statusInverterBtn.visibility = View.GONE
+                                binding.isChronicWarningMessage.visibility = View.GONE
+
+
+                            }
                         }
                     }
                 } else if (medState.isEmpty) {
@@ -366,7 +374,6 @@ class MedicineDetailsFragment :
     private fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
-
 
 
     private fun showConfirmationDialog(
@@ -432,7 +439,7 @@ class MedicineDetailsFragment :
             requireContext(),
             { _, year, month, dayOfMonth ->
                 // Handle the selected date here
-                val selectedDate = String.format("%04d-%02d-%02d", year, month, dayOfMonth)
+                val selectedDate = String.format("%04d-%02d-%02d", year, month+1, dayOfMonth)
                 // Create a SimpleDateFormat instance with the desired format
                 val dateFormat =
                     SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())
