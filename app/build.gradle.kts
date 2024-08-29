@@ -87,7 +87,8 @@ dependencies {
 
 
     // Import the Firebase BoM
-    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.bom)) // Make sure to use the latest version
+    implementation(libs.firebase.messaging)
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
 

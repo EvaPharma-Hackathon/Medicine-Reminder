@@ -29,7 +29,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
             viewModel.login(
                 LoginRequest(
                     deviceToken = "deviceToken",
-                    os = "Android",
+                    os = "android",
                     phoneNumber = "123"
                 )
             )
@@ -40,7 +40,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
         viewModel.login(
             LoginRequest(
                 deviceToken = "deviceToken",
-                os = "Android",
+                os = "android",
                 phoneNumber = "123"
             )
         )

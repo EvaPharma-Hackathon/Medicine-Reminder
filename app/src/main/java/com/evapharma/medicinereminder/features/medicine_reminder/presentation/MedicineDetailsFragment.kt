@@ -147,10 +147,13 @@ class MedicineDetailsFragment :
 
 
                         /// dosage data
+                        val dosageMessage = when {
+                            it.dosage == null || it.dosage <= 0 -> "No dosage"
+                            else -> "${it.dosage} ${it.unit.orEmpty()}"
+                        }
                         binding.MedicineDetailsDosage.root.visibility = View.VISIBLE
                         binding.MedicineDetailsDosage.title.text = getString(R.string.dosage)
-                        binding.MedicineDetailsDosage.details.text =
-                            it.dosage?.takeIf { dosage -> dosage > 0 }?.toString() ?: "No dosage"
+                        binding.MedicineDetailsDosage.details.text = dosageMessage
 
                         /// Instructions data
                         binding.MedicineDetailsInstructions.root.visibility = View.VISIBLE
@@ -172,12 +175,14 @@ class MedicineDetailsFragment :
                         if (it.durationFrom.isNullOrBlank()) {
                             binding.MedicineCardDuration.DurationFrom.text = "Unspecified"
                         } else {
-                            binding.MedicineCardDuration.DurationFrom.text = convertDateFormat(it.durationFrom ?: "")
+                            binding.MedicineCardDuration.DurationFrom.text =
+                                convertDateFormat(it.durationFrom ?: "")
                         }
                         if (it.durationTo.isNullOrBlank()) {
                             binding.MedicineCardDuration.DurationTo.text = "Unspecified"
                         } else {
-                            binding.MedicineCardDuration.DurationTo.text = convertDateFormat(it.durationTo ?: "")
+                            binding.MedicineCardDuration.DurationTo.text =
+                                convertDateFormat(it.durationTo ?: "")
                         }
 
 
@@ -483,7 +488,7 @@ class MedicineDetailsFragment :
                 val time1 = timesInMinutes[i]
                 val time2 = timesInMinutes[j]
                 val diffInMinutes = abs(time1 - time2)
-                if (diffInMinutes < 60) {
+                if (diffInMinutes < 60 || timesHaveAtLeastOneHourDifferenceCornerCase(timeStrings[i], timeStrings[j])) {
                     showToast(
                         "${convertTo12HourFormat(timeStrings[i])} and ${
                             convertTo12HourFormat(
@@ -504,6 +509,16 @@ class MedicineDetailsFragment :
         val hours = parts[0].toInt()
         val minutes = parts[1].toInt()
         return hours * 60 + minutes
+    }
+
+    private fun timesHaveAtLeastOneHourDifferenceCornerCase(time1: String, time2: String): Boolean {
+        // corener case like 00:00 and 23:50
+        val (earlierTime, laterTime) = listOf(time1, time2).sorted()
+
+        val (hours1, minutes1) = earlierTime.split(":").map { it.toInt() }
+        val (hours2, minutes2) = laterTime.split(":").map { it.toInt() }
+
+        return (hours1 == 0 && hours2 == 23 && minutes2 > minutes1)
     }
 
 

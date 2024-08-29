@@ -18,6 +18,7 @@ data class Medicine(
     @SerializedName("frequencyType") val frequencyType: String?,
     @SerializedName("isChronic") val isChronic: Boolean?,
     @SerializedName("period") val period: Int?,
+    @SerializedName("unit") val unit: String?,
     @SerializedName("periodType") val periodType: String?,
 ) : Parcelable
 
