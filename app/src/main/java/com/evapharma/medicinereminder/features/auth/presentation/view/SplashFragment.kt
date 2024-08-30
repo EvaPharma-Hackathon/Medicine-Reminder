@@ -1,5 +1,6 @@
 package com.evapharma.medicinereminder.features.auth.presentation.view
 
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -50,9 +51,19 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.loginState.collectLatest { state ->
                 if (state.isSuccess) {
-                    val action =
-                        SplashFragmentDirections.actionSplashFragmentToMedicineListFragment()
-                    findNavController().navigate(action)
+                    val id = arguments?.getInt("medicationId")
+                    Log.d("SPLASH", "onFragmentCreated id: $id")
+                    if (id != null && id != -1) {
+                        val action =
+                            SplashFragmentDirections.actionSplashFragmentToMedicineDetailsFragment(
+                                medicineId = id
+                            )
+                        findNavController().navigate(action)
+                    } else {
+                        val action =
+                            SplashFragmentDirections.actionSplashFragmentToMedicineListFragment()
+                        findNavController().navigate(action)
+                    }
                 } else if (state.isLoading) {
                     (activity as? MainActivity)?.showLoadingSpinner()
 

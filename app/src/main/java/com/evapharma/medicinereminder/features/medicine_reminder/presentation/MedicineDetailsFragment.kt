@@ -38,7 +38,7 @@ import kotlin.math.abs
 class MedicineDetailsFragment :
     BaseFragment<FragmentMedicineDetailsBinding, MedicineDetailsViewModel>() {
 
-    private var medicineId: String? = null
+    private var medicineId: Int? = null
 
     override fun initBinding(): FragmentMedicineDetailsBinding {
         return FragmentMedicineDetailsBinding.inflate(layoutInflater)
@@ -70,7 +70,7 @@ class MedicineDetailsFragment :
         (activity as? MainActivity)?.setTryAgainListener {
             viewModel.executeAction(
                 MedicineDetailsAction.LoadMedicine(
-                    medicineId = medicineId?.toInt() ?: 0
+                    medicineId = medicineId ?: -1
                 )
             )
         }
@@ -94,7 +94,7 @@ class MedicineDetailsFragment :
         if (viewModel.currentMedicine == null) {
             viewModel.executeAction(
                 MedicineDetailsAction.LoadMedicine(
-                    medicineId = medicineId?.toInt() ?: 0
+                    medicineId = medicineId ?: -1
                 )
             )
         }
@@ -233,7 +233,7 @@ class MedicineDetailsFragment :
                                             viewModel.executeAction(
                                                 MedicineDetailsAction.UpdateMedicineStatus(
                                                     MedicineStatusUpdateRequest(
-                                                        medicationId = medicineId?.toInt() ?: 0,
+                                                        medicationId = medicineId ?: -1,
                                                         status = Status.SNOOZED.apiName
                                                     )
                                                 )
@@ -260,7 +260,7 @@ class MedicineDetailsFragment :
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
                                                         MedicineStatusUpdateRequest(
-                                                            medicationId = medicineId?.toInt() ?: 0,
+                                                            medicationId = medicineId ?: -1,
                                                             status = Status.STOPPED.apiName
                                                         )
                                                     )
@@ -319,7 +319,7 @@ class MedicineDetailsFragment :
                                                 viewModel.executeAction(
                                                     MedicineDetailsAction.UpdateMedicineStatus(
                                                         MedicineStatusUpdateRequest(
-                                                            medicationId = medicineId?.toInt() ?: 0,
+                                                            medicationId = medicineId ?: -1,
                                                             status = Status.STOPPED.apiName
                                                         )
                                                     )
@@ -356,7 +356,7 @@ class MedicineDetailsFragment :
                     showToast(getString(R.string.medicine_updated_successfully))
                     viewModel.executeAction(
                         MedicineDetailsAction.LoadMedicine(
-                            medicineId = medicineId?.toInt() ?: 0
+                            medicineId = medicineId ?: -1
                         )
                     )
 

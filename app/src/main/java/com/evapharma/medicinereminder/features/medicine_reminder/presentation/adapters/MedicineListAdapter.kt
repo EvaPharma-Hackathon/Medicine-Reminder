@@ -12,7 +12,7 @@ import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getS
 
 class MedicineListAdapter(
     private var medicineList: List<Medicine>,
-    private val onItemClick: (medicineId: String) -> Unit
+    private val onItemClick: (medicineId: Int) -> Unit
 ) : RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder>() {
 
 
@@ -30,7 +30,7 @@ class MedicineListAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val selectedMedicine = medicineList[position]
-                    onItemClick(selectedMedicine.id.toString())
+                    onItemClick(selectedMedicine.id ?: -1)
                 }
             }
         }

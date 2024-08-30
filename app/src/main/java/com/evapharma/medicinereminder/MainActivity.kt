@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
@@ -11,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
+import androidx.navigation.fragment.NavHostFragment
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,6 +44,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+
+
+
+
+
+
+
         emptyView = binding.emptyState.root
         navHostFragment = binding.navHostFragment
         loadingSpinnerView = binding.loadingSpinner
@@ -51,6 +62,24 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestNotificationPermission()
         }
+
+
+        // Retrieve the id from the Intent
+        val id = intent?.getIntExtra("medicationId", -1) ?: -1
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Create a bundle with the id
+        val bundle = Bundle().apply {
+            putInt("medicationId", id)
+        }
+
+        // Set the nav graph with the bundle, ensuring that the SplashFragment gets the id
+        navController.setGraph(R.navigation.nav_graph, bundle)
+
+
     }
 
     // Function to request notification permission

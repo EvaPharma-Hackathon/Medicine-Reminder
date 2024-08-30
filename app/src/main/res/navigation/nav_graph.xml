@@ -10,6 +10,14 @@
         android:name="com.evapharma.medicinereminder.features.auth.presentation.view.SplashFragment"
         android:label="Splash Fragment"
         tools:layout="@layout/fragment_splash">
+
+        <argument
+            android:name="id"
+            android:defaultValue="-1"
+            app:argType="integer"
+            app:nullable="false" />
+
+
         <action
             android:id="@+id/action_splashFragment_to_MedicineListFragment"
             app:destination="@id/MedicineListFragment"
@@ -19,6 +27,16 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim"
             app:popUpTo="@id/SplashFragment"
             app:popUpToInclusive="true" />
+
+        <action
+            android:id="@+id/action_splashFragment_to_MedicineDetailsFragment"
+            app:destination="@id/MedicineDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
@@ -42,8 +60,8 @@
         tools:layout="@layout/fragment_medicine_details">
         <argument
             android:name="medicineId"
-            android:defaultValue=""
-            app:argType="string"
+            android:defaultValue="-1"
+            app:argType="integer"
             app:nullable="false" />
     </fragment>
 

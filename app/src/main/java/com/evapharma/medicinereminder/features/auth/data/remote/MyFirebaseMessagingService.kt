@@ -62,11 +62,13 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun sendNotification(title: String?, body: String?, medicationId: Int) {
-        Log.d(TAG, "sendNotification: $title , $body , $medicationId")
 
+        // Start MainActivity with the ID
         val intent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+            putExtra("medicationId", medicationId)
         }
+
 
         val pendingIntent = PendingIntent.getActivity(
             this,
