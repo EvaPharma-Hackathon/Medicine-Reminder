@@ -54,9 +54,9 @@ class MedicineListFragment : BaseFragment<FragmentMedicineListBinding, MedicineL
         binding.medicineListRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.medicineListRecyclerView.adapter = adapter
 
-        binding.topBar.leftIcon.setOnClickListener {
-            findNavController().navigateUp()
-        }
+//        binding.topBar.leftIcon.setOnClickListener {
+//            findNavController().navigateUp()
+//        }
 
         binding.topBar.title.text = getString(R.string.my_medications)
 

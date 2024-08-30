@@ -6,32 +6,34 @@
     android:background="@color/primary_color"
     android:padding="8dp">
 
-    <!-- Icon button -->
-    <ImageButton
-        android:id="@+id/leftIcon"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@drawable/circular_ripple"
-        android:contentDescription="@string/back"
-        android:src="@drawable/ic_back_arrow_icon"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+<!--    &lt;!&ndash; Icon button &ndash;&gt;-->
+<!--    <ImageButton-->
+<!--        android:id="@+id/leftIcon"-->
+<!--        android:layout_width="24dp"-->
+<!--        android:layout_height="24dp"-->
+<!--        android:background="@drawable/circular_ripple"-->
+<!--        android:contentDescription="@string/back"-->
+<!--        android:src="@drawable/ic_back_arrow_icon"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
 
-        app:tint="@color/white" />
+<!--        app:tint="@color/white" />-->
 
     <!-- Title centered in Toolbar -->
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="20sp"
+        android:gravity="center"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@id/leftIcon"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

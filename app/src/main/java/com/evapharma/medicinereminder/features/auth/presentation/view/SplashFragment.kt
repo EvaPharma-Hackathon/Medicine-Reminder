@@ -51,9 +51,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding, AuthViewModel>() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.loginState.collectLatest { state ->
                 if (state.isSuccess) {
-                    val id = arguments?.getInt("medicationId")
+                    val id = arguments?.getInt("medicationId") ?: -1
                     Log.d("SPLASH", "onFragmentCreated id: $id")
-                    if (id != null && id != -1) {
+                    if (id != -1 && id != 0) {
                         val action =
                             SplashFragmentDirections.actionSplashFragmentToMedicineDetailsFragment(
                                 medicineId = id
