@@ -94,7 +94,7 @@ class MedicineListViewModel @Inject constructor(
     }
 
 
-    // TODO: this implementation doesn't follow mvi principles but is made due to lack of time
+    // TODO: this implementation doesn't follow mvi principles completely but is made like this due to lack of time
     private suspend fun handleUpdateMedicineStatus(
         collector: FlowCollector<MedicineListResult>,
         request: MedicineStatusUpdateRequest,

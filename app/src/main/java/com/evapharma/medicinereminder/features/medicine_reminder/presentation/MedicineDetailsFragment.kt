@@ -477,9 +477,8 @@ class MedicineDetailsFragment :
         return "%02d:%s %s".format(hour, minutes, period)
     }
 
-    private fun allTimesHaveAtLeastOneHourDifference(): Boolean {
+    private fun allTimesHaveAtLeastOneHourDifference(timeStrings: List<String>): Boolean {
         // Parse time strings into minutes since midnight
-        val timeStrings = viewModel.currentMedicine?.time ?: emptyList()
         val timesInMinutes = timeStrings.map { timeToMinutes(it) }
 
         // Check if every pair of times has at least a 1-hour difference
@@ -488,7 +487,11 @@ class MedicineDetailsFragment :
                 val time1 = timesInMinutes[i]
                 val time2 = timesInMinutes[j]
                 val diffInMinutes = abs(time1 - time2)
-                if (diffInMinutes < 60 || timesHaveAtLeastOneHourDifferenceCornerCase(timeStrings[i], timeStrings[j])) {
+                if (diffInMinutes < 60 || timesHaveAtLeastOneHourDifferenceCornerCase(
+                        timeStrings[i],
+                        timeStrings[j]
+                    )
+                ) {
                     showToast(
                         "${convertTo12HourFormat(timeStrings[i])} and ${
                             convertTo12HourFormat(
@@ -535,7 +538,7 @@ class MedicineDetailsFragment :
 
 
     private fun activateOrUpdate(status: String) {
-        if (allTimesHaveAtLeastOneHourDifference()) {
+        if (allTimesHaveAtLeastOneHourDifference(viewModel.currentMedicine?.time ?: emptyList())) {
             viewModel.currentMedicine?.let { it1 ->
                 viewModel.executeAction(
                     MedicineDetailsAction.UpdateMedicine(
