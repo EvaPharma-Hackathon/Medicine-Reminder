@@ -154,25 +154,26 @@
     <string name="duration">Duration</string>
     <string name="to">To</string>
     <string name="status">Status:</string>
-    <string name="snooze_medication_reminder">Snooze Medication Reminder</string>
+    <string name="snooze_medication_reminder">Snooze for 7 Days</string>
     <string name="stop_medication">Stop Medication</string>
     <string name="dosage">Dosage</string>
     <string name="titration">Titration</string>
     <string name="set_medication_time">Set Medication Time</string>
     <string name="reactivate_this_medication">Reactivate This Medication</string>
     <string name="activate">Activate</string>
-    <string name="error_updating_medicine_status">Error updating medicine status</string>
+    <string name="error_updating_medicine_status">Error updating medication status</string>
     <string name="are_you_sure">Are you sure ?</string>
     <string name="confirm_action">Confirm Action</string>
-    <string name="are_you_sure_you_want_to_stop_this_medication">Are you sure you want to stop this medication?</string>
-    <string name="are_you_sure_you_want_to_snooze_this_medication">Are you sure you want to snooze this medication?</string>
+    <string name="are_you_sure_you_want_to_stop_this_medication">Are you certain you want to stop this medication? Please note that stopping it will result in its permanent deletion.</string>
+    <string name="are_you_sure_you_want_to_snooze_this_medication">Are you sure you want to snooze this medication for 7 days?</string>
     <string name="are_you_sure_you_want_to_reactivate_this_medication">Are you sure you want to Reactivate this medication?</string>
-    <string name="medicine_updated_successfully">Medicine updated successfully</string>
+    <string name="medicine_updated_successfully">Medication updated successfully</string>
     <string name="no_medicines_found">No Medications Found</string>
     <string name="times_per">%1$d times per %2$s </string>
-    <string name="one_time_per">1 time per %1$s </string>
-
-
+    <string name="one_time_per">Once per %1$s </string>
+    <string name="instructions">Instructions</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="edit_start_date">Edit Start Date</string>
 
 
 </resources>

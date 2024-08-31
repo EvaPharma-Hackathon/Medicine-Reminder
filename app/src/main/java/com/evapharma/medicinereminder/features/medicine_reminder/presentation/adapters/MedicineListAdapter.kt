@@ -1,6 +1,7 @@
 package com.evapharma.medicinereminder.features.medicine_reminder.presentation.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -11,8 +12,15 @@ import com.evapharma.medicinereminder.features.medicine_reminder.data.model.getS
 
 class MedicineListAdapter(
     private var medicineList: List<Medicine>,
-    private val onItemClick: (medicineId: String) -> Unit
+    private val onItemClick: (medicineId: Int) -> Unit
 ) : RecyclerView.Adapter<MedicineListAdapter.MedicineViewHolder>() {
+
+
+    private lateinit var onLongPress: (Medicine , View) -> Unit
+
+    fun setOnLongPress(onLongPress: (Medicine, View) -> Unit) {
+        this.onLongPress = onLongPress
+    }
 
     inner class MedicineViewHolder(val binding: MedicineCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -22,7 +30,7 @@ class MedicineListAdapter(
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
                     val selectedMedicine = medicineList[position]
-                    onItemClick(selectedMedicine.id.toString())
+                    onItemClick(selectedMedicine.id ?: -1)
                 }
             }
         }
@@ -49,6 +57,10 @@ class MedicineListAdapter(
                     holder.itemView.context, color
                 )
             )
+        }
+        holder.binding.root.setOnLongClickListener {
+            onLongPress(medicineList[position] , it)
+            true
         }
 
 

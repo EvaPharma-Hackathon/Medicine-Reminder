@@ -39,6 +39,10 @@ class MedicineDetailsViewModel @Inject constructor(
         get() = MedicineDetailsViewState()
 
 
+    // needed state for editInfo
+    var currentMedicine: Medicine? = null
+
+
     override fun handleAction(action: MedicineDetailsAction): Flow<MedicineDetailsResult> {
         return flow {
             when (action) {
@@ -55,6 +59,11 @@ class MedicineDetailsViewModel @Inject constructor(
                 is MedicineDetailsAction.LoadMedicine -> handleLoadMedicine(
                     collector = this,
                     action.medicineId
+                )
+
+                is MedicineDetailsAction.EditInfo -> handleEditInfo(
+                    collector = this,
+                    action.medicine
                 )
             }
         }
@@ -95,7 +104,6 @@ class MedicineDetailsViewModel @Inject constructor(
             }
 
             else -> {
-
                 collector.emit(
                     MedicineDetailsResult.MedicineStatusUpdate(
                         MedicineDetailsViewState(
@@ -189,12 +197,24 @@ class MedicineDetailsViewModel @Inject constructor(
     ) {
         when (useCaseResponse) {
             is DataState.Success -> {
+                currentMedicine = useCaseResponse.data
+
+                currentMedicine?.let {
+                    if (it.time.isNullOrEmpty()) {
+                        val newFrequency = it.frequency?.takeIf { freq -> freq > 0 } ?: 1
+                        it.time = List(newFrequency) { "" }
+                    }
+                }
+
+
+
+
                 collector.emit(
                     MedicineDetailsResult.Medicine(
                         MedicineDetailsViewState(
                             medicationViewState = MedicineViewState(
                                 isSuccess = true,
-                                data = useCaseResponse.data
+                                data = currentMedicine
                             )
                         )
                     )
@@ -219,47 +239,60 @@ class MedicineDetailsViewModel @Inject constructor(
         }
     }
 
+
+    /// -----------------------handle Edit Info Action---------------------------------------------/////
+
+    private suspend fun handleEditInfo(
+        collector: FlowCollector<MedicineDetailsResult>,
+        medicine: Medicine
+    ) {
+        currentMedicine = medicine.copy(time = sortTimesAscending(medicine.time ?: emptyList()))
+        collector.emit(
+            MedicineDetailsResult.Medicine(
+                MedicineDetailsViewState(
+                    medicationViewState = MedicineViewState(
+                        isSuccess = true,
+                        data = currentMedicine
+                    )
+                )
+            )
+        )
+    }
+
     /// required functions
 
 
     fun setMedicationTimes(
         hour: Int,
         minute: Int,
-        viewSelections: (String, String, List<String>) -> Unit
+        timeIndex: Int
     ) {
 
 
         viewModelScope.launch {
-            val currentDate = Date()  // This gets the current date and time
-            val formatter = SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())
-            val durationFrom = formatter.format(currentDate)
-            var durationTo: String
-            var medicationTimes: List<String>
+            var medicationTimes = (currentMedicine?.time ?: emptyList()).toMutableList()
 
-            viewStates.value.medicationViewState?.data?.let { medication ->
-                val newPeriod =
-                    if (medication.period == null || medication.period <= 0) 1 else medication.period
-                durationTo = formatter.format(
-                    currentDate.addDays(
-                        when (medication.getMedicationPeriodType()) {
-                            PeriodType.DAY -> newPeriod
-                            PeriodType.WEEK -> (newPeriod.times(7))
-                            PeriodType.MONTH -> (newPeriod.times(30))
+            currentMedicine?.let { medication ->
+                val newFrequency =
+                    if (medication.frequency == null || medication.frequency <= 0) 1 else medication.frequency
+                if (medication.time?.all { time -> time.isBlank() } == true) {
+                    medicationTimes = generateTimesWithInterval(
+                        hour, minute, when (medication.getMedicationFrequencyType()) {
+                            PeriodType.DAY -> newFrequency
+                            else -> 1
                         }
-                    )
-                )
+                    ).toMutableList()
 
-                val newFrequency = if (medication.frequency == null || medication.frequency <= 0) 1 else medication.frequency
+                    executeAction(MedicineDetailsAction.EditInfo(medication.copy(time = medicationTimes.toList())))
+                } else {
+                    val selectedTime = String.format("%02d:%02d:%02d", hour, minute, 0)
+
+                    medicationTimes[timeIndex] = selectedTime
 
 
-                medicationTimes = generateTimesWithInterval(
-                    hour, minute, when (medication.getMedicationFrequencyType()) {
-                        PeriodType.DAY -> newFrequency
-                        else -> 1
-                    }
-                )
+                    executeAction(MedicineDetailsAction.EditInfo(medication.copy(time = medicationTimes.toList())))
 
-                viewSelections(durationFrom, durationTo, medicationTimes)
+                }
 
             }
 
@@ -268,6 +301,47 @@ class MedicineDetailsViewModel @Inject constructor(
 
 
     }
+
+
+    fun setDurations(selectedDate: Date) {
+
+        currentMedicine?.let { medicine ->
+
+            val newPeriod = medicine.period?.takeIf { it > 0 } ?: 1
+
+            val formatter = SimpleDateFormat(Constants.YEAR_MONTH_DAY_FORMAT, Locale.getDefault())
+            val durationFrom = formatter.format(selectedDate)
+            val durationTo = formatter.format(
+                selectedDate.addDays(
+                    when (medicine.getMedicationPeriodType()) {
+                        PeriodType.DAY -> newPeriod
+                        PeriodType.WEEK -> (newPeriod.times(7))
+                        PeriodType.MONTH -> (newPeriod.times(30))
+                    }
+                )
+            )
+            executeAction(
+                MedicineDetailsAction.EditInfo(
+                    medicine.copy(
+                        durationTo = durationTo,
+                        durationFrom = durationFrom
+                    )
+                )
+            )
+        }
+
+    }
+
+    fun readyToActivate(): Boolean {
+        var isReady = false
+        currentMedicine?.let {
+            isReady = it.durationTo != null && it.durationFrom != null
+            isReady = isReady && !it.time.isNullOrEmpty()
+            isReady = isReady && it.time?.all { time -> time.isNotBlank() } ?: false
+        }
+        return isReady
+    }
+
 
     private fun generateTimesWithInterval(hour: Int, minute: Int, elements: Int): List<String> {
         // Calculate the total number of hours in a day
@@ -318,5 +392,10 @@ class MedicineDetailsViewModel @Inject constructor(
         return newDate
     }
 
+
+    private fun sortTimesAscending(times: List<String>): List<String> {
+        val (validTimes, emptyTimes) = times.partition { it.isNotEmpty() }
+        return validTimes.sorted() + emptyTimes
+    }
 
 }

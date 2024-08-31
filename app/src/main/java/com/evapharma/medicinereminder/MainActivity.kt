@@ -1,16 +1,17 @@
 package com.evapharma.medicinereminder
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.ProgressBar
-import android.Manifest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentContainerView
+import androidx.navigation.fragment.NavHostFragment
 import com.evapharma.medicinereminder.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,9 +23,7 @@ class MainActivity : AppCompatActivity() {
     private var emptyView: LinearLayout? = null
     private var navHostFragment: FragmentContainerView? = null
     private var loadingSpinnerView: ProgressBar? = null
-    private var errorView : View? = null
-
-
+    private var errorView: View? = null
 
 
     // Declare the launcher at the top
@@ -44,6 +43,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
+
+
+
+
+
+
+
         emptyView = binding.emptyState.root
         navHostFragment = binding.navHostFragment
         loadingSpinnerView = binding.loadingSpinner
@@ -53,6 +61,24 @@ class MainActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             requestNotificationPermission()
         }
+
+
+        // Retrieve the id from the Intent
+        val id = intent?.getIntExtra("medicationId", -1) ?: -1
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        // Create a bundle with the id
+        val bundle = Bundle().apply {
+            putInt("medicationId", id)
+        }
+
+        // Set the nav graph with the bundle, ensuring that the SplashFragment gets the id
+        navController.setGraph(R.navigation.nav_graph, bundle)
+
+
     }
 
     // Function to request notification permission
@@ -74,6 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     fun showEmptyView(text: String = getString(R.string.no_medicines_found)) {
         binding.emptyState.titleText.text = text
+
         emptyView?.visibility = View.VISIBLE
         errorView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
@@ -87,7 +114,13 @@ class MainActivity : AppCompatActivity() {
         loadingSpinnerView?.visibility = View.GONE
     }
 
-    fun showErrorView() {
+    fun showErrorView(
+        title: String = getString(R.string.warning),
+        content: String = getString(R.string.warning_desc)
+    ) {
+        binding.errorState.txtTitle.text = title
+        binding.errorState.txtdesc.text = content
+
         errorView?.visibility = View.VISIBLE
         emptyView?.visibility = View.GONE
         navHostFragment?.visibility = View.GONE
@@ -103,9 +136,6 @@ class MainActivity : AppCompatActivity() {
             listener()
         }
     }
-
-
-
 
 
 }

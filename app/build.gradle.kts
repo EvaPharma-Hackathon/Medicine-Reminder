@@ -76,7 +76,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
 
     // Chuck
-    debugImplementation("com.github.chuckerteam.chucker:library:3.5.2")
+//    implementation("com.github.chuckerteam.chucker:library:3.5.2")
 
     implementation("androidx.security:security-crypto:1.1.0-alpha03")
     implementation("androidx.preference:preference-ktx:1.2.0")
@@ -87,7 +87,8 @@ dependencies {
 
 
     // Import the Firebase BoM
-    implementation(platform(libs.firebase.bom))
+    implementation(platform(libs.firebase.bom)) // Make sure to use the latest version
+    implementation(libs.firebase.messaging)
 
     // When using the BoM, you don't specify versions in Firebase library dependencies
 

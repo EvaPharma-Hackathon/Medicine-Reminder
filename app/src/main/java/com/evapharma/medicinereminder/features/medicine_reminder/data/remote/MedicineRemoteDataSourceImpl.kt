@@ -4,6 +4,7 @@ import com.evapharma.medicinereminder.core.models.DataState
 import com.evapharma.medicinereminder.core.models.getDataState
 import com.evapharma.medicinereminder.core.models.handleException
 import com.evapharma.medicinereminder.core.network.BaseURLFactory
+import com.evapharma.medicinereminder.core.utils.Constants
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.Medicine
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineStatusUpdateRequest
 import com.evapharma.medicinereminder.features.medicine_reminder.data.model.MedicineUpdateRequest
@@ -21,7 +22,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
                     MedicineApiService::class.java
                 ).getMedicineList().getDataState()
             } catch (t: Throwable) {
-                t.handleException()
+                DataState.Error(reason = listOf(Constants.NO_INTERNET_ERROR) , code = Constants.LOCAL_ERROR_CODE )
             }
         }
 
@@ -32,7 +33,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
                     MedicineApiService::class.java
                 ).setReminder(medicineUpdateRequest = medicineUpdateRequest).getDataState()
             } catch (t: Throwable) {
-                t.handleException()
+                DataState.Error(reason = listOf(Constants.NO_INTERNET_ERROR) , code = Constants.LOCAL_ERROR_CODE )
             }
         }
 
@@ -43,7 +44,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
                     MedicineApiService::class.java
                 ).updateStatus(request = medicineStatusUpdateRequest).getDataState()
             } catch (t: Throwable) {
-                t.handleException()
+                DataState.Error(reason = listOf(Constants.NO_INTERNET_ERROR) , code = Constants.LOCAL_ERROR_CODE )
             }
         }
 
@@ -55,7 +56,7 @@ class MedicineRemoteDataSourceImpl @Inject constructor(
                     MedicineApiService::class.java
                 ).getMedicineById(id = medicineId).getDataState()
             } catch (t: Throwable) {
-                t.handleException()
+                DataState.Error(reason = listOf(Constants.NO_INTERNET_ERROR) , code = Constants.LOCAL_ERROR_CODE )
             }
         }
 }

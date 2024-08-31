@@ -18,6 +18,7 @@ data class Medicine(
     @SerializedName("frequencyType") val frequencyType: String?,
     @SerializedName("isChronic") val isChronic: Boolean?,
     @SerializedName("period") val period: Int?,
+    @SerializedName("unit") val unit: String?,
     @SerializedName("periodType") val periodType: String?,
 ) : Parcelable
 
@@ -38,4 +39,15 @@ fun Medicine.getMedicationFrequencyType(): PeriodType
 fun Medicine.getMedicationPeriodType(): PeriodType
 {
     return PeriodType.fromString(periodType ?: "") ?: PeriodType.DAY
+}
+
+fun Medicine.toUpdateRequest(status : String? = null): MedicineUpdateRequest
+{
+    return MedicineUpdateRequest(
+        medicationId = id ?: 0,
+        durationFrom = durationFrom ?: "",
+        durationTo = durationTo ?: "",
+        status = status ?: "",
+        time = time ?: emptyList(),
+    )
 }

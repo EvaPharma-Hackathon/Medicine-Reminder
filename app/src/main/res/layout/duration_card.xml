@@ -24,9 +24,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginEnd="@dimen/margin_20"
-                android:layout_marginBottom="@dimen/margin_4">
+                android:layout_marginBottom="@dimen/margin_6"
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                     android:gravity="end"
                     android:text="@string/app_name"
                     android:textColor="@color/primary_shade_400"
-                    android:textSize="18sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,6 +99,15 @@
                     android:textSize="14sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
+
+            <include
+                android:layout_marginEnd="@dimen/margin_10"
+                android:id="@+id/set_start_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                layout="@layout/rounded_button" />
         </LinearLayout>
 
 
