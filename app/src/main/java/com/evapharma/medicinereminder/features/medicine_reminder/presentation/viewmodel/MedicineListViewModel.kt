@@ -109,7 +109,7 @@ class MedicineListViewModel @Inject constructor(
     }
 
 
-    private suspend fun handleUpdateMedicineStatusUseCaseResponse(
+    private fun handleUpdateMedicineStatusUseCaseResponse(
         response: DataState<Any>,
         showToast: (String) -> Unit = {}
     ) {

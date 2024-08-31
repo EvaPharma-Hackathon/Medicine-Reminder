@@ -157,7 +157,8 @@ class MedicineDetailsFragment :
 
                         /// Instructions data
                         binding.MedicineDetailsInstructions.root.visibility = View.VISIBLE
-                        binding.MedicineDetailsInstructions.title.text = "Instructions"
+                        binding.MedicineDetailsInstructions.title.text =
+                            getString(R.string.instructions)
                         binding.MedicineDetailsInstructions.details.text =
                             it.direction?.takeIf { direction -> direction.isNotBlank() }
                                 ?: "No instructions"
@@ -173,13 +174,14 @@ class MedicineDetailsFragment :
                         period = if (newPeriod == 1) period else "${period}s"
                         binding.MedicineCardDuration.period.text = period
                         if (it.durationFrom.isNullOrBlank()) {
-                            binding.MedicineCardDuration.DurationFrom.text = "Unspecified"
+                            binding.MedicineCardDuration.DurationFrom.text =
+                                getString(R.string.unspecified)
                         } else {
                             binding.MedicineCardDuration.DurationFrom.text =
                                 convertDateFormat(it.durationFrom ?: "")
                         }
                         if (it.durationTo.isNullOrBlank()) {
-                            binding.MedicineCardDuration.DurationTo.text = "Unspecified"
+                            binding.MedicineCardDuration.DurationTo.text = getString(R.string.unspecified)
                         } else {
                             binding.MedicineCardDuration.DurationTo.text =
                                 convertDateFormat(it.durationTo ?: "")
@@ -277,7 +279,7 @@ class MedicineDetailsFragment :
                                 binding.MedicineCardDuration.setStartBtn.root.visibility =
                                     View.VISIBLE
                                 binding.MedicineCardDuration.setStartBtn.btnAction.text =
-                                    "Edit Start Date"
+                                    getString(R.string.edit_start_date)
                                 binding.MedicineCardDuration.setStartBtn.root.setOnClickListener {
                                     showDatePickerDialog()
                                 }

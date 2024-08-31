@@ -171,8 +171,9 @@
     <string name="no_medicines_found">No Medications Found</string>
     <string name="times_per">%1$d times per %2$s </string>
     <string name="one_time_per">Once per %1$s </string>
-
-
+    <string name="instructions">Instructions</string>
+    <string name="unspecified">Unspecified</string>
+    <string name="edit_start_date">Edit Start Date</string>
 
 
 </resources>
